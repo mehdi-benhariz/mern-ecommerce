@@ -1,0 +1,8 @@
+/server/node_modules
+/client/node_modules
+/server/.vscode
+/client/.vscode
+/server/config/.env
+/dummy-data.txt
+
+
