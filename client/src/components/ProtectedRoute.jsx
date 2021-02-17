@@ -8,24 +8,23 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     const {isLogged} = useContext(AuthContext);
     const {pathname} = useLocation()
      console.log(pathname==="/login")
+
     if(pathname==="/login" ||pathname==="/register"){
-        return(
-            <Route
-            {...rest}
-            render={(props) =>{
-              isLogged ? (
+        return(isLogged ? (
                 <Redirect
                 to={{
                   pathname: "/",
                 }}
               />
               ) : (
+            <Route
+            {...rest}
+            render={(props) =>{
                 <Component {...props} />
-              )
             }
             }
           />    
-        )
+        ))
     }else{
         return ( 
             <Route

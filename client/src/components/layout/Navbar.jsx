@@ -5,9 +5,7 @@ import {AuthContext} from "../context/AuthContext"
 const NavBar = () => {
    const {isLogged} = useContext(AuthContext);
    window.onstorage = () => {
-    // When local storage changes, dump the list to
-    // the console.
-    console.log(JSON.parse(window.localStorage.getItem('Token')));
+    console.log(localStorage.getItem('Token'));
   };
     return ( 
 <nav class="bg-white shadow" role="navigation">

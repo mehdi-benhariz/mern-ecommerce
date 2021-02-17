@@ -1,7 +1,9 @@
 import { useState,useHistory } from "react";
 
 const SignUp = () => {
-  const [user, setuser] = useState({
+    let history = useHistory();
+
+    const [user, setuser] = useState({
     name: "",
     email: "",
     password: "",
@@ -9,7 +11,6 @@ const SignUp = () => {
   });
 
   const {password,password_confirmation,name,email} = user;
-  let history = useHistory();
 
   const handleRegister=async(e)=>{
       e.preventDefault();
