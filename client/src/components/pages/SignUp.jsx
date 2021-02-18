@@ -1,7 +1,7 @@
-import { useState,useHistory } from "react";
+import { useState } from "react";
+import {API} from "../Api"
 
 const SignUp = () => {
-    let history = useHistory();
 
     const [user, setuser] = useState({
     name: "",
@@ -10,19 +10,17 @@ const SignUp = () => {
     password_confirmation: "",
   });
 
-  const {password,password_confirmation,name,email} = user;
-
   const handleRegister=async(e)=>{
       e.preventDefault();
-      const res = await fetch('http://localhost:5000/api/signup',{method:'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user)
-    }
-      )
-      const data = await res.json()
-      if(data.success)
-          history.push("/login")
-      
+      const data = API.register(user)
+
+      if(data.success){
+          let newUser={email:user.email,password:user.password};
+           API.login(newUser)  
+          }
+      else{
+          console.log(data)
+      }
   }
 return (  
 <div class="container max-w-full mx-auto md:py-24 px-6 bg-gray-200 " >
@@ -104,46 +102,3 @@ return (
 
 export default SignUp;
 
-
-
-{/* <div class="flex justify-start mt-3 ml-4 p-1">
-<ul>
-    <li class="flex items-center py-1">
-        <div class={`${"bg-green-200 text-green-700 "&& password == password_confirmation &&
-          password.length > 0} ${'bg-red-200 text-red-700'&&password != password_confirmation || password.length == 0}`}
-             class=" rounded-full p-1 fill-current ">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path x-show={password == password_confirmation && password.length > 0} stroke-linecap="round"
-                      stroke-linejoin="round" stroke-width="2"
-                      d="M5 13l4 4L19 7"/>
-                <path x-show={password != password_confirmation || password.length == 0} stroke-linecap="round"
-                      stroke-linejoin="round" stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"/>
-
-            </svg>
-        </div>
-        <span class={`${'text-green-700'&& password == password_confirmation && password.length > 0}
-         ${'text-red-700'&&password != password_confirmation || password.length == 0}`}
-              class="font-medium text-sm ml-3"
-              x-text={password == password_confirmation && password.length > 0 ? 'Passwords match' : 'Passwords do not match' }></span>
-    </li>
-    <li class="flex items-center py-1">
-        <div class={`${'bg-green-200 text-green-700' &&password.length > 7} 
-                 ${'bg-red-200 text-red-700'&&password.length < 7 }`}
-             class=" rounded-full p-1 fill-current ">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path x-show="password.length > 7" stroke-linecap="round"
-                      stroke-linejoin="round" stroke-width="2"
-                      d="M5 13l4 4L19 7"/>
-                <path x-show={password.length < 7} stroke-linecap="round"
-                      stroke-linejoin="round" stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"/>
-
-            </svg>
-        </div>
-        <span class={`text-green-700: password.length > 7 'text-red-700':password.length < 7 `}
-              class="font-medium text-sm ml-3"
-              x-text={`${password.length > 7 ? 'The minimum length is reached' : 'At least 8 characters required'}`}></span>
-    </li>
-</ul>
-</div> */}

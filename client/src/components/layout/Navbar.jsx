@@ -1,17 +1,15 @@
-import {useEffect, useState,useContext} from "react"
-import {Link,withRouter} from "react-router-dom";
+import {useContext} from "react"
+import {Link} from "react-router-dom";
 import {AuthContext} from "../context/AuthContext"
-
+import {API} from "../Api";
 const NavBar = () => {
    const {isLogged} = useContext(AuthContext);
-   window.onstorage = () => {
-    console.log(localStorage.getItem('Token'));
-  };
+
     return ( 
 <nav class="bg-white shadow" role="navigation">
   <div class="container mx-auto p-4 flex flex-wrap items-center md:flex-no-wrap">
     <div class="mr-4 md:mr-8">
-      <a href="#" rel="home">
+      <a href="/" rel="home">
         <svg class="w-10 h-10 text-purple-600" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
           <title>TailwindCSS</title>
           <path fill="currentColor" d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"></path>
@@ -39,20 +37,21 @@ const NavBar = () => {
         </li>
       </ul>
       <ul class="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:ml-auto md:mt-0 md:pt-0 md:border-0">
-      {isLogged ?(
-               <li>
-             <button class="block px-4 py-1 md:p-2 lg:px-4" href="#" title="Link"  onClick={logOut} >Log Out</button>
-             </li>
-          ):(<>
-           <li>
-         <Link to="/login" > <a class="block px-4 py-1 md:p-2 lg:px-4" title="Link">Login</a></Link>  
-          </li>
-          <li>
-         <Link to="/register" ><a class="block px-4 py-1 md:p-2 lg:px-4"  title="Link">Register</a></Link>
-        </li>
-          </>
-           
-          )}
+    {isLogged? (
+
+<li>
+<button class="block px-4 py-1 md:p-2 lg:px-4" href="#" title="Link"  onClick={API.logOut} >Log Out</button>
+</li>
+    ):(
+    <>
+      <li>
+      <Link to="/login" > <span class="block px-4 py-1 md:p-2 lg:px-4" title="Link">Login</span></Link>  
+       </li>
+       <li>
+      <Link to="/register" ><span class="block px-4 py-1 md:p-2 lg:px-4"  title="Link">Register</span></Link>
+     </li>
+     </>
+    )}
       </ul>
     </div>
   </div>
@@ -61,6 +60,3 @@ const NavBar = () => {
  
 export default NavBar;
 
-const logOut=()=>{
-  localStorage.removeItem('Token')
-}

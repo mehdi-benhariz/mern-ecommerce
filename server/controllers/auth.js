@@ -6,6 +6,8 @@ const {
 } = require("../utils/auth");
 
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const maxAge = 3600 * 24 * 10;
+
 //creating an account
 exports.signup = (req, res, next) => {
   let { name, email, password, password_confirmation } = req.body;
@@ -33,6 +35,7 @@ exports.signup = (req, res, next) => {
   if (errors.length > 0) {
     return res.status(422).json({ errors: errors });
   }
+
  User.findOne({email: email})
     .then(user=>{
        if(user){
@@ -43,9 +46,11 @@ exports.signup = (req, res, next) => {
            email: email,
            password: password,
          });
- bcrypt.genSalt(10, function(err, salt) { bcrypt.hash(password, salt, function(err, hash) {
+ 
+    bcrypt.genSalt(10, function(err, salt) { bcrypt.hash(password, salt, function(err, hash) {
          if (err) throw err;
          user.password = hash;
+//saving user to db
          user.save()
              .then(response => {
                 res.status(200).json({
@@ -58,6 +63,7 @@ exports.signup = (req, res, next) => {
                   errors: [{ error: err }]
                });
             });
+
          });
       });
      }
@@ -67,10 +73,12 @@ exports.signup = (req, res, next) => {
       });
   })
 }
+
 //login to the account
 exports.signin = (req, res) => {
      let { email, password } = req.body;
      let errors = [];
+
      if (!email) {
        errors.push({ email: "required" });
      }
@@ -81,18 +89,22 @@ exports.signin = (req, res) => {
        errors.push({ passowrd: "required" });
      }
      if (errors.length > 0) {
-      return res.status(422).json({ errors: errors });
+      return res.status(422).json({errors });
      }
-     User.findOne({ email: email }).then(user => {
+
+    User.findOne({ email: email })
+    .then(user => {
         if (!user) {
           return res.status(404).json({
             errors: [{ user: "not found" }],
           });
+          
         } else {
-           bcrypt.compare(password, user.password).then(isMatch => {
+          console.log(user)
+           bcrypt.compare(password, user.password)
+           .then(isMatch => {
               if (!isMatch) {
-               return res.status(400).json({ errors: [{ password:
-"incorrect" }] 
+               return res.status(400).json({ errors: [{ password:"incorrect" }] 
                });
               }
        let access_token = createJWT(
@@ -100,19 +112,23 @@ exports.signin = (req, res) => {
           user._id,
           3600
        );
-       jwt.verify(access_token, process.env.TOKEN_SECRET, (err,
-decoded) => {
+       jwt.verify(access_token, process.env.TOKEN_SECRET, (err,decoded) => {
          if (err) {
             res.status(500).json({ erros: err });
          }
          if (decoded) {
-             return res.status(200).json({
+             return res.status(200)
+           .cookie("token", access_token, {
+        httpOnly: true,
+        maxAge: maxAge * 1000,
+         })
+              .json({
                 success: true,
-                token: access_token,
                 message: user
-             });
+             })
            }
          });
+
         }).catch(err => {
           res.status(500).json({ erros: err });
         });
@@ -120,4 +136,16 @@ decoded) => {
    }).catch(err => {
       res.status(500).json({ erros: err });
    });
+}
+
+exports.logOut=(req,res)=>{
+  res.cookie("token","", { maxAge: 1 });
+  res.redirect("/");
+}
+
+exports.userInfo=(req,res)=>{
+  const { token } = req.cookies;
+  if(token)
+  res.status(200).json({isLogged:true})
+  else res.json({isLogged:false})
 }

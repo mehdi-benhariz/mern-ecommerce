@@ -1,14 +1,13 @@
 import React ,{useContext} from "react"
 import NavBar from "../layout/Navbar";
+import {AuthContext} from "../context/AuthContext"
 
 const Main = () => {
-   const token =  localStorage.getItem('Token')
-   
+    const {isLogged} = useContext(AuthContext)
    return ( 
         <React.Fragment>
             <NavBar/>
         <div>this is the main page</div>
-<p>{token?"there is a token":"there isn't a token "} </p>
         </React.Fragment>
      );
 }

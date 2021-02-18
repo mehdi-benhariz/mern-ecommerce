@@ -34,10 +34,18 @@ app.use(cookieParser());
 // Morgan
 app.use(morgan("common"));
 //allow front end
+
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: true,
+  credentials: true,
 }));
-app.use('/api', authRoutes);
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.use('/api/v1', authRoutes);
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
