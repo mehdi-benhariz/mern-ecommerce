@@ -3,6 +3,7 @@ const Product = require("../models/Product");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { createJWT } = require("../utils/auth");
+var fs = require("fs");
 
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const maxAge = 3600 * 24 * 10;
@@ -154,6 +155,25 @@ exports.userInfo = (req, res) => {
   if (token) res.status(200).json({ isLogged: true });
   else res.json({ isLogged: false });
 };
+//upload profile image
+exports.uploadPic=(req,res)=>{
+  const { token } = req.cookies;
+  const {userPhoto} = req.files;
+  const types = ["image/bmp","image/gif ", "image/jpeg","image/png ","image/webp" ,"image/tiff"]
+
+  if (!userPhoto ||!types.inlcudes(userPhoto.mimetype)) return res.status(400).json({ error: "photo is required" });
+  try{
+    const decode = await jwt.verify(token, process.env.TOKEN_SECRET);
+    let user = await User.findById(decode.userId);
+    user.img.data= fs.readFileSync(req.files.userPhoto.data);
+    user.img.contentType= userPhoto.mimetype;
+   
+  } catch(err){
+    console.log("err:", error);
+    return res.status(500).json({ error: "internal errors" });    
+  }  
+}
+
 //add a product inside the pannel
 exports.buyProduct = async (req, res) => {
   let { pId, quantity } = req.body;

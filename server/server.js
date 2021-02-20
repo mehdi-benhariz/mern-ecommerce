@@ -8,7 +8,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-
+const fileUpload  =require("express-fileupload")
 
 const path = require("path");
 require("dotenv").config({
@@ -33,6 +33,10 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 // Morgan
 app.use(morgan("common"));
+//file upload 
+app.use(fileUpload({
+  limits: { fileSize: 50* 1024},
+}));
 //allow front end
 app.use(cors({
   origin: true,

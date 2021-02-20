@@ -4,30 +4,38 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  pannelProducts:[{
-    product:{
-    type:Schema.Types.ObjectId,
-    ref:"products"
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  img: {
+    data: Buffer,
+    contentType: String,
+  },
+  pannelProducts: [
+    {
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: "products",
+      },
+      quantity: {
+        type: Number,
+      },
     },
-    quantity : {
-      type:Number,
-    }
-  }
-  
-]
+  ],
 });
 module.exports = User = mongoose.model("users", UserSchema);

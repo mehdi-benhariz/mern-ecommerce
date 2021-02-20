@@ -3,6 +3,7 @@
 /server/.vscode
 /client/.vscode
 /server/config/.env
+/.vscode
 /dummy-data.txt
 
 
