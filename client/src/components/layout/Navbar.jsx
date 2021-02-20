@@ -6,7 +6,7 @@ const NavBar = () => {
    const {isLogged} = useContext(AuthContext);
 
     return ( 
-<nav class="bg-white shadow" role="navigation">
+<nav class="bg-white shadow mb-20" role="navigation" >
   <div class="container mx-auto p-4 flex flex-wrap items-center md:flex-no-wrap">
     <div class="mr-4 md:mr-8">
       <a href="/" rel="home">
@@ -27,28 +27,34 @@ const NavBar = () => {
     <div class="w-full md:w-auto md:flex-grow md:flex md:items-center">
       <ul class="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:mt-0 md:pt-0 md:mr-4 lg:mr-8 md:border-0">
         <li>
-          <a class="block px-4 py-1 md:p-2 lg:px-4" href="#" title="Link">Link</a>
+          <a class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 
+          transform ease-linear  hover:border-b-2 border-gray-800" href="#" title="Link">Link</a>
         </li>
         <li>
-          <a class="block px-4 py-1 md:p-2 lg:px-4 " href="#" title="Link">Link</a>
+          <a class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 
+          transform ease-linear  hover:border-b-2 border-gray-800" href="#" title="Link">Link</a>
         </li>
         <li>
-          <a class="block px-4 py-1 md:p-2 lg:px-4" href="#" title="Link">Link</a>
+          <a class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 
+          transform ease-linear hover:border-b-2 border-gray-800" href="#" title="Link">Link</a>
         </li>
       </ul>
       <ul class="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:ml-auto md:mt-0 md:pt-0 md:border-0">
     {isLogged? (
 
 <li>
-<button class="block px-4 py-1 md:p-2 lg:px-4" href="#" title="Link"  onClick={API.logOut} >Log Out</button>
+<button class="block px-4 py-1 md:p-2 lg:px-4 bg-gray-500 rounded text-white font-meduim text-xl 
+hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200 " title="Link"  onClick={API.logOut} >Log Out</button>
 </li>
     ):(
     <>
       <li>
-      <Link to="/login" > <span class="block px-4 py-1 md:p-2 lg:px-4" title="Link">Login</span></Link>  
+      <Link to="/login" > <span class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 
+      border-r-2 "
+       title="Link">Login</span></Link>  
        </li>
        <li>
-      <Link to="/register" ><span class="block px-4 py-1 md:p-2 lg:px-4"  title="Link">Register</span></Link>
+      <Link to="/register" ><span class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 "  title="Link">Register</span></Link>
      </li>
      </>
     )}

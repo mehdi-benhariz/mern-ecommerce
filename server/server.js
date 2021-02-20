@@ -8,7 +8,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const authRoutes = require('./routes/auth');
+
 
 const path = require("path");
 require("dotenv").config({
@@ -34,7 +34,6 @@ app.use(cookieParser());
 // Morgan
 app.use(morgan("common"));
 //allow front end
-
 app.use(cors({
   origin: true,
   credentials: true,
@@ -44,8 +43,12 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
+//routes
+const authRoutes = require('./routes/auth');
 app.use('/api/v1', authRoutes);
+
+const productRoutes = require('./routes/product');
+app.use('/api/v1/product', productRoutes);
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

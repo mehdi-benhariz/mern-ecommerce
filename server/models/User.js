@@ -17,6 +17,17 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  pannelProducts:[{
+    product:{
+    type:Schema.Types.ObjectId,
+    ref:"products"
+    },
+    quantity : {
+      type:Number,
+    }
   }
+  
+]
 });
 module.exports = User = mongoose.model("users", UserSchema);

@@ -9,16 +9,22 @@ import Main from "./components/pages/Main";
 import AuthContextProvider from "./components/context/AuthContext"
 import Private from './components/pages/Private';
 import ProtectedRoute from './components/ProtectedRoute';
+import ErrorPage from "./components/pages/ErrorPage";
+import NavBar from './components/layout/Navbar';
+import ProductDetail from './components/pages/ProductDetail';
 
 function App() {
   return (
     <div className="App">
 <AuthContextProvider>
-<Route exact path="/login" component={SignIn} />
+<Switch>
+<NavBar/>
+   <Route exact path="/login" component={SignIn} />
    <Route exact path="/register" component={SignUp} />
    <Route  exact path="/" component={Main} />
    <ProtectedRoute   exact path="/private" component={Private} />
-<Switch>
+   <Route exact path="/product/:pid" component={ProductDetail}  />
+   <Route component={ErrorPage}  />
 
 </Switch>
 </AuthContextProvider>

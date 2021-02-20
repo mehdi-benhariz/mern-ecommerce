@@ -1,24 +1,26 @@
 import { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link ,useHistory} from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import { API } from "../Api";
 axios.defaults.withCredentials = true
 
 const SignIn = () => {
 
   const [user, setuser] = useState({ email: "", password: "" });
   const [error, seterror] = useState(null);
-  const { isLogged } = useContext(AuthContext);
-
+  const { isLogged,setisLogged } = useContext(AuthContext);
+   let history = useHistory()
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const res = await axios.post("http://localhost:5000/api/v1/signin",user);
-    console.log(res.data)    
+    const res = await API.login(user);
     if(res.data.success){
-    const state = await axios.get("http://localhost:5000/api/v1/userInfo");
-
-    console.log(state);
+    const state = await API.getUserInfo();
+    setisLogged(state.isLogged)
+    history.push('/')
+  }else{
+    seterror(res.data)
   }
     //   switchAuth()
   };
@@ -108,14 +110,7 @@ const SignIn = () => {
                 .
               </p>
             </form>
-            {error &&
-              error.map((e) => {
-                return (
-                  <p class="text-lg font-extrabold text-red-500">
-                    {`${Object.getOwnPropertyNames(e)}:${e[Object.keys(e)[0]]}`}
-                  </p>
-                );
-              })}
+          
           </div>
         </div>
       </div>
