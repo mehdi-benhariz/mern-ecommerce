@@ -15,8 +15,9 @@ import Pannel from "./components/pages/Pannel";
 function App() {
   return (
     <div className="App">
-<Switch>
 <NavBar/>
+
+<Switch>
    <Route exact path="/login" component={SignIn} />
    <Route exact path="/register" component={SignUp} />
    <Route  exact path="/" component={Main} />

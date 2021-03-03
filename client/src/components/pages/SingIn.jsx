@@ -9,7 +9,8 @@ const SignIn = () => {
 
   const [user, setuser] = useState({ email: "", password: "" });
   const [error, seterror] = useState(null);
-  const { isLogged,setisLogged } = useContext(AuthContext);
+  const {setisLogged ,update} = useContext(AuthContext);
+
    let history = useHistory()
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,9 +19,11 @@ const SignIn = () => {
     if(res.data.success){
     const state = await API.getUserInfo();
     setisLogged(state.isLogged)
+    update()
     history.push('/')
   }else{
     seterror(res.data)
+    console.log(res.data)
   }
     //   switchAuth()
   };

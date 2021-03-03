@@ -3,10 +3,10 @@ import {Link} from "react-router-dom";
 import {AuthContext} from "../context/AuthContext"
 import {API} from "../Api";
 const NavBar = () => {
-   const {isLogged} = useContext(AuthContext);
+   const {isLogged,update} = useContext(AuthContext);
 
-    return ( 
-<nav class="bg-white shadow mb-20" role="navigation" >
+   return ( 
+<nav class="bg-white shadow mb-28 " role="navigation" >
   <div class="container mx-auto p-4 flex flex-wrap items-center md:flex-no-wrap">
     <div class="mr-4 md:mr-8">
       <a href="/" rel="home">
@@ -44,7 +44,12 @@ const NavBar = () => {
 
 <li>
 <button class="block px-4 py-1 md:p-2 lg:px-4 bg-gray-500 rounded text-white font-meduim text-xl 
-hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200 " title="Link"  onClick={API.logOut} >Log Out</button>
+hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200 " title="Link"  
+onClick={(e)=>{
+  e.preventDefault();
+  API.logOut();
+   update();
+} } >Log Out</button>
 </li>
     ):(
     <>

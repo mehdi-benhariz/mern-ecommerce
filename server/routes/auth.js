@@ -18,4 +18,5 @@ router.get("/userInfo", auth, userInfo);
 router.post("/buy", auth, buyProduct);
 router.get("/pannel", auth, pannelDetail);
 router.post("/upload-pic", auth, uploadPic);
+
 module.exports = router;

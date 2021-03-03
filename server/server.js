@@ -54,5 +54,8 @@ app.use('/api/v1', authRoutes);
 const productRoutes = require('./routes/product');
 app.use('/api/v1/product', productRoutes);
 
+const adminRoutes = require('./routes/admin');
+app.use('/api/v1/admin', adminRoutes);
+
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

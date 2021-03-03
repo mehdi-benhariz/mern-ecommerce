@@ -34,4 +34,5 @@ exports.admin = async (req, res, next) => {
     console.log("error");
     console.log("err:", error);
   }
+
 };

@@ -2,7 +2,7 @@ const User = require("../models/User");
 const Product = require("../models/Product");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { createJWT } = require("../utils/auth");
+const { createJWT,getUserByToken } = require("../utils/auth");
 var fs = require("fs");
 
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
@@ -93,6 +93,7 @@ exports.signin = (req, res) => {
     errors.push({ passowrd: "required" });
   }
   if (errors.length > 0) {
+    console.log(errors)
     return res.status(422).json({ errors });
   }
 
@@ -150,21 +151,25 @@ exports.logOut = (req, res) => {
   res.redirect("/");
 };
 //check whether the user is logged or not
-exports.userInfo = (req, res) => {
+exports.userInfo =async (req, res) => {
   const { token } = req.cookies;
-  if (token) res.status(200).json({ isLogged: true });
+  if (token) {
+    var user = await getUserByToken(token);
+    res.status(200).json({ isLogged: true,isAdmin:user.isAdmin });
+  
+  }
   else res.json({ isLogged: false });
 };
 //upload profile image
-exports.uploadPic=(req,res)=>{
+exports.uploadPic=async (req,res)=>{
   const { token } = req.cookies;
   const {userPhoto} = req.files;
   const types = ["image/bmp","image/gif ", "image/jpeg","image/png ","image/webp" ,"image/tiff"]
 
   if (!userPhoto ||!types.inlcudes(userPhoto.mimetype)) return res.status(400).json({ error: "photo is required" });
   try{
-    const decode = await jwt.verify(token, process.env.TOKEN_SECRET);
-    let user = await User.findById(decode.userId);
+   
+    let user = await getUserByToken(token);
     user.img.data= fs.readFileSync(req.files.userPhoto.data);
     user.img.contentType= userPhoto.mimetype;
    
@@ -185,8 +190,7 @@ exports.buyProduct = async (req, res) => {
   try {
     const newProduct = await Product.findById(pId);
 
-    const decode = await jwt.verify(token, process.env.TOKEN_SECRET);
-    let user = await User.findById(decode.userId);
+    let user = await getUserByToken(token);
 
     let obj = { product: newProduct, quantity: quantity };
     user.pannelProducts.push(obj);
@@ -202,8 +206,7 @@ exports.buyProduct = async (req, res) => {
 exports.pannelDetail = async (req, res) => {
   const { token } = req.cookies;
   try {
-    const decode = await jwt.verify(token, process.env.TOKEN_SECRET);
-    const user = await User.findById(decode.userId);
+    const user = await getUserByToken(token);
     console.log(user);
     let data = user.pannelProducts;
     if (!data) return res.status(400).json({ error: "ID is required" });
