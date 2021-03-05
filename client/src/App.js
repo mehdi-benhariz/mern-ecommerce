@@ -12,10 +12,11 @@ import NavBar from './components/layout/Navbar';
 import ProductDetail from './components/pages/ProductDetail';
 import Pannel from "./components/pages/Pannel";
 import Category from './components/pages/Category';
+import Footer from './components/layout/Footer';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-gray-100 flex flex-col h-screen justify-between">
 <NavBar/>
 <Switch>
    <Route exact path="/login" component={SignIn} />
@@ -27,6 +28,7 @@ function App() {
    <Route component={ErrorPage}  />
 
 </Switch>
+<Footer/>
     </div>
   );
 }

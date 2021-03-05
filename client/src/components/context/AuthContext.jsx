@@ -15,8 +15,8 @@ const AuthContextProvider = (props) => {
     
    useEffect(async() => {
        const res= await API.getUserInfo();
-       setisLogged(res.data.isLogged)
-       setisAdmin(res.data.isAdmin)
+       setisLogged(res?.data.isLogged)
+       setisAdmin(res?.data.isAdmin)
    }, [change])
 
 

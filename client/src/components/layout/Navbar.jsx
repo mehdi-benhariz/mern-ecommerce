@@ -105,21 +105,20 @@ const NavBar = () => {
                       aria-orientation="vertical"
                       aria-labelledby="options-menu"
                     >
-                      <a
-                        href="#"
+                      <Link
+                        to="product/category/clothes"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
                       >
-                        Account settings
-                      </a>
-                      <a
-                        href="product/cat"
+                       clothes
+                      </Link>
+                      <Link
+                        to="product/category/electronic"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
                       >
-                        Support
-                      </a>
-      
+                        electronic
+                      </Link>
                     </div>
                   </div>}
 
