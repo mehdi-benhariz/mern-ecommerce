@@ -1,31 +1,28 @@
 import { useState, useContext } from "react";
-import { Link ,useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import axios from "axios";
 import { API } from "../Api";
-axios.defaults.withCredentials = true
 
 const SignIn = () => {
-
   const [user, setuser] = useState({ email: "", password: "" });
-  const [error, seterror] = useState(null);
-  const {setisLogged ,update} = useContext(AuthContext);
+  const [error, seterror] = useState([]);
+  const { setisLogged, update } = useContext(AuthContext);
 
-   let history = useHistory()
+  let history = useHistory();
   const handleLogin = async (e) => {
     e.preventDefault();
 
     const res = await API.login(user);
-    if(res.data.success){
-    const state = await API.getUserInfo();
-    setisLogged(state.isLogged)
-    update()
-    history.push('/')
-  }else{
-    seterror(res.data)
-    console.log(res.data)
-  }
-    //   switchAuth()
+    console.log({res})
+    if (res?.data?.errors) {
+      seterror(res.data.errors);
+      console.log(res.data.errors);
+    } else {
+      const state = await API.getUserInfo();
+      setisLogged(state.isLogged);
+      update();
+      history.push("/");
+    }
   };
 
   return (
@@ -58,7 +55,10 @@ const SignIn = () => {
                         placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring 
                         focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 
                         dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                  onChange={(e) => setuser({ ...user, email: e.target.value })}
+                  onChange={(e) => {
+                    seterror([]);  
+                    setuser({ ...user, email: e.target.value })
+                  }}
                 />
               </div>
               <div class="mb-6">
@@ -85,9 +85,10 @@ const SignIn = () => {
                         focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 
                         dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 
                         dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                  onChange={(e) =>
-                    setuser({ ...user, password: e.target.value })
-                  }
+                  onChange={(e) => {
+                    seterror([]);
+                    setuser({ ...user, password: e.target.value });
+                  }}
                 />
               </div>
               <div class="mb-6">
@@ -100,20 +101,36 @@ const SignIn = () => {
                   Sign in
                 </button>
               </div>
+              <div>
+                {error.map((e,i) => {
+                  return(
+                    <p key={i}
+                    class="no-underline text-red-600 mb-2 inline-flex items-center rounded-full border border-grey-light bg-red-200 text-xs 
+          pl-1 pt-1 pb-1 pr-2 leading-none mr-2 font-bold p-4"
+                  >
+                    <span class="inline-flex rounded-full bg-green-light text-red-600 mr-1 font-bold">
+                      X
+                    </span>{" "}
+                    <span>{Object.keys(e)[0]} {Object.values(e)[0]} </span>
+                  </p>
+                
+                  )}
+       )}
+              </div>
+
               <p class="text-sm text-center text-gray-400">
                 Don&#x27;t have an account yet?
                 <Link to="/register">
-                  <a
+                  <p
                     class="text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500
                      dark:focus:border-indigo-800"
                   >
                     Sign up
-                  </a>
+                  </p>
                 </Link>
                 .
               </p>
             </form>
-          
           </div>
         </div>
       </div>

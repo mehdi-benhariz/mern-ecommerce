@@ -11,17 +11,18 @@ import ErrorPage from "./components/pages/ErrorPage";
 import NavBar from './components/layout/Navbar';
 import ProductDetail from './components/pages/ProductDetail';
 import Pannel from "./components/pages/Pannel";
+import Category from './components/pages/Category';
 
 function App() {
   return (
     <div className="App">
 <NavBar/>
-
 <Switch>
    <Route exact path="/login" component={SignIn} />
    <Route exact path="/register" component={SignUp} />
    <Route  exact path="/" component={Main} />
    <ProtectedRoute  exact path="/pannel" component={Pannel} />
+   <Route exact path="/product/categorie/:cid" component={Category} />
    <Route exact path="/product/:pid" component={ProductDetail}  />
    <Route component={ErrorPage}  />
 

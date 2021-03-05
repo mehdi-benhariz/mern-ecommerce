@@ -1,8 +1,6 @@
-import React ,{useContext} from "react"
-import {AuthContext} from "../context/AuthContext"
+import React  from "react"
 import ProductCard from "../layout/ProductCard"
 const Main = () => {
-    const {isLogged} = useContext(AuthContext)
     const list = new Array(10)
 
    return ( 
@@ -12,7 +10,9 @@ const Main = () => {
          class="py-4 w-2/3 outline-none shadow-md bg-white pl-2 rounded min-w-min"  />
        <div class="self-center bg-gray-300" >
            {list.map((p,i)=>{
-           <ProductCard />
+               return(
+                <ProductCard />
+               )
        })}</div>
         </span >
      );

@@ -63,7 +63,7 @@ exports.signup = (req, res, next) => {
                 });
               })
               .catch((err) => {
-                res.status(500).json({
+                res.status(400).json({
                   errors: [{ error: err }],
                 });
               });
@@ -72,7 +72,7 @@ exports.signup = (req, res, next) => {
       }
     })
     .catch((err) => {
-      res.status(500).json({
+      res.status(400).json({
         errors: [{ error: "Something went wrong" }],
       });
     });
@@ -83,24 +83,24 @@ exports.signin = (req, res) => {
   let { email, password } = req.body;
   let errors = [];
 
-  if (!email) {
+  if (!email)
     errors.push({ email: "required" });
-  }
+
   //  if (!emailRegexp.test(email)) {
   //    errors.push({ email: "invalid email" });
   //  }
-  if (!password) {
+  if (!password)
     errors.push({ passowrd: "required" });
-  }
+
   if (errors.length > 0) {
     console.log(errors)
-    return res.status(422).json({ errors });
+    return res.status(400).json({ errors });
   }
 
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
-        return res.status(404).json({
+        return res.status(400).json({
           errors: [{ user: "not found" }],
         });
       } else {
@@ -119,7 +119,7 @@ exports.signin = (req, res) => {
               process.env.TOKEN_SECRET,
               (err, decoded) => {
                 if (err) {
-                  res.status(500).json({ erros: err });
+                  res.status(400).json({ erros: err });
                 }
                 if (decoded) {
                   return res
@@ -137,12 +137,12 @@ exports.signin = (req, res) => {
             );
           })
           .catch((err) => {
-            res.status(500).json({ erros: err });
+            res.status(400).json({ erros: err });
           });
       }
     })
     .catch((err) => {
-      res.status(500).json({ erros: err });
+      res.status(400).json({ erros: err });
     });
 };
 //loggin out

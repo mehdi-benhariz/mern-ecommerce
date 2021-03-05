@@ -36,7 +36,7 @@ const ErrorPage = () => {
               </p>
               <p class="text-base font-normal text-gray-600 dark:text-gray-300">
                 You may return to
-                <a to="/" class="text-blue-600 hover:underline dark:text-blue-500"> home page</a></p>
+                <a href="/" class="text-blue-600 hover:underline dark:text-blue-500"> home page</a></p>
             </div>
           </div>
 
