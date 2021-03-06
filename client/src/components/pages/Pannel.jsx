@@ -1,6 +1,10 @@
+import React from 'react'
+
 const Pannel = () => {
   return (
     <div class="container-fluid">
+
+      
       <div class="row">
         <div class="col-12 col">
           <div class="page-title-box d-flex align-items-center justify-content-between">
