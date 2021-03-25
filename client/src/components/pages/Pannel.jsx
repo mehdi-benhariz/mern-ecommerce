@@ -1,11 +1,17 @@
-import React from 'react'
+import React from "react";
 
 const Pannel = () => {
   return (
     <div class="container-fluid">
-
+    <h3>test</h3>
       
-      <div class="row">
+    </div>
+  );
+};
+
+export default Pannel;
+
+{/* <div class="row">
         <div class="col-12 col">
           <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="mb-0">Cart</h4>
@@ -75,7 +81,7 @@ const Pannel = () => {
                   <div class="col-md-4">
                     <div class="mt-3">
                       <p class="text-muted mb-2">Quantity</p>
-                      <div style={{width: "110px"}}>
+                      <div style={{ width: "110px" }}>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <button type="button" class="btn btn-primary">
@@ -160,7 +166,7 @@ const Pannel = () => {
                   <div class="col-md-4">
                     <div class="mt-3">
                       <p class="text-muted mb-2">Quantity</p>
-                      <div style={{width: "110px"}}>
+                      <div style={{ width: "110px" }}>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <button type="button" class="btn btn-primary">
@@ -328,7 +334,7 @@ const Pannel = () => {
                   <div class="col-md-4">
                     <div class="mt-3">
                       <p class="text-muted mb-2">Quantity</p>
-                      <div style={{width: "110px"}}>
+                      <div style={{ width: "110px" }}>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <button type="button" class="btn btn-primary">
@@ -412,7 +418,7 @@ const Pannel = () => {
                   <div class="col-md-4">
                     <div class="mt-3">
                       <p class="text-muted mb-2">Quantity</p>
-                      <div style={{width: "110px"}}>
+                      <div style={{ width: "110px" }}>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <button type="button" class="btn btn-primary">
@@ -496,7 +502,7 @@ const Pannel = () => {
                   <div class="col-md-4">
                     <div class="mt-3">
                       <p class="text-muted mb-2">Quantity</p>
-                      <div style={{width: "110px"}}>
+                      <div style={{ width: "110px" }}>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <button type="button" class="btn btn-primary">
@@ -571,9 +577,4 @@ const Pannel = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
-};
-
-export default Pannel;
+      </div> */}

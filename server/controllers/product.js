@@ -76,5 +76,32 @@ exports.updateProduct = async (req, res) => {
 };
 //detailed search
 exports.search=async(req,res)=>{
-  console.log("te")
+  const {search} = req.body
+  let regex = search ?new RegExp(search):null
+
+  try{
+    const result = await Product.find({name:regex})
+    if(result.length >0)
+       return res.status(200).json(result)
+    return res.status(400).json({"message":"no product was found!"})
+  }catch(err){
+     res.status(500).json("there was an error!")
+     console.log(err)
+  }
+}
+//get by category 
+exports.getByCategory=async(req,res)=>{
+   const {cId} = req.body
+   let regex = cId ?new RegExp(search):null
+
+   try{
+    const result = await Product.find({tags:"clothes" })
+    if(result.length >0)
+       return res.status(200).json(result)
+    return res.status(400).json({"message":"no product was found!"})
+   }catch(err){
+    res.status(500).json("there was an error!")
+    console.log(err)
+   }
+
 }

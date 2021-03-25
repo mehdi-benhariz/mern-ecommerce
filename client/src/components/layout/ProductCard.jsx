@@ -1,3 +1,5 @@
+import React from 'react'
+
 const ProductCard = () => {
   return (
     <div class="w-screen h-screen flex justify-center items-center">
@@ -13,6 +15,7 @@ const ProductCard = () => {
             <img
               src="https://unsplash.com/photos/IJjfPInzmdk/download?force=true&w=1920"
               class="w-full object-cover object-center"
+              alt="a product"
             />
           </div>
           <div class="prod-info grid gap-10">

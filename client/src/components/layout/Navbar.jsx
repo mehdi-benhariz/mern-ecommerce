@@ -46,20 +46,20 @@ const NavBar = () => {
               <a
                 class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 
           transform ease-linear  hover:border-b-2 border-gray-800"
-                href="#"
+                href="/adminPage"
                 title="Link"
               >
-                Link
+                Admin Page
               </a>
             </li>
             <li>
               <a
                 class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 
           transform ease-linear  hover:border-b-2 border-gray-800"
-                href="#"
+                href="/pannel"
                 title="Link"
               >
-                Link
+                Pannel
               </a>
             </li>
             <li>
@@ -106,7 +106,7 @@ const NavBar = () => {
                       aria-labelledby="options-menu"
                     >
                       <Link
-                        to="product/category/clothes"
+                        to="/product/categorie/clothes"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
                       >

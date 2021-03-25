@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import {AuthContext} from "../context/AuthContext"
 
 const ProductDetail = () => {
+  const {isAdmin} = useContext(AuthContext)
+  console.log({isAdmin})
   return (
     <div class="mb-8 rounded-md" >
           <div class="page-title-box d-flex align-items-center justify-content-between ">
@@ -10,7 +13,7 @@ const ProductDetail = () => {
       
                <div class="row-span-3 p-3  border-gray-700 border-r-0" >
                  <img src="https://www.cdiscount.com/pdt2/6/2/0/2/300x300/tok5194620/rw/pack-3t-shirt-col-rond-noir-logo-poitrine.jpg" 
-                 class="pr-0" />
+                 class="pr-0" alt="a product" />
         
                </div>
   <div class="col-span-2 pl-2 text-left">

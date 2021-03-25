@@ -10,8 +10,8 @@ const ProductContextProvider = (props) => {
    const [products, setproducts] = useState([])
     const update=()=>setchange(!change)
     useEffect(async() => {
-        let data = await API.getProducts();
-        setproducts(data);
+        let res = await API.getProducts();
+        setproducts(res?.data);
     }, [change])
 
     return ( 

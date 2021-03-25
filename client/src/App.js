@@ -1,4 +1,3 @@
-import './App.css';
 import {
   Switch,
   Route,
@@ -14,6 +13,7 @@ import Pannel from "./components/pages/Pannel";
 import Category from './components/pages/Category';
 import Footer from './components/layout/Footer';
 import AddProduct from './components/pages/AddProduct';
+import AdminPage from "./components/pages/AdminPage";
 
 function App() {
   return (
@@ -27,10 +27,12 @@ function App() {
    <Route exact path="/product/categorie/:cid" component={Category} />
    <Route exact path="/product/add" component={AddProduct} />
    <Route exact path="/product/:pid" component={ProductDetail}  />
+   <Route exact path="/adminPage" component={AdminPage} />
    <Route component={ErrorPage}  />
 
 </Switch>
 <Footer/>
+
     </div>
   );
 }

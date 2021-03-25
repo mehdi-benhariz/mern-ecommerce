@@ -6,7 +6,8 @@ import ProductCard from "../layout/ProductCard";
 const Category = () => {
   const {products} =useContext(ProductContext);
   let {cId} = useParams();
-
+ console.log({cId})
+ 
     return ( 
         <div>
             <h3>product for category</h3>

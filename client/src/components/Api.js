@@ -35,7 +35,7 @@ export class API {
     }
 
   };
-  //check if the use is logged or not
+  //check if the user is logged or not
   static getUserInfo = async () => {
     try{
       const res = await axios.get( `${process.env.REACT_APP_BASIC_URL}/api/v1/userInfo`);
