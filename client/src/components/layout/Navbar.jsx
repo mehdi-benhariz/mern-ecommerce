@@ -6,7 +6,11 @@ const NavBar = () => {
   const { isLogged, update } = useContext(AuthContext);
   const [expanded, setexpanded] = useState(false);
   return (
-    <nav class="bg-white shadow mb-28 " role="navigation" onBlur={()=>setexpanded(false)} >
+    <nav
+      class="bg-white shadow mb-28 "
+      role="navigation"
+      onBlur={() => setexpanded(false)}
+    >
       <div class="container mx-auto p-4 flex flex-wrap items-center md:flex-no-wrap">
         <div class="mr-4 md:mr-8">
           <a href="/" rel="home">
@@ -77,11 +81,12 @@ const NavBar = () => {
                       id="options-menu"
                       aria-haspopup="true"
                       aria-expanded="true"
-                      onClick={(e)=>{
-                        e.preventDefault() 
-                        setexpanded(!expanded)
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setexpanded(!expanded);
                       }}
-                    >Categories
+                    >
+                      Categories
                       <svg
                         class="-mr-1 ml-2 h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -95,33 +100,37 @@ const NavBar = () => {
                           clip-rule="evenodd"
                         />
                       </svg>
-
                     </button>
                   </div>
-{expanded  &&   <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                    <div
-                      class="py-1"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="options-menu"
-                    >
-                      <Link
-                        to="/product/categorie/clothes"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                        role="menuitem"
-                      >
+                  {expanded && (
+                    <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                      <div
+                        class="py-1"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="options-menu"
+                      ><li>
+<Link
+                          to="/product/categorie/"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          role="menuitem"
+                        >
                        clothes
-                      </Link>
-                      <Link
-                        to="product/category/electronic"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                        role="menuitem"
-                      >
-                        electronic
-                      </Link>
-                    </div>
-                  </div>}
+                        </Link>
+                      </li>
+                        <li>
+                        <Link
+                          to="/product/categorie/"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          role="menuitem"
+                        >
+                          electronic
+                        </Link>
+                        </li>
 
+                      </div>
+                    </div>
+                  )}
                 </div>
               </a>
             </li>

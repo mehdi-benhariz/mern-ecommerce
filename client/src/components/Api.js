@@ -105,4 +105,13 @@ export class API {
          return err.response
        }
    }
+  //add product to pannel
+  static buyProduct=async(pId,quantity)=>{
+     try{
+        const res = await axios.post(`${process.env.REACT_APP_BASIC_URL}/api/v1/buy`,{pId,quantity})
+        return res;
+     }catch(err){
+       return err.response
+     }
+  }
 }

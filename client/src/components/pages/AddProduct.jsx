@@ -96,6 +96,7 @@ const AddProduct = () => {
           <button
             class="text-xl text-white font-semibold bg-gray-500 hover:bg-gray-700 ease-linear p-4 
          rounded-md  m-3"
+         onClick={()=>{setnewProduct({})}}
           >
             Cancel
           </button>

@@ -1,580 +1,123 @@
-import React from "react";
-
+import React, { useState } from "react";
+import {API} from "../Api"
 const Pannel = () => {
+  const [quantity, setquantity] = useState(0);
+  useEffect(() => {
+    console.log("get pannel data")
+  }, [])
+  const handlBuy=async(e)=>{
+    let pId = 0
+   const res = await  API.buyProduct(pId,quantity)  
+   console.log(res)
+  }
   return (
-    <div class="container-fluid">
-    <h3>test</h3>
-      
+    <div class="grid grid-rows-5 m-2">
+      <div class="row-span-3 grid sm:grid-flow-row  grid-cols-3 mb-4 ">
+        <div class=" sm:row-auto col-span-2 mr-3 rounded bg-white shadow-lg">
+          <span class="py-4 bg-purple-400 text-white font-semibold pl-2 mb-3 px-6">
+            the product pic
+          </span>
+          <img
+            src="https://unsplash.com/photos/IJjfPInzmdk/download?force=true&w=1920"
+            alt="a product"
+            class="object-fill"
+          />{" "}
+        </div>
+        <div class="sm:row-auto bg-white rounded shadow-lg p-4">
+          <h4 class="text-gray-700 text-lg font-bold">Products(4)</h4>
+          <h4 class="text-gray-500 text-lg font-bold">Name:</h4>
+          <nav
+            class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+            aria-label="Pagination"
+          >
+            <a
+              href="#"
+              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            >
+              <span class="sr-only">Previous</span>
+              <svg
+                class="h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
+            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+              4
+            </span>
+            <a
+              href="#"
+              class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            >
+              <span class="sr-only">Next</span>
+              <svg
+                class="h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
+          </nav>
+          <h4 class="text-gray-500 text-lg font-bold">Price</h4>
+          <h4 class="text-gray-500 text-lg font-bold">Quantity:</h4>
+          <nav
+            class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+            aria-label="Pagination"
+          >
+            <button
+              class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white 
+            text-sm font-medium text-gray-900 hover:bg-gray-50 outline-none"
+              onClick={() => (quantity > 0 ? setquantity(quantity - 1) : null)}
+            >
+              -
+            </button>
+            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+              {quantity}
+            </span>
+            <button
+              class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium
+             text-gray-900 hover:bg-gray-50 outline-none" 
+              onClick={() => setquantity(quantity + 1)}
+            >
+              +
+            </button>
+          </nav>
+          <h4 class="text-gray-500 text-lg font-bold">See More</h4>
+        </div>
+      </div>
+      <div class="row-auto bg-white rounded shadow-lg mt-3 mb-4 p-4 flex flex-col">
+      <span class="inline-flex mb-3">
+          <h4 class="text-gray-700 text-5xl font-bold">Products: </h4>
+          <span class="text-blue-400 text-5xl float-right">8</span>
+        </span>
+        <span class="inline-flex mb-3">
+          <h4 class="text-gray-700 text-5xl font-bold">total: </h4>
+          <span class="text-green-450 text-5xl float-right ">150$</span>
+        </span>
+        <button class="bg-pink-500 py-4 px-8 text-2xl font-semibold text-white hover:bg-pink-700 
+        transform duration-150 ease-linear mt-2"
+        onClick={handlBuy} >Buy it!</button>
+      </div>
+      <div class="row-span-1 bg-white rounded shadow-lg mb-4  h-60 p-4 ">
+        <h4 class="text-lg font-medium text-gray-500" >Payment History</h4>
+        <table></table>
+      </div>
     </div>
   );
 };
 
 export default Pannel;
-
-{/* <div class="row">
-        <div class="col-12 col">
-          <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Cart</h4>
-            <div class="page-title-right">
-              <ol class="breadcrumb m-0">
-                <li class="breadcrumb-item">
-                  <a href="/ecommerce-cart">Ecommerce</a>
-                </li>
-                <li class="active breadcrumb-item" aria-current="page">
-                  <a href="/ecommerce-cart">Cart</a>
-                </li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-8">
-          <div class="border shadow-none card">
-            <div class="card-body">
-              <div class="d-flex border-bottom pb-3">
-                <div class="me-4">
-                  <img
-                    src="/static/media/img-1.7d8658df.png"
-                    alt=""
-                    class="avatar-lg"
-                  />
-                </div>
-                <div class="flex-1 align-self-center overflow-hidden">
-                  <div>
-                    <h5 class="text-truncate font-size-16">
-                      <a class="text-dark" href="/ecommerce-product-detail/1">
-                        Half sleeve T-shirt
-                      </a>
-                    </h5>
-                    <p class="mb-1">
-                      Color : <span class="fw-medium">Maroon</span>
-                    </p>
-                    <p>
-                      Size : <span class="fw-medium">08</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="ml-2">
-                  <ul class="list-inline mb-0 font-size-16">
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-trash-alt"></i>
-                      </a>{" "}
-                    </li>
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-heart"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Price</p>
-                      <h5 class="font-size-16">$450</h5>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Quantity</p>
-                      <div style={{ width: "110px" }}>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button type="button" class="btn btn-primary">
-                              +
-                            </button>
-                          </div>
-                          <input
-                            name="demo_vertical"
-                            readonly=""
-                            type="text"
-                            class="form-control"
-                            value="2"
-                          />
-                          <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">
-                              -
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Total</p>
-                      <h5 class="font-size-16">$900</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="border shadow-none card">
-            <div class="card-body">
-              <div class="d-flex border-bottom pb-3">
-                <div class="me-4">
-                  <img
-                    src="/static/media/img-2.1c8fac61.png"
-                    alt=""
-                    class="avatar-lg"
-                  />
-                </div>
-                <div class="flex-1 align-self-center overflow-hidden">
-                  <div>
-                    <h5 class="text-truncate font-size-16">
-                      <a class="text-dark" href="/ecommerce-product-detail/2">
-                        Light blue T-shirt
-                      </a>
-                    </h5>
-                    <p class="mb-1">
-                      Color : <span class="fw-medium">Light blue</span>
-                    </p>
-                    <p>
-                      Size : <span class="fw-medium">08</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="ml-2">
-                  <ul class="list-inline mb-0 font-size-16">
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-trash-alt"></i>
-                      </a>{" "}
-                    </li>{" "}
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-heart"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Price</p>
-                      <h5 class="font-size-16">$225</h5>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Quantity</p>
-                      <div style={{ width: "110px" }}>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button type="button" class="btn btn-primary">
-                              +
-                            </button>
-                          </div>
-                          <input
-                            name="demo_vertical"
-                            readonly=""
-                            type="text"
-                            class="form-control"
-                            value="6"
-                          />
-                          <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">
-                              -
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Total</p>
-                      <h5 class="font-size-16">$225</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="border shadow-none card">
-            <div class="card-body">
-              <div class="d-flex border-bottom pb-3">
-                <div class="me-4">
-                  <img
-                    src="/static/media/img-3.13e02027.png"
-                    alt=""
-                    class="avatar-lg"
-                  />
-                </div>
-                <div class="flex-1 align-self-center overflow-hidden">
-                  <div>
-                    <h5 class="text-truncate font-size-16">
-                      <a class="text-dark" href="/ecommerce-product-detail/3">
-                        Black Color T-shirt
-                      </a>
-                    </h5>
-                    <p class="mb-1">
-                      Color : <span class="fw-medium">Black</span>
-                    </p>
-                    <p>
-                      Size : <span class="fw-medium">08</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="ml-2">
-                  <ul class="list-inline mb-0 font-size-16">
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-trash-alt"></i>
-                      </a>{" "}
-                    </li>{" "}
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-heart"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Price</p>
-                      <h5 class="font-size-16">$152</h5>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Quantity</p>
-                      <div style={{ width: "110px" }}>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button type="button" class="btn btn-primary">
-                              +
-                            </button>
-                          </div>
-                          <input
-                            name="demo_vertical"
-                            readonly=""
-                            type="text"
-                            class="form-control"
-                            value="2"
-                          />
-                          <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">
-                              -
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Total</p>
-                      <h5 class="font-size-16">$304</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="border shadow-none card">
-            <div class="card-body">
-              <div class="d-flex border-bottom pb-3">
-                <div class="me-4">
-                  <img
-                    src="/static/media/img-4.ff280ca7.png"
-                    alt=""
-                    class="avatar-lg"
-                  />
-                </div>
-                <div class="flex-1 align-self-center overflow-hidden">
-                  <div>
-                    <h5 class="text-truncate font-size-16">
-                      <a class="text-dark" href="/ecommerce-product-detail/4">
-                        Hoodie (Blue)
-                      </a>
-                    </h5>
-                    <p class="mb-1">
-                      Color : <span class="fw-medium">Blue</span>
-                    </p>
-                    <p>
-                      Size : <span class="fw-medium">08</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="ml-2">
-                  <ul class="list-inline mb-0 font-size-16">
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-trash-alt"></i>
-                      </a>{" "}
-                    </li>{" "}
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-heart"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Price</p>
-                      <h5 class="font-size-16">$145</h5>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Quantity</p>
-                      <div style={{ width: "110px" }}>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button type="button" class="btn btn-primary">
-                              +
-                            </button>
-                          </div>
-                          <input
-                            name="demo_vertical"
-                            readonly=""
-                            type="text"
-                            class="form-control"
-                            value="2"
-                          />
-                          <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">
-                              -
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Total</p>
-                      <h5 class="font-size-16">$290</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="border shadow-none card">
-            <div class="card-body">
-              <div class="d-flex border-bottom pb-3">
-                <div class="me-4">
-                  <img
-                    src="/static/media/img-5.7524c50a.png"
-                    alt=""
-                    class="avatar-lg"
-                  />
-                </div>
-                <div class="flex-1 align-self-center overflow-hidden">
-                  <div>
-                    <h5 class="text-truncate font-size-16">
-                      <a class="text-dark" href="/ecommerce-product-detail/5">
-                        Half sleeve T-Shirt
-                      </a>
-                    </h5>
-                    <p class="mb-1">
-                      Color : <span class="fw-medium">Light orange</span>
-                    </p>
-                    <p>
-                      Size : <span class="fw-medium">08</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="ml-2">
-                  <ul class="list-inline mb-0 font-size-16">
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-trash-alt"></i>
-                      </a>{" "}
-                    </li>{" "}
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-heart"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Price</p>
-                      <h5 class="font-size-16">$138</h5>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Quantity</p>
-                      <div style={{ width: "110px" }}>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button type="button" class="btn btn-primary">
-                              +
-                            </button>
-                          </div>
-                          <input
-                            name="demo_vertical"
-                            readonly=""
-                            type="text"
-                            class="form-control"
-                            value="8"
-                          />
-                          <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">
-                              -
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Total</p>
-                      <h5 class="font-size-16">$138</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="border shadow-none card">
-            <div class="card-body">
-              <div class="d-flex border-bottom pb-3">
-                <div class="me-4">
-                  <img
-                    src="/static/media/img-6.8d6e5eec.png"
-                    alt=""
-                    class="avatar-lg"
-                  />
-                </div>
-                <div class="flex-1 align-self-center overflow-hidden">
-                  <div>
-                    <h5 class="text-truncate font-size-16">
-                      <a class="text-dark" href="/ecommerce-product-detail/6">
-                        Green color T-shirt
-                      </a>
-                    </h5>
-                    <p class="mb-1">
-                      Color : <span class="fw-medium">Green</span>
-                    </p>
-                    <p>
-                      Size : <span class="fw-medium">08</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="ml-2">
-                  <ul class="list-inline mb-0 font-size-16">
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-trash-alt"></i>
-                      </a>{" "}
-                    </li>{" "}
-                    <li class="list-inline-item">
-                      <a class="text-muted px-2" href="/ecommerce-cart">
-                        <i class="uil uil-heart"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Price</p>
-                      <h5 class="font-size-16">$152</h5>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Quantity</p>
-                      <div style={{ width: "110px" }}>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button type="button" class="btn btn-primary">
-                              +
-                            </button>
-                          </div>
-                          <input
-                            name="demo_vertical"
-                            readonly=""
-                            type="text"
-                            class="form-control"
-                            value="2"
-                          />
-                          <div class="input-group-append">
-                            <button type="button" class="btn btn-primary">
-                              -
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mt-3">
-                      <p class="text-muted mb-2">Total</p>
-                      <h5 class="font-size-16">$304</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4">
-          <div class="mt-5 mt-lg-0">
-            <div class="border shadow-none card">
-              <div class="card-header bg-transparent border-bottom py-3 px-4">
-                <h5 class="font-size-16 mb-0">
-                  Order Summary <span class="float-end">#MN0124</span>
-                </h5>
-              </div>
-              <div class="p-4 card-body">
-                <div class="table-responsive">
-                  <table class=" mb-0 table">
-                    <tbody>
-                      <tr>
-                        <td>Sub Total :</td>
-                        <td class="text-end">$ 780</td>
-                      </tr>
-                      <tr>
-                        <td>Discount : </td>
-                        <td class="text-end">- $ 78</td>
-                      </tr>
-                      <tr>
-                        <td>Shipping Charge :</td>
-                        <td class="text-end">$ 25</td>
-                      </tr>
-                      <tr>
-                        <td>Estimated Tax : </td>
-                        <td class="text-end">$ 18.20</td>
-                      </tr>
-                      <tr class="bg-light">
-                        <th>Total :</th>
-                        <td class="text-end">
-                          <span class="fw-bold">$ 745.2</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}

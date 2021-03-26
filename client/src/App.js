@@ -17,13 +17,13 @@ import AdminPage from "./components/pages/AdminPage";
 
 function App() {
   return (
-    <div className="App bg-gray-100 flex flex-col h-screen justify-between">
+    <div className="App bg-gray-200 h-full flex flex-col justify-between">
 <NavBar/>
 <Switch>
    <Route exact path="/login" component={SignIn} />
    <Route exact path="/register" component={SignUp} />
    <Route  exact path="/" component={Main} />
-   <ProtectedRoute  exact path="/pannel" component={Pannel} />
+   <Route  exact path="/pannel" component={Pannel} />
    <Route exact path="/product/categorie/:cid" component={Category} />
    <Route exact path="/product/add" component={AddProduct} />
    <Route exact path="/product/:pid" component={ProductDetail}  />
