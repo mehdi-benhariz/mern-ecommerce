@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {API} from "../Api"
 const Pannel = () => {
   const [quantity, setquantity] = useState(0);
@@ -31,7 +31,7 @@ const Pannel = () => {
             aria-label="Pagination"
           >
             <a
-              href="#"
+              href="/"
               class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
             >
               <span class="sr-only">Previous</span>
@@ -53,7 +53,7 @@ const Pannel = () => {
               4
             </span>
             <a
-              href="#"
+              href="/"
               class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
             >
               <span class="sr-only">Next</span>

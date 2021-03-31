@@ -70,7 +70,7 @@ const NavBar = () => {
               <a
                 class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 
           transform ease-linear hover:border-b-2 border-gray-800"
-                href="#"
+                href="/"
                 title="Link"
               >
                 <div class="relative inline-block text-left">
@@ -109,25 +109,25 @@ const NavBar = () => {
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="options-menu"
-                      ><li>
-<Link
-                          to="/product/categorie/"
-                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          role="menuitem"
-                        >
-                       clothes
-                        </Link>
-                      </li>
+                      >
                         <li>
-                        <Link
-                          to="/product/categorie/"
-                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          role="menuitem"
-                        >
-                          electronic
-                        </Link>
+                          <Link
+                            to="/product/categorie/"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                            role="menuitem"
+                          >
+                            clothes
+                          </Link>
                         </li>
-
+                        <li>
+                          <Link
+                            to="/product/categorie/"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                            role="menuitem"
+                          >
+                            electronic
+                          </Link>
+                        </li>
                       </div>
                     </div>
                   )}
