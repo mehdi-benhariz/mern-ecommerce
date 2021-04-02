@@ -11,7 +11,7 @@ exports.getAll = async (req, res) => {
 //add a new product
 exports.addProduct = async (req, res) => {
   const { name, price, description, quantityStock } = req.body;
-
+console.log({ name, price, description, quantityStock })
   if (!name || !price || !description || !quantityStock)
     return res.status(400).json({ error: "all fields are required required" });
 

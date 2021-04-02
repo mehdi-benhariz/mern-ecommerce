@@ -1,11 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-
+import DeleteModal from "../layout/DeleteModal"
 const ProductDetail = () => {
   const { isAdmin } = useContext(AuthContext);
   console.log({ isAdmin });
+  
+  const [showModal, setShowModal] = useState(false)
+
   return (
     <div class="mb-8 rounded-md">
+ {showModal && <DeleteModal setShowModal={setShowModal} />}
       <div class="page-title-box d-flex align-items-center justify-content-between ">
         <h4 class="mb-1  align-left text-lg font-bold text-gray-500 left-4 text-left pl-4 ">
           Product Detail
@@ -32,15 +36,11 @@ const ProductDetail = () => {
             this is a brief description
           </p>
         </div>
-        <div class="row-span-2 col-span-2 text-left pl-2 ">
-          <button
-            class="bg-purple-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-purple-800 
-                 transation ease-linear duration-100 mb-3"
-          >
-            Add to Card
-          </button>
-          <button
-            class="bg-yellow-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-yellow-800 
+        <div class="row-span-2 col-span-2 text-left pl-2 ">{
+          isAdmin?(
+            <span>
+<button
+            class="bg-yellow-400 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-yellow-600 
                  transation ease-linear duration-100 mb-3"
           >
             Edit
@@ -48,9 +48,24 @@ const ProductDetail = () => {
           <button
             class="bg-red-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-red-800 
                  transation ease-linear duration-100 mb-3"
+                 onClick={(e)=>{
+                   e.preventDefault()
+                   setShowModal(true)
+                  }}
           >
             Delete
           </button>
+            </span>
+          ):(
+          <button
+          class="bg-purple-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-purple-800 
+               transation ease-linear duration-100 mb-3"
+        >
+          Add to Card
+        </button>)
+        }
+          
+          
         </div>
       </div>
     </div>

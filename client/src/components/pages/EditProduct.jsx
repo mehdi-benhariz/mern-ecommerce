@@ -4,11 +4,13 @@ const EditProduct = () => {
   const [newProduct, setnewProduct] = useState({});
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await API.addProducts(
-      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/add`,
-      newProduct
-    );
-    console.log(res);
+    console.log("tes")
+    // const res = await API.addProducts(
+    //   `${process.env.REACT_APP_BASIC_URL}/api/v1/product/add`,
+    //   newProduct
+    // );
+    console.log(newProduct)
+    // console.log(res);
   };
 
   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
@@ -87,7 +89,7 @@ const EditProduct = () => {
           <button
             class="text-xl text-white font-semibold bg-purple-500 hover:bg-purple-700 ease-linear p-4
          rounded-md m-3"
-            onClick={handleSubmit}
+            onClick={(e)=> handleSubmit(e)}
           >
             Save
           </button>

@@ -24,15 +24,13 @@ exports.admin = async (req, res, next) => {
   const { token } = req.cookies;
   try {
     const decode = await jwt.verify(token, process.env.TOKEN_SECRET);
-    const user =  User.findById(decode.userId);
-    if(user.isAdmin)
-      next();
-    else
-     return res.status(403).json({ message: "access denied" });
+    const user = await User.findById(decode.userId);
 
+    console.log(user.isAdmin);
+    if (user.isAdmin) next();
+    else return res.status(403).json({ message: "access denied" });
   } catch (error) {
     console.log("error");
     console.log("err:", error);
   }
-
 };
