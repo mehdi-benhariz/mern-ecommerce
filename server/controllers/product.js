@@ -10,13 +10,12 @@ exports.getAll = async (req, res) => {
 };
 //add a new product
 exports.addProduct = async (req, res) => {
-  const { name, price, description, quantityStock } = req.body;
-console.log({ name, price, description, quantityStock })
+  const { name, price, description, quantityStock } = req.body.newProduct;
   if (!name || !price || !description || !quantityStock)
     return res.status(400).json({ error: "all fields are required required" });
 
   try {
-    const newProduct = new Product(req.body);
+    const newProduct = new Product(req.body.newProduct);
     await newProduct.save();
 
     return res.status(200).json({ success: true });
@@ -27,8 +26,8 @@ console.log({ name, price, description, quantityStock })
 };
 //delete a product
 exports.removeProduct = async (req, res) => {
+  console.log(req.body)
   const { pId } = req.body;
-
   if (!pId) return res.status(400).json({ error: "ID is required" });
 
   try {

@@ -25,10 +25,11 @@ require("dotenv").config({
     .then(() => console.log(`database connected`))
     .catch((err) => console.error(err));
 
-    // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
+
 // cookie parser middleware
 app.use(cookieParser());
 // Morgan

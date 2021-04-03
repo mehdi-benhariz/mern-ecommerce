@@ -59,7 +59,7 @@ export class API {
   //add a product
   static addProducts=async(newProduct)=>{
     try{
-      const res = await axios.post(`${process.env.REACT_APP_BASIC_URL}/api/v1/product/add`,newProduct);
+      const res = await axios.post(`${process.env.REACT_APP_BASIC_URL}/api/v1/product/add`,{newProduct});
       return res;
     }catch(err){
     return err.response
@@ -69,7 +69,7 @@ export class API {
   //delete a product
   static removeProduct=async(pId)=>{
     try{
-      const res = await axios.delete(`${process.env.REACT_APP_BASIC_URL}/api/v1/product/delete`,pId)
+      const res = await axios.delete(`${process.env.REACT_APP_BASIC_URL}/api/v1/product/delete`,{pId})
       return res;
     }catch(err){
    return err.response
@@ -90,7 +90,7 @@ export class API {
    static getProduct=async(pId)=>{
      try{
       const res =await axios.get(`${process.env.REACT_APP_BASIC_URL}/api/v1/product/detail`,pId)
-      return res;
+      return  res;
      }catch(err){
        return err.response
      }

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { API } from "../Api";
+import { useParams } from "react-router";
+import { API } from "../Api"; 
+
 const EditProduct = () => {
   const [newProduct, setnewProduct] = useState({});
+  let {pid }=useParams();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("tes")
-    // const res = await API.addProducts(
-    //   `${process.env.REACT_APP_BASIC_URL}/api/v1/product/add`,
-    //   newProduct
-    // );
+    const res = await API.addProducts(
+      pid,
+      newProduct
+    );
     console.log(newProduct)
-    // console.log(res);
+    console.log(res);
   };
 
   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 

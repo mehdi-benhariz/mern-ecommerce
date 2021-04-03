@@ -3,13 +3,12 @@ import { API } from "../Api";
 
 const AddProduct = () => {
   const [newProduct, setnewProduct] = useState({});
+  const [error, seterror] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await API.addProducts(
-      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/add`,
-      newProduct
-    );
-    console.log(res);
+    const res = await API.addProducts(newProduct);
+    if (res?.data.success) setnewProduct({});
+    else seterror(res?.data?.error);
   };
 
   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
@@ -63,7 +62,15 @@ const AddProduct = () => {
           />
         </div>
       </div>
-
+     {error &&  <p
+          class="no-underline text-red-600 mb-2 inline-flex items-center rounded-full border border-grey-light bg-red-200 text-xs 
+          pl-1 pt-1 pb-1 pr-2 leading-none mr-2 font-bold p-4"
+        >
+          <span class="inline-flex rounded-full bg-green-light text-red-600 mr-1 font-bold">
+            X
+          </span>{" "}
+          <span>{error} </span>
+        </p>} 
       <div class=" bg-white rounded-md shadow-md mb-10">
         {" "}
         <div class="mb-2">
@@ -96,7 +103,9 @@ const AddProduct = () => {
           <button
             class="text-xl text-white font-semibold bg-gray-500 hover:bg-gray-700 ease-linear p-4 
          rounded-md  m-3"
-         onClick={()=>{setnewProduct({})}}
+            onClick={() => {
+              setnewProduct({});
+            }}
           >
             Cancel
           </button>

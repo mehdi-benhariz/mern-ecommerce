@@ -8,7 +8,7 @@ exports.auth = async (req, res, next) => {
       const decode = await jwt.verify(token, process.env.TOKEN_SECRET);
       req.body = {
         ...req.body,
-        user_id: decode._id,
+        user_id: decode.userId,
       };
       next();
     } else {
