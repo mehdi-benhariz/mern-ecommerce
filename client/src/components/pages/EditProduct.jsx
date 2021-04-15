@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import { API } from "../Api"; 
-
+import { addProducts } from "../api/ProductApi";
 const EditProduct = () => {
   const [newProduct, setnewProduct] = useState({});
-  let {pid }=useParams();
+  let { pid } = useParams();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await API.addProducts(
-      pid,
-      newProduct
-    );
-    console.log(newProduct)
+    const res = await addProducts(pid, newProduct);
+    console.log(newProduct);
     console.log(res);
   };
 
@@ -91,7 +87,7 @@ const EditProduct = () => {
           <button
             class="text-xl text-white font-semibold bg-purple-500 hover:bg-purple-700 ease-linear p-4
          rounded-md m-3"
-            onClick={(e)=> handleSubmit(e)}
+            onClick={(e) => handleSubmit(e)}
           >
             Save
           </button>

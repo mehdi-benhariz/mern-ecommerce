@@ -1,14 +1,13 @@
 import React from "react";
-import { API } from "../Api";
 import { AnimatePresence, motion } from "framer-motion";
-
-const DeleteModal = ({ setShowModal,pId }) => {
+import { removeProduct } from "../api/ProductApi";
+const DeleteModal = ({ setShowModal, pId }) => {
   const handleDelete = async (e) => {
     e.preventDefault();
-    console.log({pId})
-     const res= await API.removeProduct(pId);
+    console.log({ pId });
+    const res = await removeProduct(pId);
 
-    console.log({res})
+    console.log({ res });
     if (res?.data?.success) setShowModal(false);
   };
   const backdrop = {
@@ -18,7 +17,7 @@ const DeleteModal = ({ setShowModal,pId }) => {
   return (
     <AnimatePresence exitBeforeEnter>
       <motion.div
-        variants= {backdrop}
+        variants={backdrop}
         initial="hidden"
         animate="visible"
         exit="hidden"

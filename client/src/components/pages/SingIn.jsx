@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { API } from "../Api";
+import { login, getUserInfo } from "../api/UserApi";
 
 const SignIn = () => {
   const [user, setuser] = useState({ email: "", password: "" });
@@ -12,13 +12,13 @@ const SignIn = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const res = await API.login(user);
-    console.log({res})
+    const res = await login(user);
+    console.log({ res });
     if (res?.data?.errors) {
       seterror(res.data.errors);
       console.log(res.data.errors);
     } else {
-      const state = await API.getUserInfo();
+      const state = await getUserInfo();
       setisLogged(state.isLogged);
       update();
       history.push("/");
@@ -56,8 +56,8 @@ const SignIn = () => {
                         focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 
                         dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
                   onChange={(e) => {
-                    seterror([]);  
-                    setuser({ ...user, email: e.target.value })
+                    seterror([]);
+                    setuser({ ...user, email: e.target.value });
                   }}
                 />
               </div>
@@ -102,20 +102,22 @@ const SignIn = () => {
                 </button>
               </div>
               <div>
-                {error.map((e,i) => {
-                  return(
-                    <p key={i}
-                    class="no-underline text-red-600 mb-2 inline-flex items-center rounded-full border border-grey-light bg-red-200 text-xs 
+                {error.map((e, i) => {
+                  return (
+                    <p
+                      key={i}
+                      class="no-underline text-red-600 mb-2 inline-flex items-center rounded-full border border-grey-light bg-red-200 text-xs 
           pl-1 pt-1 pb-1 pr-2 leading-none mr-2 font-bold p-4"
-                  >
-                    <span class="inline-flex rounded-full bg-green-light text-red-600 mr-1 font-bold">
-                      X
-                    </span>{" "}
-                    <span>{Object.keys(e)[0]} {Object.values(e)[0]} </span>
-                  </p>
-                
-                  )}
-       )}
+                    >
+                      <span class="inline-flex rounded-full bg-green-light text-red-600 mr-1 font-bold">
+                        X
+                      </span>{" "}
+                      <span>
+                        {Object.keys(e)[0]} {Object.values(e)[0]}{" "}
+                      </span>
+                    </p>
+                  );
+                })}
               </div>
 
               <p class="text-sm text-center text-gray-400">

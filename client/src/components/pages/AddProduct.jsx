@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { API } from "../Api";
-
+import { addProducts } from "../api/ProductApi";
 const AddProduct = () => {
   const [newProduct, setnewProduct] = useState({});
   const [error, seterror] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await API.addProducts(newProduct);
+    const res = await addProducts(newProduct);
     if (res?.data.success) setnewProduct({});
     else seterror(res?.data?.error);
   };
@@ -62,7 +61,8 @@ const AddProduct = () => {
           />
         </div>
       </div>
-     {error &&  <p
+      {error && (
+        <p
           class="no-underline text-red-600 mb-2 inline-flex items-center rounded-full border border-grey-light bg-red-200 text-xs 
           pl-1 pt-1 pb-1 pr-2 leading-none mr-2 font-bold p-4"
         >
@@ -70,7 +70,8 @@ const AddProduct = () => {
             X
           </span>{" "}
           <span>{error} </span>
-        </p>} 
+        </p>
+      )}
       <div class=" bg-white rounded-md shadow-md mb-10">
         {" "}
         <div class="mb-2">

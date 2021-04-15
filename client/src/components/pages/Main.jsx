@@ -1,19 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import ProductCard from "../layout/ProductCard";
 import { ProductContext } from "../context/ProductContext";
-import {API} from "../Api"
+import { searchProduct } from "../api/ProductApi";
 const Main = () => {
   const { products } = useContext(ProductContext);
   console.log(products);
   const [q, setq] = useState("");
-   const [search, setsearch] = useState([])
-  let productList = (q? search:products)?.map((p) => {
+  const [search, setsearch] = useState([]);
+  let productList = (q ? search : products)?.map((p) => {
     return <ProductCard product={p} />;
   });
-   useEffect(async() => {
-     const res  =await API.searchProduct(q)
-     console.log({res})
-   }, [q])
+  useEffect(async () => {
+    const res = await searchProduct(q);
+    console.log({ res });
+  }, [q]);
   return (
     <React.Fragment>
       <div class="flex items-center justify-center">

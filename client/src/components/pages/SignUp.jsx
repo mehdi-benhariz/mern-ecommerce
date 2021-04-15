@@ -1,8 +1,7 @@
 import { useState, useContext } from "react";
-import { API } from "../Api";
 import { AuthContext } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
-
+import { register, login, getUserInfo } from "../api/UserApi";
 const SignUp = () => {
   const [user, setuser] = useState({
     name: "",
@@ -16,15 +15,15 @@ const SignUp = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const res = await API.register(user);
+    const res = await register(user);
 
     if (res.data?.errors) {
       seterror(res.data.errors);
       console.log(res.data.errors);
     } else {
       let newUser = { email: user.email, password: user.password };
-      API.login(newUser);
-      const state = await API.getUserInfo();
+      login(newUser);
+      const state = await getUserInfo();
       setisLogged(state.isLogged);
       update();
       history.push("/");

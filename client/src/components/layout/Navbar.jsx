@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { API } from "../Api";
+import { logOut } from "../api/UserApi";
+
 const NavBar = () => {
   const { isLogged, update } = useContext(AuthContext);
   const [expanded, setexpanded] = useState(false);
@@ -95,9 +96,9 @@ const NavBar = () => {
                         aria-hidden="true"
                       >
                         <path
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clip-rule="evenodd"
+                          clipRule="evenodd"
                         />
                       </svg>
                     </button>
@@ -144,7 +145,7 @@ hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200 "
                   title="Link"
                   onClick={(e) => {
                     e.preventDefault();
-                    API.logOut();
+                    logOut();
                     update();
                   }}
                 >

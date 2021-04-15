@@ -1,21 +1,20 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import DeleteModal from "../layout/DeleteModal"
-import {useParams } from "react-router-dom"
-import {API} from "../Api"
+import DeleteModal from "../layout/DeleteModal";
+import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
   const { isAdmin } = useContext(AuthContext);
   console.log({ isAdmin });
-  let {pid} = useParams();
-  let price,name,description;
-   
-  const [showModal, setShowModal] = useState(false)
+  let { pid } = useParams();
+  let price, name, description;
+
+  const [showModal, setShowModal] = useState(false);
 
   return (
-    <div class="mb-8 rounded-md" >
- {showModal && <DeleteModal setShowModal={setShowModal} pId={pid} />}
-      <div class="page-title-box d-flex align-items-center justify-content-between " >
+    <div class="mb-8 rounded-md">
+      {showModal && <DeleteModal setShowModal={setShowModal} pId={pid} />}
+      <div class="page-title-box d-flex align-items-center justify-content-between ">
         <h4 class="mb-1  align-left text-lg font-bold text-gray-500 left-4 text-left pl-4 ">
           Product Detail
         </h4>
@@ -37,40 +36,36 @@ const ProductDetail = () => {
           <h2 class="text-gray-600 text-lg font-semibold border-l-4 border-purple-500 rounded-sm ">
             Description:
           </h2>
-          <p class="text-gray-500 text-lg  font-semibold ">
-            {description}
-          </p>
+          <p class="text-gray-500 text-lg  font-semibold ">{description}</p>
         </div>
-        <div class="row-span-2 col-span-2 text-left pl-2 ">{
-          isAdmin?(
+        <div class="row-span-2 col-span-2 text-left pl-2 ">
+          {isAdmin ? (
             <span>
-<button
-            class="bg-yellow-400 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-yellow-600 
+              <button
+                class="bg-yellow-400 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-yellow-600 
                  transation ease-linear duration-100 mb-3"
-          >
-            Edit
-          </button>{" "}
-          <button
-            class="bg-red-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-red-800 
+              >
+                Edit
+              </button>{" "}
+              <button
+                class="bg-red-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-red-800 
                  transation ease-linear duration-100 mb-3"
-                 onClick={(e)=>{
-                   e.preventDefault()
-                   setShowModal(true)
-                  }}
-          >
-            Delete
-          </button>
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowModal(true);
+                }}
+              >
+                Delete
+              </button>
             </span>
-          ):(
-          <button
-          class="bg-purple-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-purple-800 
+          ) : (
+            <button
+              class="bg-purple-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-purple-800 
                transation ease-linear duration-100 mb-3"
-        >
-          Add to Card
-        </button>)
-        }
-          
-          
+            >
+              Add to Card
+            </button>
+          )}
         </div>
       </div>
     </div>

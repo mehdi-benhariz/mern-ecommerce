@@ -1,15 +1,15 @@
-import React, { useState,useEffect } from "react";
-import {API} from "../Api"
+import React, { useState, useEffect } from "react";
+import { buyProduct } from "../api/ProductApi";
 const Pannel = () => {
   const [quantity, setquantity] = useState(0);
   useEffect(() => {
-    console.log("get pannel data")
-  }, [])
-  const handlBuy=async(e)=>{
-    let pId = 0
-   const res = await  API.buyProduct(pId,quantity)  
-   console.log(res)
-  }
+    console.log("get pannel data");
+  }, []);
+  const handlBuy = async (e) => {
+    let pId = 0;
+    const res = await buyProduct(pId, quantity);
+    console.log(res);
+  };
   return (
     <div class="grid grid-rows-5 m-2">
       <div class="row-span-3 grid sm:grid-flow-row  grid-cols-3 mb-4 ">
@@ -90,7 +90,7 @@ const Pannel = () => {
             </span>
             <button
               class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium
-             text-gray-900 hover:bg-gray-50 outline-none" 
+             text-gray-900 hover:bg-gray-50 outline-none"
               onClick={() => setquantity(quantity + 1)}
             >
               +
@@ -100,7 +100,7 @@ const Pannel = () => {
         </div>
       </div>
       <div class="row-auto bg-white rounded shadow-lg mt-3 mb-4 p-4 flex flex-col">
-      <span class="inline-flex mb-3">
+        <span class="inline-flex mb-3">
           <h4 class="text-gray-700 text-5xl font-bold">Products: </h4>
           <span class="text-blue-400 text-5xl float-right">8</span>
         </span>
@@ -108,12 +108,16 @@ const Pannel = () => {
           <h4 class="text-gray-700 text-5xl font-bold">total: </h4>
           <span class="text-green-450 text-5xl float-right ">150$</span>
         </span>
-        <button class="bg-pink-500 py-4 px-8 text-2xl font-semibold text-white hover:bg-pink-700 
+        <button
+          class="bg-pink-500 py-4 px-8 text-2xl font-semibold text-white hover:bg-pink-700 
         transform duration-150 ease-linear mt-2"
-        onClick={handlBuy} >Buy it!</button>
+          onClick={handlBuy}
+        >
+          Buy it!
+        </button>
       </div>
       <div class="row-span-1 bg-white rounded shadow-lg mb-4  h-60 p-4 ">
-        <h4 class="text-lg font-medium text-gray-500" >Payment History</h4>
+        <h4 class="text-lg font-medium text-gray-500">Payment History</h4>
         <table></table>
       </div>
     </div>

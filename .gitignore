@@ -5,5 +5,5 @@
 /server/config/.env
 /.vscode
 /dummy-data.txt
-
+/client/.env
 
