@@ -1,19 +1,20 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import DeleteModal from "../layout/DeleteModal";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { getProduct } from "../api/ProductApi";
 
 const ProductDetail = () => {
   const { isAdmin } = useContext(AuthContext);
   console.log({ isAdmin });
-  let { pid } = useParams();
+  let { pId } = useParams();
   let price, name, description;
-
+  const product = getProduct(pId);
   const [showModal, setShowModal] = useState(false);
 
   return (
     <div class="mb-8 rounded-md">
-      {showModal && <DeleteModal setShowModal={setShowModal} pId={pid} />}
+      {showModal && <DeleteModal setShowModal={setShowModal} pId={pId} />}
       <div class="page-title-box d-flex align-items-center justify-content-between ">
         <h4 class="mb-1  align-left text-lg font-bold text-gray-500 left-4 text-left pl-4 ">
           Product Detail
@@ -41,12 +42,13 @@ const ProductDetail = () => {
         <div class="row-span-2 col-span-2 text-left pl-2 ">
           {isAdmin ? (
             <span>
-              <button
+              <Link
                 class="bg-yellow-400 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-yellow-600 
                  transation ease-linear duration-100 mb-3"
+                to={{ pathname: `/product/edit/${pId}` }}
               >
                 Edit
-              </button>{" "}
+              </Link>{" "}
               <button
                 class="bg-red-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-red-800 
                  transation ease-linear duration-100 mb-3"
@@ -59,12 +61,13 @@ const ProductDetail = () => {
               </button>
             </span>
           ) : (
-            <button
+            <Link
               class="bg-purple-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-purple-800 
                transation ease-linear duration-100 mb-3"
+              to={{ pathname: "/pannel", pId, price: product.price }}
             >
               Add to Card
-            </button>
+            </Link>
           )}
         </div>
       </div>

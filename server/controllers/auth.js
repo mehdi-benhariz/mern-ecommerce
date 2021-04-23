@@ -2,7 +2,7 @@ const User = require("../models/User");
 const Product = require("../models/Product");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { createJWT,getUserByToken } = require("../utils/auth");
+const { createJWT, getUserByToken } = require("../utils/auth");
 var fs = require("fs");
 
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
@@ -11,6 +11,7 @@ const maxAge = 3600 * 24 * 10;
 //creating an account
 exports.signup = (req, res, next) => {
   let { name, email, password, password_confirmation } = req.body;
+  console.log(req.body);
   let errors = [];
   if (!name) {
     errors.push({ name: "required" });
@@ -83,17 +84,15 @@ exports.signin = (req, res) => {
   let { email, password } = req.body;
   let errors = [];
 
-  if (!email)
-    errors.push({ email: "required" });
+  if (!email) errors.push({ email: "required" });
 
   //  if (!emailRegexp.test(email)) {
   //    errors.push({ email: "invalid email" });
   //  }
-  if (!password)
-    errors.push({ passowrd: "required" });
+  if (!password) errors.push({ passowrd: "required" });
 
   if (errors.length > 0) {
-    console.log(errors)
+    console.log(errors);
     return res.status(400).json({ errors });
   }
 
@@ -108,11 +107,11 @@ exports.signin = (req, res) => {
         bcrypt
           .compare(password, user.password)
           .then((isMatch) => {
-            if (!isMatch) {
+            if (!isMatch)
               return res
                 .status(400)
                 .json({ errors: [{ password: "incorrect" }] });
-            }
+
             let access_token = createJWT(user.email, user._id, 3600);
             jwt.verify(
               access_token,
@@ -151,33 +150,37 @@ exports.logOut = (req, res) => {
   res.redirect("/");
 };
 //check whether the user is logged or not
-exports.userInfo =async (req, res) => {
+exports.userInfo = async (req, res) => {
   const { token } = req.cookies;
   if (token) {
     var user = await getUserByToken(token);
-    res.status(200).json({ isLogged: true,isAdmin:user.isAdmin });
-  
-  }
-  else res.json({ isLogged: false });
+    res.status(200).json({ isLogged: true, isAdmin: user.isAdmin });
+  } else res.json({ isLogged: false });
 };
 //upload profile image
-exports.uploadPic=async (req,res)=>{
+exports.uploadPic = async (req, res) => {
   const { token } = req.cookies;
-  const {userPhoto} = req.files;
-  const types = ["image/bmp","image/gif ", "image/jpeg","image/png ","image/webp" ,"image/tiff"]
+  const { userPhoto } = req.files;
+  const types = [
+    "image/bmp",
+    "image/gif ",
+    "image/jpeg",
+    "image/png ",
+    "image/webp",
+    "image/tiff",
+  ];
 
-  if (!userPhoto ||!types.inlcudes(userPhoto.mimetype)) return res.status(400).json({ error: "photo is required" });
-  try{
-   
+  if (!userPhoto || !types.inlcudes(userPhoto.mimetype))
+    return res.status(400).json({ error: "photo is required" });
+  try {
     let user = await getUserByToken(token);
-    user.img.data= fs.readFileSync(req.files.userPhoto.data);
-    user.img.contentType= userPhoto.mimetype;
-   
-  } catch(err){
+    user.img.data = fs.readFileSync(req.files.userPhoto.data);
+    user.img.contentType = userPhoto.mimetype;
+  } catch (err) {
     console.log("err:", error);
-    return res.status(500).json({ error: "internal errors" });    
-  }  
-}
+    return res.status(500).json({ error: "internal errors" });
+  }
+};
 
 //add a product inside the pannel
 exports.buyProduct = async (req, res) => {
@@ -192,7 +195,7 @@ exports.buyProduct = async (req, res) => {
 
     let user = await getUserByToken(token);
 
-    let obj = { product: newProduct, quantity: quantity };
+    let obj = { product: newProduct,quantity };
     user.pannelProducts.push(obj);
     user.save();
 

@@ -4,10 +4,9 @@ import { removeProduct } from "../api/ProductApi";
 const DeleteModal = ({ setShowModal, pId }) => {
   const handleDelete = async (e) => {
     e.preventDefault();
-    console.log({ pId });
+
     const res = await removeProduct(pId);
 
-    console.log({ res });
     if (res?.data?.success) setShowModal(false);
   };
   const backdrop = {

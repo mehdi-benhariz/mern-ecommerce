@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import { addProducts } from "../api/ProductApi";
+import { addProducts, editProduct } from "../api/ProductApi";
 const EditProduct = () => {
   const [newProduct, setnewProduct] = useState({});
-  let { pid } = useParams();
+  let { pId } = useParams();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await addProducts(pid, newProduct);
+    const res = await editProduct(pId, newProduct);
     console.log(newProduct);
     console.log(res);
   };

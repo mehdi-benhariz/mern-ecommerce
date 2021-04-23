@@ -7,6 +7,7 @@ export const register = async (user) => {
       `${process.env.REACT_APP_BASIC_URL}/api/v1/register`,
       user
     );
+    console.log(res);
     return res;
   } catch (err) {
     return err.response;

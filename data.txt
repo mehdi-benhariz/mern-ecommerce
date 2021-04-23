@@ -1,0 +1,13 @@
+ {
+"name":"dali",
+"email":"testmail2",
+"password":"12345",
+"password_confirmation":"12345"
+}
+
+ {
+"name":"mehdi",
+"email":"testmail1",
+"password":"12345",
+"password_confirmation":"12345"
+}

@@ -4,16 +4,17 @@ import { ProductContext } from "../context/ProductContext";
 import { searchProduct } from "../api/ProductApi";
 const Main = () => {
   const { products } = useContext(ProductContext);
-  console.log(products);
+
   const [q, setq] = useState("");
   const [search, setsearch] = useState([]);
-  let productList = (q ? search : products)?.map((p) => {
+  let productList = (false ? search : products)?.map((p) => {
     return <ProductCard product={p} />;
   });
   useEffect(async () => {
     const res = await searchProduct(q);
     console.log({ res });
   }, [q]);
+
   return (
     <React.Fragment>
       <div class="flex items-center justify-center">
@@ -27,9 +28,7 @@ const Main = () => {
         />
       </div>
 
-      <div class=" bg-gray-300 grid grid-cols-3 px-3">
-        {q ? <p></p> : productList}{" "}
-      </div>
+      <div class=" bg-gray-300 grid grid-cols-3 px-3">{productList} </div>
     </React.Fragment>
   );
 };

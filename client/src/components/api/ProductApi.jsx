@@ -60,11 +60,19 @@ export const getProduct = async (pId) => {
   }
 };
 //search
+let cancelToken;
+
 export const searchProduct = async (q) => {
+  //Check if there are any previous pending requests
+  if (typeof cancelToken != typeof undefined)
+    cancelToken.cancel("Operation canceled due to new request.");
+
+  //Save the cancel token for the current request
+  cancelToken = axios.CancelToken.source();
   try {
     const res = await axios.get(
       `${process.env.REACT_APP_BASIC_URL}/api/v1/product/search`,
-      q
+      { q, cancelToken: cancelToken.token }
     );
     return res;
   } catch (err) {

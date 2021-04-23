@@ -16,8 +16,8 @@ const SignUp = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     const res = await register(user);
-
-    if (res.data?.errors) {
+    console.log(res);
+    if (res?.data?.errors) {
       seterror(res.data.errors);
       console.log(res.data.errors);
     } else {

@@ -26,7 +26,6 @@ exports.addProduct = async (req, res) => {
 };
 //delete a product
 exports.removeProduct = async (req, res) => {
-  console.log(req.body)
   const { pId } = req.body;
   if (!pId) return res.status(400).json({ error: "ID is required" });
 
@@ -63,44 +62,40 @@ exports.updateProduct = async (req, res) => {
     return res.status(400).json({ error: "new product is required" });
 
   try {
-
-    const updated = await Product.findByIdAndUpdate(pId, editProduct, { new: true });
-    if(!updated)
-      return res.status(500).json({ error: "couldn't update !" })
-   return res.status(200).json({ success:true})
-
+    const updated = await Product.findByIdAndUpdate(pId, editProduct, {
+      new: true,
+    });
+    if (!updated) return res.status(500).json({ error: "couldn't update !" });
+    return res.status(200).json({ success: true });
   } catch (err) {
     res.status(500).json({ error: "the was internal error" });
   }
 };
 //detailed search
-exports.search=async(req,res)=>{
-  const {search} = req.body
-  let regex = search ?new RegExp(search):null
+exports.search = async (req, res) => {
+  const { search } = req.body;
+  let regex = search ? new RegExp(search) : null;
 
-  try{
-    const result = await Product.find({name:regex})
-    if(result.length >0)
-       return res.status(200).json(result)
-    return res.status(400).json({"message":"no product was found!"})
-  }catch(err){
-     res.status(500).json("there was an error!")
-     console.log(err)
+  try {
+    const result = await Product.find({ name: regex });
+    if (result.length > 0) return res.status(200).json(result);
+    return res.status(400).json({ message: "no product was found!" });
+  } catch (err) {
+    res.status(500).json("there was an error!");
+    console.log(err);
   }
-}
-//get by category 
-exports.getByCategory=async(req,res)=>{
-   const {cId} = req.body
-   let regex = cId ?new RegExp(search):null
+};
+//get by category
+exports.getByCategory = async (req, res) => {
+  const { cId } = req.body;
+  let regex = cId ? new RegExp(search) : null;
 
-   try{
-    const result = await Product.find({tags:"clothes" })
-    if(result.length >0)
-       return res.status(200).json(result)
-    return res.status(400).json({"message":"no product was found!"})
-   }catch(err){
-    res.status(500).json("there was an error!")
-    console.log(err)
-   }
-
-}
+  try {
+    const result = await Product.find({ tags: "clothes" });
+    if (result.length > 0) return res.status(200).json(result);
+    return res.status(400).json({ message: "no product was found!" });
+  } catch (err) {
+    res.status(500).json("there was an error!");
+    console.log(err);
+  }
+};

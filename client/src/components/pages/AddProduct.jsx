@@ -3,10 +3,11 @@ import { addProducts } from "../api/ProductApi";
 const AddProduct = () => {
   const [newProduct, setnewProduct] = useState({});
   const [error, seterror] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await addProducts(newProduct);
-    if (res?.data.success) setnewProduct({});
+    if (res?.data?.success) setnewProduct({});
     else seterror(res?.data?.error);
   };
 
