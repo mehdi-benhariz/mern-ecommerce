@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const port = 5000;
 
-const mongoose = require("mongoose");
 const helmet = require("helmet");
 const cors = require("cors");
 const morgan = require("morgan");

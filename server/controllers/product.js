@@ -27,6 +27,7 @@ exports.addProduct = async (req, res) => {
 //delete a product
 exports.removeProduct = async (req, res) => {
   const { pId } = req.body;
+  console.log(pId);
   if (!pId) return res.status(400).json({ error: "ID is required" });
 
   try {
