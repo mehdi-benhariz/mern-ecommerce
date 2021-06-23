@@ -14,7 +14,6 @@ const SignUp = () => {
   let history = useHistory();
 
   const handleRegister = async (e) => {
-    e.preventDefault();
     const res = await register(user);
     console.log(res);
     if (res?.data?.errors) {

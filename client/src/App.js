@@ -2,7 +2,6 @@ import { Switch, Route } from "react-router-dom";
 import SignIn from "./components/pages/SingIn";
 import SignUp from "./components/pages/SignUp";
 import Main from "./components/pages/Main";
-import ProtectedRoute from "./components/ProtectedRoute";
 import ErrorPage from "./components/pages/ErrorPage";
 import NavBar from "./components/layout/Navbar";
 import ProductDetail from "./components/pages/ProductDetail";

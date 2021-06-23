@@ -1,13 +1,14 @@
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { removeProduct } from "../api/ProductApi";
+import { useHistory } from "react-router-dom";
+
 const DeleteModal = ({ setShowModal, pId }) => {
+  let history = useHistory();
+
   const handleDelete = async (e) => {
-    e.preventDefault();
-
     const res = await removeProduct(pId);
-
-    if (res?.data?.success) setShowModal(false);
+    if (res?.data?.success) history.push("/");
   };
   const backdrop = {
     visible: { opacity: 1 },
@@ -16,6 +17,7 @@ const DeleteModal = ({ setShowModal, pId }) => {
   return (
     <AnimatePresence exitBeforeEnter>
       <motion.div
+        key="delete"
         variants={backdrop}
         initial="hidden"
         animate="visible"

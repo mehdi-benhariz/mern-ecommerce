@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { login, getUserInfo } from "../api/UserApi";
-
+//works fine
 const SignIn = () => {
   const [user, setuser] = useState({ email: "", password: "" });
   const [error, seterror] = useState([]);
@@ -10,8 +10,6 @@ const SignIn = () => {
 
   let history = useHistory();
   const handleLogin = async (e) => {
-    e.preventDefault();
-
     const res = await login(user);
     console.log({ res });
     if (res?.data?.errors) {

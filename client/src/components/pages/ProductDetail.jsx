@@ -1,15 +1,23 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import DeleteModal from "../layout/DeleteModal";
-import { Link, useParams } from "react-router-dom";
-import { getProduct } from "../api/ProductApi";
+import { Link, useLocation } from "react-router-dom";
 
 const ProductDetail = () => {
   const { isAdmin } = useContext(AuthContext);
   console.log({ isAdmin });
-  let { pId } = useParams();
-  let price, name, description;
-  const product = getProduct(pId);
+
+  /*   const product = useLocation().product;
+  console.log(useLocation());
+  */
+
+  const product = JSON.parse(window.localStorage.getItem("product"));
+  console.log({ product });
+  const { price, name, description } = product;
+  let pId = product._id;
+
+  console.log(price, name, description);
+
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -37,7 +45,7 @@ const ProductDetail = () => {
           <h2 class="text-gray-600 text-lg font-semibold border-l-4 border-purple-500 rounded-sm ">
             Description:
           </h2>
-          <p class="text-gray-500 text-lg  font-semibold ">{description}</p>
+          <p class="text-gray-500 text-lg font-semibold ">{description}</p>
         </div>
         <div class="row-span-2 col-span-2 text-left pl-2 ">
           {isAdmin ? (
@@ -45,15 +53,14 @@ const ProductDetail = () => {
               <Link
                 class="bg-yellow-400 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-yellow-600 
                  transation ease-linear duration-100 mb-3"
-                to={{ pathname: `/product/edit/${pId}` }}
+                to={{ pathname: `/product/edit/${pId}`, product }}
               >
                 Edit
               </Link>{" "}
               <button
                 class="bg-red-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-red-800 
                  transation ease-linear duration-100 mb-3"
-                onClick={(e) => {
-                  e.preventDefault();
+                onClick={() => {
                   setShowModal(true);
                 }}
               >
@@ -64,7 +71,7 @@ const ProductDetail = () => {
             <Link
               class="bg-purple-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-purple-800 
                transation ease-linear duration-100 mb-3"
-              to={{ pathname: "/pannel", pId, price: product.price }}
+              to={{ pathname: "/pannel", pId, price }}
             >
               Add to Card
             </Link>

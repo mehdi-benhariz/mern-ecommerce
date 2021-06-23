@@ -1,27 +1,33 @@
-import React, { useState } from "react";
-import { useParams } from "react-router";
-import { addProducts, editProduct } from "../api/ProductApi";
+import React, { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router";
+import { editProduct, getProduct } from "../api/ProductApi";
 const EditProduct = () => {
-  const [newProduct, setnewProduct] = useState({});
+  const product = JSON.parse(window.localStorage.getItem("product"));
+  console.log(product);
+  let [newProduct, setnewProduct] = useState(product);
   let { pId } = useParams();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  let history = useHistory();
+
+  const handleSubmit = async () => {
     const res = await editProduct(pId, newProduct);
     console.log(newProduct);
     console.log(res);
+    if (res.status == 200) history.push("/");
   };
 
   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
     focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-full mb-2 mr-4`;
   const labelText = `text-lg font-medium text-gray-700`;
+
   return (
-    <div class="grid grid-rows-3 gap-8 px-4 ">
-      <div class="row-span-3 grid grid-cols-2 gap-2 bg-white rounded-md shadow-md text-left pl-4 py-4">
-        <div>
+    <div className="grid grid-rows-3 gap-8 px-4 ">
+      <div className="row-span-3 grid sm:grid-cols-2 gap-2 bg-white rounded-md shadow-md text-left pl-4 py-4">
+        <div className="p-2">
           <div>
-            <label class={labelText}>Name</label>
+            <label className={labelText}>Name</label>
             <input
-              class={input}
+              value={newProduct.name}
+              className={input}
               type="text"
               onChange={(e) =>
                 setnewProduct({ ...newProduct, name: e.target.value })
@@ -29,9 +35,10 @@ const EditProduct = () => {
             />
           </div>
           <div>
-            <label class={labelText}>Price</label>
+            <label className={labelText}>Price</label>
             <input
-              class={input}
+              value={newProduct.price}
+              className={input}
               type="number"
               onChange={(e) =>
                 setnewProduct({ ...newProduct, price: e.target.value })
@@ -39,9 +46,10 @@ const EditProduct = () => {
             />
           </div>
           <div>
-            <label class={labelText}>Quantity In Stock</label>
+            <label className={labelText}>Quantity In Stock</label>
             <input
-              class={input}
+              value={newProduct.quantityStock}
+              className={input}
               type="number"
               onChange={(e) =>
                 setnewProduct({ ...newProduct, quantityStock: e.target.value })
@@ -49,12 +57,13 @@ const EditProduct = () => {
             />
           </div>
         </div>
-        <div class="row-span-3  text-left pl-4 mr-2 mb-4 ">
-          <label class={labelText}>Description</label>
+        <div className="row-span-3  text-left pl-4 mr-2 mb-4 ">
+          <label className={labelText}>Description</label>
           <input
-            class="bg-gray-200 rounded-md px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
+            className="bg-gray-200 rounded-md px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
   focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-full mb-2 mr-4  h-full"
             type="text"
+            value={newProduct.description}
             onChange={(e) =>
               setnewProduct({ ...newProduct, description: e.target.value })
             }
@@ -62,37 +71,37 @@ const EditProduct = () => {
         </div>
       </div>
 
-      <div class=" bg-white rounded-md shadow-md mb-10">
+      <div className=" bg-white rounded-md shadow-md mb-10">
         {" "}
-        <div class="mb-2">
+        <div className="mb-2">
           {" "}
-          <span class={labelText}>Photo</span>
-          <div class="relative h-40 rounded-lg border-dashed border-2 border-gray-200 bg-white flex justify-center items-center hover:cursor-pointer">
-            <div class="absolute">
-              <div class="flex flex-col items-center ">
-                <i class="fa fa-cloud-upload fa-3x text-gray-200"></i>
-                <span class="block text-gray-400 font-normal">
+          <span className={labelText}>Photo</span>
+          <div className="relative h-40 rounded-lg border-dashed border-2 border-gray-200 bg-white flex justify-center items-center hover:cursor-pointer">
+            <div className="absolute">
+              <div className="flex flex-col items-center ">
+                <i className="fa fa-cloud-upload fa-3x text-gray-200"></i>
+                <span className="block text-gray-400 font-normal">
                   Attach you files here
                 </span>{" "}
-                <span class="block text-gray-400 font-normal">or</span>{" "}
-                <span class="block text-blue-400 font-normal">
+                <span className="block text-gray-400 font-normal">or</span>{" "}
+                <span className="block text-blue-400 font-normal">
                   Browse files
                 </span>{" "}
               </div>
             </div>{" "}
-            <input type="file" class="h-full w-full opacity-0" name="" />
+            <input type="file" className="h-full w-full opacity-0" name="" />
           </div>
         </div>
         <div>
           <button
-            class="text-xl text-white font-semibold bg-purple-500 hover:bg-purple-700 ease-linear p-4
+            className="text-xl text-white font-semibold bg-purple-500 hover:bg-purple-700 ease-linear p-4
          rounded-md m-3"
             onClick={(e) => handleSubmit(e)}
           >
             Save
           </button>
           <button
-            class="text-xl text-white font-semibold bg-gray-500 hover:bg-gray-700 ease-linear p-4 
+            className="text-xl text-white font-semibold bg-gray-500 hover:bg-gray-700 ease-linear p-4 
          rounded-md  m-3"
             onClick={() => {
               setnewProduct({});

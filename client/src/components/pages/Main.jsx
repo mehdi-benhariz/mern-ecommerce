@@ -7,12 +7,14 @@ const Main = () => {
 
   const [q, setq] = useState("");
   const [search, setsearch] = useState([]);
-  let productList = (false ? search : products)?.map((p) => {
-    return <ProductCard product={p} />;
+  let productList = (false ? search : products)?.map((p, i) => {
+    return <ProductCard product={p} key={i} />;
   });
   useEffect(async () => {
     const res = await searchProduct(q);
     console.log({ res });
+    //TODO: change it
+    setsearch(null);
   }, [q]);
 
   return (
@@ -28,7 +30,9 @@ const Main = () => {
         />
       </div>
 
-      <div class=" bg-gray-300 grid grid-cols-3 px-3">{productList} </div>
+      <div class=" bg-gray-300 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 px-3">
+        {productList}{" "}
+      </div>
     </React.Fragment>
   );
 };

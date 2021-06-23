@@ -26,7 +26,7 @@ export const addProducts = async (newProduct) => {
 //delete a product
 export const removeProduct = async (pId) => {
   try {
-    const res = await axios.delete(
+    const res = await axios.post(
       `${process.env.REACT_APP_BASIC_URL}/api/v1/product/delete`,
       { pId }
     );
@@ -39,7 +39,7 @@ export const removeProduct = async (pId) => {
 export const editProduct = async (pId, editProduct) => {
   try {
     const res = await axios.put(
-      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/delete`,
+      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/edit`,
       { pId, editProduct }
     );
     return res;
@@ -50,10 +50,11 @@ export const editProduct = async (pId, editProduct) => {
 //get specific porduct
 export const getProduct = async (pId) => {
   try {
-    const res = await axios.get(
+    const res = await axios.post(
       `${process.env.REACT_APP_BASIC_URL}/api/v1/product/detail`,
-      pId
+      { pId }
     );
+
     return res;
   } catch (err) {
     return err.response;

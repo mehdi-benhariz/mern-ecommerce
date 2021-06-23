@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { addProducts } from "../api/ProductApi";
+//totally fine
 const AddProduct = () => {
   const [newProduct, setnewProduct] = useState({});
   const [error, seterror] = useState(null);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     const res = await addProducts(newProduct);
     if (res?.data?.success) setnewProduct({});
     else seterror(res?.data?.error);
