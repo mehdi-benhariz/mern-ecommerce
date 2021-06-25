@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const path = require("path");
 
 exports.getAll = async (req, res) => {
   try {
@@ -18,7 +19,7 @@ exports.addProduct = async (req, res) => {
     const newProduct = new Product(req.body.newProduct);
     await newProduct.save();
 
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, newProduct });
   } catch (error) {
     console.log("err:", error);
     return res.status(500).json({ error: "internal errors" });
@@ -75,16 +76,19 @@ exports.updateProduct = async (req, res) => {
 //detailed search
 exports.search = async (req, res) => {
   const { search } = req.body;
-  let regex = search ? new RegExp(search) : null;
+  console.log(req.body);
+  const regex = search ? new RegExp(search) : null;
 
-  try {
-    const result = await Product.find({ name: regex });
-    if (result.length > 0) return res.status(200).json(result);
-    return res.status(400).json({ message: "no product was found!" });
-  } catch (err) {
-    res.status(500).json("there was an error!");
-    console.log(err);
-  }
+  if (regex !== null)
+    try {
+      console.log(search);
+      const result = await Product.find({ name: regex });
+      console.log(result);
+      return res.status(200).json(result);
+    } catch (err) {
+      res.status(500).json("there was an error!");
+      console.log(err);
+    }
 };
 //get by category
 exports.getByCategory = async (req, res) => {
@@ -101,7 +105,10 @@ exports.getByCategory = async (req, res) => {
 
 //upload image
 exports.uploadImage = async (req, res, next) => {
-  const { product } = req.body;
+  console.log("");
+  const { pId } = req.params;
+  const product = await Product.findById(pId);
+  console.log(product);
 
   try {
     // file upload handler
@@ -110,7 +117,7 @@ exports.uploadImage = async (req, res, next) => {
 
     const file = req.files.file;
     const regex = /^image\/(png|jpg|jpeg)$/;
-    console.log(req.files);
+    console.log(file);
     if (!regex.test(file.mimetype))
       return res
         .status(400)
@@ -118,7 +125,7 @@ exports.uploadImage = async (req, res, next) => {
     const err = await file.mv(
       path.join(__dirname, "..", "public", "product_images", file.name)
     );
-    product.product_images = `/product_images/${file.name}`;
+
     const newProduct = await product.save();
     res.json({ product: newProduct });
 

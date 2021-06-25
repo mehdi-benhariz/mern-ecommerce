@@ -63,18 +63,20 @@ export const getProduct = async (pId) => {
 //search
 let cancelToken;
 
-export const searchProduct = async (q) => {
+export const searchProduct = async (search) => {
   //Check if there are any previous pending requests
   if (typeof cancelToken != typeof undefined)
     cancelToken.cancel("Operation canceled due to new request.");
 
   //Save the cancel token for the current request
   cancelToken = axios.CancelToken.source();
+  const url = `${process.env.REACT_APP_BASIC_URL}/api/v1/product/search`;
+  //   cancelToken: cancelToken.token,
+
   try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/search`,
-      { q, cancelToken: cancelToken.token }
-    );
+    const res = await axios.post(url, {
+      search,
+    });
     return res;
   } catch (err) {
     return err.response;
@@ -104,11 +106,17 @@ export const getProductByCat = async (cId) => {
   }
 };
 //upload image of product
-export const uploadProductPic = async (formData) => {
+export const uploadProductPic = async (formData, pId) => {
+  console.log({ formData });
   try {
     const res = await axios.post(
-      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/`,
-      formData
+      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/upload-pic/${pId}`,
+      {
+        body: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return res;
   } catch (error) {

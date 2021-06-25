@@ -6,14 +6,14 @@ import { logOut } from "../api/UserApi";
 const NavBar = () => {
   const { isLogged, update } = useContext(AuthContext);
   const [expanded, setexpanded] = useState(false);
-  const categories = ["clothes", "elecronic", "food"];
+  const [selectedElt, setSelectedElt] = useState(false);
+  const categories = ["clothes", "electronic", "food"];
   return (
-    <nav
-      class="bg-white shadow mb-28 "
-      role="navigation"
-      // onBlur={() => setexpanded()}
-    >
-      <div class="container mx-auto p-4 flex flex-wrap items-center md:flex-no-wrap">
+    <nav class="bg-white shadow mb-28 " role="navigation">
+      <div
+        class="container mx-auto p-4 flex flex-wrap items-center md:flex-no-wrap"
+        onBlur={() => !selectedElt && setexpanded(false)}
+      >
         <div class="mr-4 md:mr-8">
           <a href="/" rel="home">
             <svg
@@ -49,24 +49,24 @@ const NavBar = () => {
         <div class="w-full md:w-auto md:flex-grow md:flex md:items-center">
           <ul class="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:mt-0 md:pt-0 md:mr-4 lg:mr-8 md:border-0">
             <li>
-              <a
-                class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 
-          transform ease-linear  hover:border-b-2 border-gray-800"
-                href="/adminPage"
+              <Link
+                class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 
+          transform ease-linear  nav-item"
+                to="/adminPage"
                 title="Link"
               >
                 Admin Page
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 
-          transform ease-linear  hover:border-b-2 border-gray-800"
-                href="/pannel"
+              <Link
+                class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500  
+          transform ease-linear nav-item "
+                to="/pannel"
                 title="Link"
               >
                 Pannel
-              </a>
+              </Link>
             </li>
             <li>
               <a
@@ -114,14 +114,19 @@ const NavBar = () => {
                       >
                         {categories.map((e) => {
                           return (
-                            <li key={e}>
-                              <a
-                                href={`/product/categorie/${e}`}
+                            <li
+                              key={e}
+                              //this is to determine if the mouse if over an element or not
+                              onMouseOver={() => setSelectedElt(true)}
+                              onMouseLeave={() => setSelectedElt(false)}
+                            >
+                              <Link
+                                to={`/product/categorie/${e}`}
                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                 role="menuitem"
                               >
                                 {e}
-                              </a>
+                              </Link>
                             </li>
                           );
                         })}
@@ -131,7 +136,7 @@ const NavBar = () => {
                 </div>
               </a>
             </li>
-          </ul>
+          </ul>{" "}
           <ul class="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:ml-auto md:mt-0 md:pt-0 md:border-0">
             {isLogged ? (
               <li>
@@ -139,8 +144,7 @@ const NavBar = () => {
                   class="block px-4 py-1 md:p-2 lg:px-4 bg-gray-500 rounded text-white font-meduim text-xl 
 hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200 "
                   title="Link"
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
                     logOut();
                     update();
                   }}

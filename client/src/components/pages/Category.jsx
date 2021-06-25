@@ -11,17 +11,16 @@ const Category = () => {
   const getCat = async () => {
     let res = await getProductByCat(cId);
     if (res.status === 200) setproducts(res.data);
+    else if (res.status === 400) setproducts([]);
     console.log(res);
   };
 
   useEffect(() => {
     getCat();
-
     return () => {
       setproducts([]);
-      console.log("clean");
     };
-  });
+  }, [cId]);
   return (
     <div class="p-2">
       <h3 class="text-gray-700 font-semibold text-2xl">

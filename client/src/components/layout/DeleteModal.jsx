@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { removeProduct } from "../api/ProductApi";
 import { useHistory } from "react-router-dom";
+import { ProductContext } from "../context/ProductContext";
 
 const DeleteModal = ({ setShowModal, pId }) => {
   let history = useHistory();
-
+  const { update } = useContext(ProductContext);
   const handleDelete = async (e) => {
     const res = await removeProduct(pId);
-    if (res?.data?.success) history.push("/");
+    if (res?.data?.success) {
+      update();
+      history.push("/");
+    }
   };
   const backdrop = {
     visible: { opacity: 1 },
