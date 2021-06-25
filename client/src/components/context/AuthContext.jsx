@@ -11,12 +11,12 @@ const AuthContextProvider = (props) => {
   const [change, setchange] = useState(false);
   const [isAdmin, setisAdmin] = useState(false);
   const update = () => setchange(!change);
-
-  useEffect(async () => {
+  async function setInfo() {
     const res = await getUserInfo();
     setisLogged(res?.data.isLogged);
     setisAdmin(res?.data.isAdmin);
-  }, [change]);
+  }
+  useEffect(() => setInfo(), [change]);
 
   return (
     <AuthContext.Provider

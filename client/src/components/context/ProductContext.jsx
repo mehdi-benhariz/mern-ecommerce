@@ -6,10 +6,12 @@ const ProductContextProvider = (props) => {
   const [change, setchange] = useState(false);
   const [products, setproducts] = useState([]);
   const update = () => setchange(!change);
-  useEffect(async () => {
+
+  async function fetch() {
     let res = await getProducts();
     setproducts(res?.data);
-  }, [change]);
+  }
+  useEffect(() => fetch(), [change]);
 
   return (
     <ProductContext.Provider value={{ update, products }}>

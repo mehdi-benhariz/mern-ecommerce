@@ -4,11 +4,16 @@ import { addProducts } from "../api/ProductApi";
 const AddProduct = () => {
   const [newProduct, setnewProduct] = useState({});
   const [error, seterror] = useState(null);
+  const [file, setFile] = useState(null);
+  const [preview, setPreveiew] = useState(null);
 
   const handleSubmit = async (e) => {
     const res = await addProducts(newProduct);
     if (res?.data?.success) setnewProduct({});
     else seterror(res?.data?.error);
+
+    const formData = new FormData();
+    formData.append("file", file);
   };
 
   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
@@ -91,6 +96,13 @@ const AddProduct = () => {
                 </span>{" "}
               </div>
             </div>{" "}
+            <div className="w-28 h-28 shadow-xl rounded-full overflow-hidden ">
+              <img
+                // src={preview || values.profile_img}
+                className="object-cover h-28 w-28"
+                alt=""
+              />
+            </div>
             <input type="file" class="h-full w-full opacity-0" name="" />
           </div>
         </div>

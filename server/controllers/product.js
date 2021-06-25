@@ -88,15 +88,42 @@ exports.search = async (req, res) => {
 };
 //get by category
 exports.getByCategory = async (req, res) => {
-  const { cId } = req.body;
-  let regex = cId ? new RegExp(search) : null;
-
+  const { cId } = req.params;
   try {
-    const result = await Product.find({ tags: "clothes" });
+    const result = await Product.find({ tags: cId });
     if (result.length > 0) return res.status(200).json(result);
     return res.status(400).json({ message: "no product was found!" });
   } catch (err) {
     res.status(500).json("there was an error!");
     console.log(err);
+  }
+};
+
+//upload image
+exports.uploadImage = async (req, res, next) => {
+  const { product } = req.body;
+
+  try {
+    // file upload handler
+    if (req.files === null)
+      return res.status(400).json({ message: "No file uploaded" });
+
+    const file = req.files.file;
+    const regex = /^image\/(png|jpg|jpeg)$/;
+    console.log(req.files);
+    if (!regex.test(file.mimetype))
+      return res
+        .status(400)
+        .json({ message: "File type should be png, jpg, or jpeg" });
+    const err = await file.mv(
+      path.join(__dirname, "..", "public", "product_images", file.name)
+    );
+    product.product_images = `/product_images/${file.name}`;
+    const newProduct = await product.save();
+    res.json({ product: newProduct });
+
+    // end file upload handler
+  } catch (error) {
+    next(error);
   }
 };

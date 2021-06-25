@@ -17,10 +17,6 @@ mongoose.connection.on("connected", () =>
   console.log(`mongoose is connected on ${process.env.NODE_ENV}`)
 );
 
-mongoose.connection.on("error", (err) =>
-  console.log(`Error connecting to db:\n ${err}`)
-);
-
 mongoose.connection.on("disconnected", () =>
   console.log(`Mongoose is disconnected`)
 );

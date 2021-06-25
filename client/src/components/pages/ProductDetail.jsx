@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import DeleteModal from "../layout/DeleteModal";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProductDetail = () => {
   const { isAdmin } = useContext(AuthContext);

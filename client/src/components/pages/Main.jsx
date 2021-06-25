@@ -10,11 +10,13 @@ const Main = () => {
   let productList = (false ? search : products)?.map((p, i) => {
     return <ProductCard product={p} key={i} />;
   });
-  useEffect(async () => {
-    const res = await searchProduct(q);
-    console.log({ res });
-    //TODO: change it
-    setsearch(null);
+  useEffect(() => {
+    async function name() {
+      const res = await searchProduct(q);
+      console.log({ res });
+      //TODO: change it
+      setsearch(null);
+    }
   }, [q]);
 
   return (
@@ -22,10 +24,10 @@ const Main = () => {
       <div class="flex items-center justify-center">
         <input
           placeholder="What are you shopping for?"
-          maxlength="300"
-          autocomplete="on"
+          maxLength="300"
+          autoComplete="on"
           type="text"
-          class="py-4 w-2/3 outline-none shadow-md bg-white pl-2 rounded min-w-min mb-4"
+          className="py-4 w-2/3 outline-none shadow-md bg-white pl-2 rounded min-w-min mb-4"
           onChange={(e) => setq(e.target.value)}
         />
       </div>

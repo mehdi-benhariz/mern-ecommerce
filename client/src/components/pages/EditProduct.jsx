@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams, useHistory } from "react-router";
-import { editProduct, getProduct } from "../api/ProductApi";
+import { editProduct } from "../api/ProductApi";
 const EditProduct = () => {
   const product = JSON.parse(window.localStorage.getItem("product"));
   console.log(product);
@@ -12,7 +12,7 @@ const EditProduct = () => {
     const res = await editProduct(pId, newProduct);
     console.log(newProduct);
     console.log(res);
-    if (res.status == 200) history.push("/");
+    if (res.status === 200) history.push("/");
   };
 
   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 

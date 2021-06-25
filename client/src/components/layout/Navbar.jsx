@@ -6,11 +6,12 @@ import { logOut } from "../api/UserApi";
 const NavBar = () => {
   const { isLogged, update } = useContext(AuthContext);
   const [expanded, setexpanded] = useState(false);
+  const categories = ["clothes", "elecronic", "food"];
   return (
     <nav
       class="bg-white shadow mb-28 "
       role="navigation"
-      onBlur={() => setexpanded(false)}
+      // onBlur={() => setexpanded()}
     >
       <div class="container mx-auto p-4 flex flex-wrap items-center md:flex-no-wrap">
         <div class="mr-4 md:mr-8">
@@ -111,24 +112,19 @@ const NavBar = () => {
                         aria-orientation="vertical"
                         aria-labelledby="options-menu"
                       >
-                        <li>
-                          <Link
-                            to="/product/categorie/"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                            role="menuitem"
-                          >
-                            clothes
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/product/categorie/"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                            role="menuitem"
-                          >
-                            electronic
-                          </Link>
-                        </li>
+                        {categories.map((e) => {
+                          return (
+                            <li key={e}>
+                              <a
+                                href={`/product/categorie/${e}`}
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                role="menuitem"
+                              >
+                                {e}
+                              </a>
+                            </li>
+                          );
+                        })}
                       </div>
                     </div>
                   )}

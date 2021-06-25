@@ -20,7 +20,7 @@ function App() {
         <Route exact path="/register" component={SignUp} />
         <Route exact path="/" component={Main} />
         <Route exact path="/pannel" component={Pannel} />
-        <Route exact path="/product/categorie/:cid" component={Category} />
+        <Route exact path="/product/categorie/:cId" component={Category} />
         <Route exact path="/product/add" component={AddProduct} />
         <Route exact path="/product/edit/:pId" component={EditProduct} />
         <Route exact path="/product/:pid" component={ProductDetail} />

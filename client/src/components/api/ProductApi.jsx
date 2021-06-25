@@ -92,3 +92,26 @@ export const buyProduct = async (pId, quantity) => {
     return err.response;
   }
 };
+//get the products of a category
+export const getProductByCat = async (cId) => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/getByCat/${cId}`
+    );
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+//upload image of product
+export const uploadProductPic = async (formData) => {
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/`,
+      formData
+    );
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};

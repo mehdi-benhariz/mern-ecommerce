@@ -6,7 +6,6 @@ const helmet = require("helmet");
 const cors = require("cors");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 
 const path = require("path");
