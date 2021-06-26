@@ -83,11 +83,11 @@ export const searchProduct = async (search) => {
   }
 };
 //add product to pannel
-export const buyProduct = async (pId, quantity) => {
+export const buyProduct = async (pannel, total) => {
   try {
     const res = await axios.post(
       `${process.env.REACT_APP_BASIC_URL}/api/v1/buy`,
-      { pId, quantity }
+      { pannel, total }
     );
     return res;
   } catch (err) {
@@ -121,5 +121,27 @@ export const uploadProductPic = async (formData, pId) => {
     return res;
   } catch (error) {
     return error.response;
+  }
+};
+
+export const getPannel = async () => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/pannel`
+    );
+    return res;
+  } catch (err) {
+    return err.response;
+  }
+};
+export const addToPannel = async (pId) => {
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_BASIC_URL}/api/v1/product/pannel/add`,
+      { pId }
+    );
+    return res;
+  } catch (err) {
+    return err.response;
   }
 };

@@ -5,7 +5,8 @@ const bcrypt = require("bcrypt");
 const { createJWT, getUserByToken } = require("../utils/auth");
 var fs = require("fs");
 
-const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const emailRegexp =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const maxAge = 3600 * 24 * 10;
 
 //creating an account
@@ -184,20 +185,22 @@ exports.uploadPic = async (req, res) => {
 
 //add a product inside the pannel
 exports.buyProduct = async (req, res) => {
-  let { pId, quantity } = req.body;
+  let { pannel, total } = req.body;
   const { token } = req.cookies;
 
-  if (!pId) return res.status(400).json({ error: "ID is required" });
-  if (!quantity) quantity = 1;
+  if (!pannel) return res.status(400).json({ error: "pannel is empty" });
+  if (!total) total = 0;
 
   try {
-    const newProduct = await Product.findById(pId);
-
     let user = await getUserByToken(token);
-
-    let obj = { product: newProduct,quantity };
-    user.pannelProducts.push(obj);
-    user.save();
+    let data = user.historic;
+    console.log();
+    if (!Array.isArray(data.goods)) data.goods = [];
+    data.push({ total, goods: [...data.goods, pannel] });
+    const resp = await User.updateOne(
+      { _id: user._id },
+      { $set: { pannelProducts: [], historic: data } }
+    );
 
     return res.status(200).json({ success: true });
   } catch (error) {
@@ -215,7 +218,9 @@ exports.pannelDetail = async (req, res) => {
     if (!data) return res.status(400).json({ error: "ID is required" });
 
     for (var i = 0; i < data.length; i++) {
+      console.log(data[i].product);
       const prod = await Product.findById(data[i].product);
+      console.log({ prod });
       data[i] = { product: prod, quantity: data[i].quantity };
     }
 

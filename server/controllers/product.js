@@ -1,6 +1,6 @@
 const Product = require("../models/Product");
 const path = require("path");
-
+const { getUserByToken } = require("../utils/auth");
 exports.getAll = async (req, res) => {
   try {
     const products = await Product.find();
@@ -132,5 +132,36 @@ exports.uploadImage = async (req, res, next) => {
     // end file upload handler
   } catch (error) {
     next(error);
+  }
+};
+
+//
+exports.addToPannel = async (req, res) => {
+  const { token } = req.cookies;
+  const { pId } = req.body;
+  let exist = false;
+  try {
+    const user = await getUserByToken(token);
+    console.log(user);
+    let data = user.pannelProducts;
+    if (!data) return res.status(400).json({ error: "ID is required" });
+    data.forEach((e) => {
+      if (e["product"]._id === pId) {
+        exist = true;
+        return res.status(200).json("already in pannel!");
+      }
+    });
+    const prod = await Product.findById(pId);
+    console.log({ prod });
+    data.push({ product: prod, quantity: 0 });
+    const resp = await User.updateOne(
+      { _id: user._id },
+      { $set: { pannelProducts: data } }
+    );
+
+    return res.status(200).json(resp["ok"]);
+  } catch (error) {
+    console.log("err:", error);
+    return res.status(500).json({ error: "internal errors" });
   }
 };

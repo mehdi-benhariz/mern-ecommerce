@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { logOut } from "../api/UserApi";
 
 const NavBar = () => {
-  const { isLogged, update } = useContext(AuthContext);
+  const { isLogged, update, isAdmin } = useContext(AuthContext);
   const [expanded, setexpanded] = useState(false);
   const [selectedElt, setSelectedElt] = useState(false);
   const categories = ["clothes", "electronic", "food"];
@@ -23,7 +23,7 @@ const NavBar = () => {
               viewBox="0 0 54 54"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <title>TailwindCSS</title>
+              <title>E-Commerce</title>
               <path
                 fill="currentColor"
                 d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"
@@ -49,25 +49,27 @@ const NavBar = () => {
         <div class="w-full md:w-auto md:flex-grow md:flex md:items-center">
           <ul class="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:mt-0 md:pt-0 md:mr-4 lg:mr-8 md:border-0">
             <li>
-              <Link
-                class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 
+              {isAdmin ? (
+                <Link
+                  class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 
           transform ease-linear  nav-item"
-                to="/adminPage"
-                title="Link"
-              >
-                Admin Page
-              </Link>
-            </li>
-            <li>
-              <Link
-                class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500  
+                  to="/adminPage"
+                  title="Link"
+                >
+                  Admin Page
+                </Link>
+              ) : (
+                <Link
+                  class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500  
           transform ease-linear nav-item "
-                to="/pannel"
-                title="Link"
-              >
-                Pannel
-              </Link>
+                  to="/pannel"
+                  title="Link"
+                >
+                  Pannel
+                </Link>
+              )}
             </li>
+
             <li>
               <a
                 class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 

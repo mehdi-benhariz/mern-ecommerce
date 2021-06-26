@@ -37,5 +37,28 @@ const UserSchema = new Schema({
       },
     },
   ],
+  historic: [
+    {
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+      total: {
+        type: Number,
+        required: true,
+      },
+      goods: [
+        {
+          product: {
+            type: Schema.Types.ObjectId,
+            ref: "products",
+          },
+          quantity: {
+            type: Number,
+          },
+        },
+      ],
+    },
+  ],
 });
 module.exports = User = mongoose.model("users", UserSchema);

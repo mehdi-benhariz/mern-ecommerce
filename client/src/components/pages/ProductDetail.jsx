@@ -1,22 +1,22 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import DeleteModal from "../layout/DeleteModal";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { addToPannel } from "../api/ProductApi";
 
 const ProductDetail = () => {
   const { isAdmin } = useContext(AuthContext);
   console.log({ isAdmin });
-
-  /*   const product = useLocation().product;
-  console.log(useLocation());
-  */
-
+  let history = useHistory();
   const product = JSON.parse(window.localStorage.getItem("product"));
-  console.log({ product });
   const { price, name, description } = product;
   let pId = product._id;
-
-  console.log(price, name, description);
+  const handleAddToPannel = async () => {
+    const res = await addToPannel(pId);
+    if (res.status === 200) {
+      history.push("/");
+    }
+  };
 
   const [showModal, setShowModal] = useState(false);
 
@@ -71,7 +71,7 @@ const ProductDetail = () => {
             <Link
               class="bg-purple-600 text-lg text-white font-bold px-10 py-4 rounded-md hover:bg-purple-800 
                transation ease-linear duration-100 mb-3"
-              to={{ pathname: "/pannel", pId, price }}
+              onClick={handleAddToPannel}
             >
               Add to Card
             </Link>

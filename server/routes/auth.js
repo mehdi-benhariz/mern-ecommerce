@@ -16,7 +16,8 @@ router.post("/signin", signin);
 router.post("/logOut", auth, logOut);
 router.get("/userInfo", auth, userInfo);
 router.post("/buy", auth, buyProduct);
-router.get("/pannel", auth, pannelDetail);
+//router.get("/pannel", auth, pannelDetail);
 router.post("/upload-pic", auth, uploadPic);
+router.post("/buy", auth, buyProduct);
 
 module.exports = router;
