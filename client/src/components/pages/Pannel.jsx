@@ -1,29 +1,60 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { getPannel, buyProduct } from "../api/ProductApi";
+import Alert from "../utils/Toasts";
 
 const Pannel = () => {
   const [pannel, setPannel] = useState([]);
   const [index, setIndex] = useState(0);
   const [total, setTotal] = useState(0);
   const [quantity, setQuantity] = useState(0);
+  const [alert, setAlert] = useState({
+    isShown: false,
+    text: "",
+    type: "green",
+  });
+  //display the toast message
+  const displayAlert = (duration, type, text) => {
+    setAlert({
+      isShown: true,
+      text,
+      type,
+    });
+
+    setTimeout(
+      () => setAlert({ alert: { ...alert, isShown: false } }),
+      duration
+    );
+  };
   let history = useHistory();
   //set the pannel
   async function fetchPannel() {
     const res = await getPannel();
     if (res?.status === 200) setPannel(res.data);
-    console.log(res.data);
+    console.log(res?.data);
   }
   useEffect(() => {
     fetchPannel();
   }, []);
+
   //buying products
   const handleBuy = async () => {
     const res = await buyProduct(pannel, total);
     console.log({ res });
-    if (res.status === 200) history.push("/");
-    //TODO create a custom error handler and succes message
-    else console.log("error");
+    if (res?.status === 200) {
+      displayAlert(
+        1000,
+        "red",
+        "there was an error buying the product :( ...!"
+      );
+      history.push("/");
+    } else
+      displayAlert(
+        5000,
+        "red",
+        "there was an error buying the product :( ...!"
+      );
+    console.log("test", alert);
   };
   //paggination
   const incrementElt = (e) => {
@@ -181,6 +212,7 @@ const Pannel = () => {
         >
           Buy it!
         </button>
+        <Alert alert={alert} />
       </div>
       <div class="row-span-1 bg-white rounded shadow-lg mb-4  h-60 p-4 ">
         <h4 class="text-lg font-medium text-gray-500">Payment History</h4>

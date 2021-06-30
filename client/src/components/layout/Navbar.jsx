@@ -9,15 +9,15 @@ const NavBar = () => {
   const [selectedElt, setSelectedElt] = useState(false);
   const categories = ["clothes", "electronic", "food"];
   return (
-    <nav class="bg-white shadow mb-28 " role="navigation">
+    <nav className="bg-white shadow mb-28 " role="navigation">
       <div
-        class="container mx-auto p-4 flex flex-wrap items-center md:flex-no-wrap"
+        className="container mx-auto p-4 flex flex-wrap items-center md:flex-no-wrap"
         onBlur={() => !selectedElt && setexpanded(false)}
       >
-        <div class="mr-4 md:mr-8">
+        <div className="mr-4 md:mr-8">
           <a href="/" rel="home">
             <svg
-              class="w-10 h-10 text-purple-600"
+              className="w-10 h-10 text-purple-600"
               width="54"
               height="54"
               viewBox="0 0 54 54"
@@ -65,23 +65,26 @@ const NavBar = () => {
                   to="/pannel"
                   title="Link"
                 >
-                  Pannel
+                  <span>Pannel</span>
+                  <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                    9
+                  </span>
                 </Link>
               )}
             </li>
 
             <li>
               <a
-                class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 
+                className="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 hover:text-gray-800 
           transform ease-linear hover:border-b-2 border-gray-800"
                 href="/"
                 title="Link"
               >
-                <div class="relative inline-block text-left">
+                <div className="relative inline-block text-left">
                   <div>
                     <button
                       type="button"
-                      class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                      className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
                       id="options-menu"
                       aria-haspopup="true"
                       aria-expanded="true"
@@ -92,7 +95,7 @@ const NavBar = () => {
                     >
                       Categories
                       <svg
-                        class="-mr-1 ml-2 h-5 w-5"
+                        className="-mr-1 ml-2 h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
@@ -107,9 +110,9 @@ const NavBar = () => {
                     </button>
                   </div>
                   {expanded && (
-                    <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                       <div
-                        class="py-1"
+                        className="py-1"
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="options-menu"
@@ -139,11 +142,11 @@ const NavBar = () => {
               </a>
             </li>
           </ul>{" "}
-          <ul class="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:ml-auto md:mt-0 md:pt-0 md:border-0">
+          <ul className="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:ml-auto md:mt-0 md:pt-0 md:border-0">
             {isLogged ? (
               <li>
                 <button
-                  class="block px-4 py-1 md:p-2 lg:px-4 bg-gray-500 rounded text-white font-meduim text-xl 
+                  className="block px-4 py-1 md:p-2 lg:px-4 bg-gray-500 rounded text-white font-meduim text-xl 
 hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200 "
                   title="Link"
                   onClick={() => {
@@ -160,7 +163,7 @@ hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200 "
                   <Link to="/login">
                     {" "}
                     <span
-                      class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 
+                      className="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 
       border-r-2 "
                       title="Link"
                     >
@@ -171,7 +174,7 @@ hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200 "
                 <li>
                   <Link to="/register">
                     <span
-                      class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 "
+                      className="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 "
                       title="Link"
                     >
                       Register

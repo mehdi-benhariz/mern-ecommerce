@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import ProductCard from "../layout/ProductCard";
 import { ProductContext } from "../context/ProductContext";
 import { searchProduct } from "../api/ProductApi";
+
 const Main = () => {
   const { products } = useContext(ProductContext);
 
@@ -12,7 +13,7 @@ const Main = () => {
   });
   async function fetchSearch() {
     const res = await searchProduct(q);
-    if (res.status === 200) setsearch(res.data);
+    if (res?.status === 200) setsearch(res.data);
   }
   useEffect(() => {
     fetchSearch();
@@ -32,7 +33,7 @@ const Main = () => {
       </div>
 
       <div class=" bg-gray-300 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 px-3">
-        {productList.length > 0 && productList}{" "}
+        {productList?.length > 0 && productList}{" "}
       </div>
     </React.Fragment>
   );

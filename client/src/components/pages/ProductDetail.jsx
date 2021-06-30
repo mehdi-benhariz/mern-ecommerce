@@ -5,17 +5,17 @@ import { Link, useHistory } from "react-router-dom";
 import { addToPannel } from "../api/ProductApi";
 
 const ProductDetail = () => {
-  const { isAdmin } = useContext(AuthContext);
+  const { isAdmin, isLogged } = useContext(AuthContext);
   console.log({ isAdmin });
   let history = useHistory();
   const product = JSON.parse(window.localStorage.getItem("product"));
   const { price, name, description } = product;
   let pId = product._id;
   const handleAddToPannel = async () => {
-    const res = await addToPannel(pId);
-    if (res.status === 200) {
-      history.push("/");
-    }
+    if (isLogged) {
+      const res = await addToPannel(pId);
+      if (res.status === 200) history.push("/");
+    } else history.push("/login");
   };
 
   const [showModal, setShowModal] = useState(false);
