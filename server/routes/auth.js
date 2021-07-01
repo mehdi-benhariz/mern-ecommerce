@@ -19,5 +19,5 @@ router.post("/buy", auth, buyProduct);
 //router.get("/pannel", auth, pannelDetail);
 router.post("/upload-pic", auth, uploadPic);
 router.post("/buy", auth, buyProduct);
-
+router.post("password-reset");
 module.exports = router;

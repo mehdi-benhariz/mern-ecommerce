@@ -2,6 +2,9 @@ const User = require("../models/User");
 const Product = require("../models/Product");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const Token = require("../models/Token");
+const sendEmail = require("../utils/mail");
+const crypto = require("crypto");
 const { createJWT, getUserByToken } = require("../utils/auth");
 var fs = require("fs");
 
@@ -40,11 +43,11 @@ exports.signup = (req, res, next) => {
 
   User.findOne({ email: email })
     .then((user) => {
-      if (user) {
+      if (user)
         return res
           .status(422)
           .json({ errors: [{ user: "email already exists" }] });
-      } else {
+      else {
         const user = new User({
           name: name,
           email: email,
@@ -194,14 +197,33 @@ exports.buyProduct = async (req, res) => {
   try {
     let user = await getUserByToken(token);
     let data = user.historic;
-    console.log();
+    pannel.forEach(async (element) => {
+      await Product.updateOne(
+        { _id: element.product._id },
+        {
+          $set: {
+            quantityStock: element.product.quantityStock - element.quantity,
+          },
+        }
+      );
+    });
     if (!Array.isArray(data.goods)) data.goods = [];
     data.push({ total, goods: [...data.goods, pannel] });
     const resp = await User.updateOne(
       { _id: user._id },
       { $set: { pannelProducts: [], historic: data } }
     );
-
+    if (resp)
+      pannel.forEach(async (element) => {
+        await Product.updateOne(
+          { _id: element.product._id },
+          {
+            $set: {
+              quantityStock: element.product.quantityStock - element.quantity,
+            },
+          }
+        );
+      });
     return res.status(200).json({ success: true });
   } catch (error) {
     console.log("err:", error);
@@ -228,5 +250,62 @@ exports.pannelDetail = async (req, res) => {
   } catch (error) {
     console.log("err:", error);
     return res.status(500).json({ error: "internal errors" });
+  }
+};
+
+//create password reset
+exports.resetPWD = async (req, res) => {
+  try {
+    //to
+    // const schema = Joi.object({ email: Joi.string().email().required() });
+    // const { error } = schema.validate(req.body);
+    // if (error) return res.status(400).send(error.details[0].message);
+    const { email } = req.body.email;
+    if (!email) return res.status(400).json("invalid email");
+    const user = await User.findOne({ email: email });
+    if (!user)
+      return res.status(400).send("user with given email doesn't exist");
+
+    let token = await Token.findOne({ userId: user._id });
+    if (!token) {
+      token = await new Token({
+        userId: user._id,
+        token: crypto.randomBytes(32).toString("hex"),
+      }).save();
+    }
+
+    const link = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}`;
+    await sendEmail(user.email, "Password reset", link);
+
+    res.send("password reset link sent to your email account");
+  } catch (error) {
+    res.send("An error occured");
+    console.log(error);
+  }
+};
+
+exports.resetPWDverif = async (req, res) => {
+  try {
+    //    const schema = Joi.object({ password: Joi.string().required() });
+    //  const { error } = schema.validate(req.body);
+    //  if (error) return res.status(400).send(error.details[0].message);
+    //TODO :add a body verification
+    const user = await User.findById(req.params.userId);
+    if (!user) return res.status(400).send("invalid link or expired");
+
+    const token = await Token.findOne({
+      userId: user._id,
+      token: req.params.token,
+    });
+    if (!token) return res.status(400).send("Invalid link or expired");
+
+    user.password = req.body.password;
+    await user.save();
+    await token.delete();
+
+    res.send("password reset sucessfully.");
+  } catch (error) {
+    res.send("An error occured");
+    console.log(error);
   }
 };
