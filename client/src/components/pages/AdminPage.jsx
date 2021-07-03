@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Link } from "react-router-dom";
+import { getAdminPage } from "../api/AdminApi";
+import UsersDataTable from "../layout/UserTable";
 
 const AdminPage = () => {
+  const [userTable, setUserTable] = useState([]);
+  const [revenuPerMonth, setRevenuPerMonth] = useState([]);
+  const fetchPage = async () => {
+    const res = await getAdminPage();
+    if (res?.status === 200) {
+      console.log(res);
+      const { users, revenuPerMonth } = res.data;
+      setRevenuPerMonth(revenuPerMonth);
+      setUserTable(users);
+    }
+  };
+  useEffect(() => {
+    fetchPage();
+  }, []);
   const data = {
     maintainAspectRatio: false,
     responsive: false,
@@ -38,16 +54,17 @@ const AdminPage = () => {
       },
     },
   };
-let chartInstance = null
+  let chartInstance = null;
   return (
     <div class="p-2 grid grid-flow-row">
       <div>
         <div class="flex mb-3">
-        <h2 class="flex-1 text-gray-700 font-bold">Admin Page</h2>
-        <Link to="/product/add">
-        <button class="py-4 px-8 mr-2 bg-purple-500 hover:bg-purple-700 text-3xl text-white font-bold rounded" >Add Product</button>
-
-        </Link>
+          <h2 class="flex-1 text-gray-700 font-bold">Admin Page</h2>
+          <Link to="/product/add">
+            <button class="py-4 px-8 mr-2 bg-purple-500 hover:bg-purple-700 text-3xl text-white font-bold rounded">
+              Add Product
+            </button>
+          </Link>
         </div>
         <div class="grid xl:grid-cols-4 gap-4 md:grid-cols-2 grid-cols-1  ">
           <div class="bg-white shadow-lg rounded p-3 h-48 ">
@@ -68,36 +85,34 @@ let chartInstance = null
           </div>
         </div>
       </div>
-      <div class="bg-white rounded shadow-lg mt-5 p-3 grid grid-cols-3 "  >
-        <div class="col-span-2" >
-          <h3 class="text-xl text-gray-700 font-semibold" >Products beeing sold are:</h3>
+      <div class="bg-white rounded shadow-lg mt-5 p-3 grid grid-cols-3 ">
+        <div class="col-span-2">
+          <h3 class="text-xl text-gray-700 font-semibold">
+            Products beeing sold are:
+          </h3>
           <ul>
-            <li class="text-xl text-gray-600 font-bold border-l-4 border-purple-500  my-2" >Clothes</li>
-            <li class="text-xl text-gray-600 font-bold border-l-4 border-purple-500  my-2" >Electronics</li>
-            <li class="text-xl text-gray-600 font-bold border-l-4 border-purple-500  my-2" >Clothes</li>
-
+            <li class="text-xl text-gray-600 font-bold border-l-4 border-purple-500  my-2">
+              Clothes
+            </li>
+            <li class="text-xl text-gray-600 font-bold border-l-4 border-purple-500  my-2">
+              Electronics
+            </li>
+            <li class="text-xl text-gray-600 font-bold border-l-4 border-purple-500  my-2">
+              Clothes
+            </li>
           </ul>
         </div>
         <div>
-        <Pie
-          data={data}
-          options={pieOptions}
-          ref={(input) => {
-            chartInstance = input;
-          }}
-        />
-        </div>     
+          <Pie
+            data={data}
+            options={pieOptions}
+            ref={(input) => {
+              chartInstance = input;
+            }}
+          />
+        </div>
       </div>
-      <div class="bg-white rounded shadow-lg mt-3 p-2" >
-       <h3 class="text-2xl text-gray-700 font-semibold" >clients:</h3>
-       <table class="grid grid-cols-4">
-        <th>Name</th> 
-        <th>Registration date</th>  
-        <th>sex</th>      
-        <th>delete?</th>
-
-         </table> 
-      </div>
+      <UsersDataTable data={userTable} />
     </div>
   );
 };
