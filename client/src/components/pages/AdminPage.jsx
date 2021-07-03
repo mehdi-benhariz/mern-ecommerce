@@ -1,65 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Pie } from "react-chartjs-2";
+
 import { Link } from "react-router-dom";
 import { getAdminPage } from "../api/AdminApi";
+import CategoryChart from "../charts/CategoryChart";
+import RevenuMonth from "../charts/RevenuMonth";
 import UsersDataTable from "../layout/UserTable";
 
 const AdminPage = () => {
   const [userTable, setUserTable] = useState([]);
-  const [revenuPerMonth, setRevenuPerMonth] = useState([]);
+  const [revenuePerMonth, setRevenuePerMonth] = useState([]);
   const fetchPage = async () => {
     const res = await getAdminPage();
     if (res?.status === 200) {
       console.log(res);
-      const { users, revenuPerMonth } = res.data;
-      setRevenuPerMonth(revenuPerMonth);
+      const { users, revenuePerMonth } = res.data;
+      console.log(revenuePerMonth);
+      setRevenuePerMonth(revenuePerMonth);
       setUserTable(users);
     }
   };
   useEffect(() => {
     fetchPage();
   }, []);
-  const data = {
-    maintainAspectRatio: false,
-    responsive: false,
-    labels: ["a", "b", "c", "d"],
-    datasets: [
-      {
-        data: [300, 50, 100, 50],
-        backgroundColor: ["#fcba03", "#35fc03", "#035efc", "#fc0303"],
-        hoverBackgroundColor: ["#fcba03", "#35fc03", "#035efc", "#fc0303"],
-      },
-    ],
-  };
-  const pieOptions = {
-    legend: {
-      display: false,
-      position: "right",
-      legendCallback: function (chart) {
-        // Return the HTML string here.
-        console.log(chart);
-        return [
-          <ul>
-            <li>z</li>
-            <li>zzzz</li>
-            <li>ppp</li>
-            <li>adasda</li>
-          </ul>,
-        ];
-      },
-    },
-    elements: {
-      arc: {
-        borderWidth: 0,
-      },
-    },
-  };
-  let chartInstance = null;
+
   return (
     <div class="p-2 grid grid-flow-row">
       <div>
-        <div class="flex mb-3">
+        <div class="flex mb-3 ">
           <h2 class="flex-1 text-gray-700 font-bold">Admin Page</h2>
+          <Link>
+            <button class="py-4 px-8 mr-2 bg-green-500 hover:bg-green-700 text-3xl text-white font-bold rounded">
+              Add Facture
+            </button>
+          </Link>
           <Link to="/product/add">
             <button class="py-4 px-8 mr-2 bg-purple-500 hover:bg-purple-700 text-3xl text-white font-bold rounded">
               Add Product
@@ -86,31 +59,10 @@ const AdminPage = () => {
         </div>
       </div>
       <div class="bg-white rounded shadow-lg mt-5 p-3 grid grid-cols-3 ">
-        <div class="col-span-2">
-          <h3 class="text-xl text-gray-700 font-semibold">
-            Products beeing sold are:
-          </h3>
-          <ul>
-            <li class="text-xl text-gray-600 font-bold border-l-4 border-purple-500  my-2">
-              Clothes
-            </li>
-            <li class="text-xl text-gray-600 font-bold border-l-4 border-purple-500  my-2">
-              Electronics
-            </li>
-            <li class="text-xl text-gray-600 font-bold border-l-4 border-purple-500  my-2">
-              Clothes
-            </li>
-          </ul>
-        </div>
-        <div>
-          <Pie
-            data={data}
-            options={pieOptions}
-            ref={(input) => {
-              chartInstance = input;
-            }}
-          />
-        </div>
+        <CategoryChart />
+      </div>
+      <div class="bg-white rounded shadow-lg mt-5 p-3 grid grid-cols-1 ">
+        {revenuePerMonth && <RevenuMonth dataSet={revenuePerMonth} />}
       </div>
       <UsersDataTable data={userTable} />
     </div>

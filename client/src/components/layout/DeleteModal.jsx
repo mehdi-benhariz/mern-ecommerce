@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { removeProduct } from "../api/ProductApi";
 import { useHistory } from "react-router-dom";
 import { ProductContext } from "../context/ProductContext";
-
+//TODO: create a template modal for delete
 const DeleteModal = ({ setShowModal, pId }) => {
   let history = useHistory();
   const { update } = useContext(ProductContext);

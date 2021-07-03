@@ -1,0 +1,6 @@
+impliment a delete user function and modal
+fix the routing
+fix the category chart
+fix the badge pannel
+add a profile page for user 
+add forgot password 

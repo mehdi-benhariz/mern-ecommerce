@@ -29,7 +29,7 @@ const UsersDataTable = ({ data }) => {
                 return (
                   <tr key={user._id}>
                     <td>
-                      <span>Pic</span> <img src="" />
+                      <span>Pic</span> <img src="" alt="profile" />
                     </td>
                     <td>
                       <span>Name</span>
