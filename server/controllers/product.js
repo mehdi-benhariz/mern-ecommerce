@@ -33,9 +33,8 @@ exports.removeProduct = async (req, res) => {
 
   try {
     const removed = await Product.findByIdAndRemove(pId);
-    if (!removed) {
-      return res.status(200).json({ success: true });
-    } else return res.status(404).json({ error: "product doesn't exist" });
+    if (!removed) return res.status(200).json({ success: true });
+    else return res.status(404).json({ error: "product doesn't exist" });
   } catch (err) {
     res.status(500).json({ error: "the was internal error" });
   }

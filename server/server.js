@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 5000;
+require("express-async-errors");
 
 const helmet = require("helmet");
 const cors = require("cors");
@@ -49,6 +50,8 @@ app.use(function (req, res, next) {
   );
   next();
 });
+const { errorHandler } = require("./middleware/errorHandler");
+app.use(errorHandler);
 //routes
 const authRoutes = require("./routes/auth");
 app.use("/api/v1", authRoutes);
@@ -57,6 +60,7 @@ const productRoutes = require("./routes/product");
 app.use("/api/v1/product", productRoutes);
 
 const adminRoutes = require("./routes/admin");
+
 app.use("/api/v1/admin", adminRoutes);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
