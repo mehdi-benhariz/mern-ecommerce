@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router";
-import { editProduct } from "../api/ProductApi";
+import { editProduct } from "../../api/ProductApi";
 const EditProduct = () => {
   const product = JSON.parse(window.localStorage.getItem("product"));
   console.log(product);

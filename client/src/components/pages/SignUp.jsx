@@ -15,21 +15,20 @@ const SignUp = () => {
   let history = useHistory();
 
   const handleRegister = async (e) => {
+    e.preventDefault();
     const res = await register(user);
-    console.log(res);
-    if (res?.data?.errors) {
-      seterror(res.data.errors);
-      console.log(res.data.errors);
-    } else {
+    console.log(res.data);
+    if (res?.status === 200) {
       let newUser = { email: user.email, password: user.password };
       login(newUser);
-      setPannelItems(res.data.message.productPannel.length);
+      console.log(res.data);
+      setPannelItems(0);
 
       const state = await getUserInfo();
       setisLogged(state.isLogged);
       update();
       history.push("/");
-    }
+    } else seterror(res.data.errors);
   };
   return (
     <div class="container max-w-full mx-auto md:py-24 px-6 bg-gray-200 ">

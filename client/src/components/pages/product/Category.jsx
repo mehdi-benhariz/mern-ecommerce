@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import ProductCard from "../layout/ProductCard";
-import { getProductByCat } from "../api/ProductApi";
+import ProductCard from "../../layout/ProductCard";
+import { getProductByCat } from "../../api/ProductApi";
 
 const Category = () => {
   const [products, setproducts] = useState([]);
@@ -14,12 +14,12 @@ const Category = () => {
     else if (res.status === 400) setproducts([]);
     console.log(res);
   };
-
   useEffect(() => {
     getCat();
     return () => {
       setproducts([]);
     };
+    // eslint-disable-next-line
   }, [cId]);
   return (
     <div class="p-2">

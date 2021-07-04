@@ -1,4 +1,4 @@
-impliment a delete user function and modal
+x impliment a delete user function and modal
 x fix the routing
 fix the category chart
 x fix the badge pannel

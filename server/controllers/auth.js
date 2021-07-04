@@ -26,26 +26,22 @@ exports.signup = (req, res, next) => {
   // if (!emailRegexp.test(email)) {
   //   errors.push({ email: "invalid" });
   // }
-  if (!password) {
-    errors.push({ password: "required" });
-  }
-  if (!password_confirmation) {
+  if (!password) errors.push({ password: "required" });
+
+  if (!password_confirmation)
     errors.push({
       password_confirmation: "required",
     });
-  }
-  if (password != password_confirmation) {
-    errors.push({ password: "mismatch" });
-  }
-  if (errors.length > 0) {
-    return res.status(422).json({ errors: errors });
-  }
+
+  if (password != password_confirmation) errors.push({ password: "mismatch" });
+
+  if (errors.length > 0) return res.status(400).json({ errors });
 
   User.findOne({ email: email })
     .then((user) => {
       if (user)
         return res
-          .status(422)
+          .status(400)
           .json({ errors: [{ user: "email already exists" }] });
       else {
         const user = new User({
@@ -64,7 +60,7 @@ exports.signup = (req, res, next) => {
               .then((response) => {
                 res.status(200).json({
                   success: true,
-                  result: response,
+                  message: response,
                 });
               })
               .catch((err) => {
@@ -77,9 +73,7 @@ exports.signup = (req, res, next) => {
       }
     })
     .catch((err) => {
-      res.status(400).json({
-        errors: [{ error: "Something went wrong" }],
-      });
+      next(err);
     });
 };
 

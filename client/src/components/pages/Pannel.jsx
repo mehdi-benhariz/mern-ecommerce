@@ -100,7 +100,8 @@ const Pannel = () => {
     var { resP, resQ } = getPriceQuantity();
     setTotal(resP);
     setQuantity(resQ);
-  });
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div class="grid grid-rows-5 m-2">

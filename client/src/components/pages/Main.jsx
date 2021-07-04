@@ -17,6 +17,7 @@ const Main = () => {
   }
   useEffect(() => {
     fetchSearch();
+    // eslint-disable-next-line
   }, [q]);
 
   return (

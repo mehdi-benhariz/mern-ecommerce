@@ -3,15 +3,30 @@ import { AnimatePresence, motion } from "framer-motion";
 import { removeProduct } from "../api/ProductApi";
 import { useHistory } from "react-router-dom";
 import { ProductContext } from "../context/ProductContext";
+import { removeUser } from "../api/AdminApi";
 //TODO: create a template modal for delete
-const DeleteModal = ({ setShowModal, pId }) => {
+const DeleteModal = ({ setShowModal, id, type }) => {
   let history = useHistory();
   const { update } = useContext(ProductContext);
   const handleDelete = async (e) => {
-    const res = await removeProduct(pId);
-    if (res?.data?.success) {
-      update();
-      history.push("/");
+    var res = null;
+    switch (type) {
+      case "product":
+        res = await removeProduct(id);
+        if (res?.data?.success) {
+          update();
+          history.push("/");
+          setShowModal(false);
+        }
+        break;
+      case "user":
+        res = await removeUser(id);
+        if (res?.data?.success) {
+          setShowModal(false);
+        }
+        break;
+      default:
+        break;
     }
   };
   const backdrop = {
@@ -46,7 +61,7 @@ const DeleteModal = ({ setShowModal, pId }) => {
             {/*body*/}
             <div className="relative p-6 flex-auto">
               <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
-                you sure you want to delete this product ?
+                you sure you want to delete this ?
               </p>
             </div>
             {/*footer*/}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addProducts, uploadProductPic } from "../api/ProductApi";
+import { addProducts } from "../../api/ProductApi";
 //totally fine
 const AddProduct = () => {
   const [newProduct, setnewProduct] = useState({});

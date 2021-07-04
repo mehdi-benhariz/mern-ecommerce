@@ -38,13 +38,13 @@ const NavBar = () => {
             </svg>
           </a>
         </div>
-        <div class="ml-auto md:hidden">
+        <div className="ml-auto md:hidden">
           <button
-            class="flex items-center px-3 py-2 border rounded"
+            className="flex items-center px-3 py-2 border rounded"
             type="button"
           >
             <svg
-              class="h-3 w-3"
+              className="h-3 w-3"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -53,14 +53,14 @@ const NavBar = () => {
             </svg>
           </button>
         </div>
-        <div class="w-full md:w-auto md:flex-grow md:flex md:items-center">
-          <ul class="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:mt-0 md:pt-0 md:mr-4 lg:mr-8 md:border-0">
+        <div className="w-full md:w-auto md:flex-grow md:flex md:items-center">
+          <ul className="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:mt-0 md:pt-0 md:mr-4 lg:mr-8 md:border-0">
             <li>
               {isLogged && (
                 <span>
                   {isAdmin ? (
                     <Link
-                      class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 
+                      className="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 
           transform ease-linear  nav-item"
                       to="/adminPage"
                       title="Link"
@@ -69,7 +69,7 @@ const NavBar = () => {
                     </Link>
                   ) : (
                     <Link
-                      class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500  
+                      className="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500  
           transform ease-linear nav-item "
                       to="/pannel"
                       title="Link"

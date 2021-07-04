@@ -1,9 +1,9 @@
 import React from "react";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
-import Category from "../pages/Category";
-import AddProduct from "../pages/AddProduct";
-import ProductDetail from "../pages/ProductDetail";
-import EditProduct from "../pages/EditProduct";
+import Category from "../pages/product/Category";
+import AddProduct from "../pages/product/AddProduct";
+import ProductDetail from "../pages/product/ProductDetail";
+import EditProduct from "../pages/product/EditProduct";
 
 const ProductRoute = () => {
   let { path, url } = useRouteMatch();

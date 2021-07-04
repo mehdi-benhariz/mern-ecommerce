@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import DeleteModal from "../layout/DeleteModal";
+import { AuthContext } from "../../context/AuthContext";
+import DeleteModal from "../../layout/DeleteModal";
 import { Link, useHistory } from "react-router-dom";
-import { addToPannel } from "../api/ProductApi";
-import { getPannelItems, setPannelItems } from "../utils/Cache";
+import { addToPannel } from "../../api/ProductApi";
+import { getPannelItems, setPannelItems } from "../../utils/Cache";
 
 const ProductDetail = () => {
   const { isAdmin, isLogged } = useContext(AuthContext);
-  console.log({ isAdmin });
+
   let history = useHistory();
   const product = JSON.parse(window.localStorage.getItem("product"));
   const { price, name, description } = product;
@@ -24,7 +24,9 @@ const ProductDetail = () => {
 
   return (
     <div class="mb-8 rounded-md">
-      {showModal && <DeleteModal setShowModal={setShowModal} pId={pId} />}
+      {showModal && (
+        <DeleteModal setShowModal={setShowModal} id={pId} type="product" />
+      )}
       <div class="page-title-box d-flex align-items-center justify-content-between ">
         <h4 class="mb-1  align-left text-lg font-bold text-gray-500 left-4 text-left pl-4 ">
           Product Detail

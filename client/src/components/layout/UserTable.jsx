@@ -1,6 +1,9 @@
+import { useState } from "react";
+import DeleteModal from "./DeleteModal";
 const UsersDataTable = ({ data }) => {
   let exist = data.length > 0;
   console.log(exist, data.length);
+  const [showModal, setShowModal] = useState(false);
   return (
     <div class="bg-white rounded shadow-lg mt-3 p-2">
       {exist ? (
@@ -28,6 +31,13 @@ const UsersDataTable = ({ data }) => {
                 console.log(user);
                 return (
                   <tr key={user._id}>
+                    {showModal && (
+                      <DeleteModal
+                        setShowModal={setShowModal}
+                        id={user._id}
+                        type="user"
+                      />
+                    )}
                     <td>
                       <span>Pic</span> <img src="" alt="profile" />
                     </td>
@@ -47,7 +57,10 @@ const UsersDataTable = ({ data }) => {
                     </td>
                     <td>
                       <span> delete</span>{" "}
-                      <button className="hover:bg-white hover:text-red-500 hover:border-red-500 border-2 ease-linear duration-200 w-4/5 rounded bg-red-500 text-xl px-6 text-white font-semibold ">
+                      <button
+                        onClick={() => setShowModal(true)}
+                        className="hover:bg-white hover:text-red-500 hover:border-red-500 border-2 ease-linear duration-200 w-4/5 rounded bg-red-500 text-xl px-6 text-white font-semibold "
+                      >
                         X{" "}
                       </button>
                     </td>

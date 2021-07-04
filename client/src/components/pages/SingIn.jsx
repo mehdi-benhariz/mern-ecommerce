@@ -19,7 +19,7 @@ const SignIn = () => {
     } else {
       const state = await getUserInfo();
       setisLogged(state.isLogged);
-      setPannelItems(res.data.message.productPannel.length);
+      setPannelItems(res.data.message.pannelProducts.length);
       update();
       history.push("/");
     }

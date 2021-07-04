@@ -4,7 +4,7 @@ axios.defaults.withCredentials = true;
 export const register = async (user) => {
   try {
     const res = await axios.post(
-      `${process.env.REACT_APP_BASIC_URL}/api/v1/register`,
+      `${process.env.REACT_APP_BASIC_URL}/api/v1/signup`,
       user
     );
     console.log(res);
