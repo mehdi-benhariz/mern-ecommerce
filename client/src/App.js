@@ -7,8 +7,8 @@ import NavBar from "./components/layout/Navbar";
 import Pannel from "./components/pages/Pannel";
 import Footer from "./components/layout/Footer";
 import ProductRoute from "./components/routes/ProductRoute";
-
 import AdminRoute from "./components/routes/AdminRoute";
+
 function App() {
   return (
     <div className="App bg-gray-200 h-full flex flex-col justify-between">
@@ -18,8 +18,8 @@ function App() {
         <Route exact path="/register" component={SignUp} />
         <Route exact path="/" component={Main} />
         <Route exact path="/pannel" component={Pannel} />
-        <Route exact path="/product" component={ProductRoute} />
-        <Route exact path="/adminPage" component={AdminRoute} />
+        <Route path="/product" component={ProductRoute} />
+        <Route path="/adminPage" component={AdminRoute} />
         <Route component={ErrorPage} />
       </Switch>
       <Footer />

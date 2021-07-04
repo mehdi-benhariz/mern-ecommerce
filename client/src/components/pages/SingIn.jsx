@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { login, getUserInfo } from "../api/UserApi";
+import { setPannelItems } from "../utils/Cache";
 //works fine
 const SignIn = () => {
   const [user, setuser] = useState({ email: "", password: "" });
@@ -18,6 +19,7 @@ const SignIn = () => {
     } else {
       const state = await getUserInfo();
       setisLogged(state.isLogged);
+      setPannelItems(res.data.message.productPannel.length);
       update();
       history.push("/");
     }

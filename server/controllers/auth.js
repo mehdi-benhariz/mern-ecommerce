@@ -207,7 +207,7 @@ exports.buyProduct = async (req, res) => {
         }
       );
     });
-    if (!Array.isArray(data.goods)) data.goods = [];
+    if (!Array.isArray(data.goods)) data.goods = [{}];
     data.push({ total, goods: [...data.goods, pannel] });
     const resp = await User.updateOne(
       { _id: user._id },

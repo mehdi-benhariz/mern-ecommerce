@@ -1,6 +1,6 @@
-import lru from "lru-cache";
-const cache = lru({
-  maxAge: 30000,
-});
+export const setPannelItems = (x) =>
+  window.localStorage.setItem("pannelItems", x);
 
-export const set = (key, value) => cache.set(key, value);
+export const getPannelItems = () => {
+  return window.localStorage.getItem("pannelItems");
+};

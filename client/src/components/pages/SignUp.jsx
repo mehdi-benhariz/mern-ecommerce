@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 import { register, login, getUserInfo } from "../api/UserApi";
+import { setPannelItems } from "../utils/Cache";
 const SignUp = () => {
   const [user, setuser] = useState({
     name: "",
@@ -22,6 +23,8 @@ const SignUp = () => {
     } else {
       let newUser = { email: user.email, password: user.password };
       login(newUser);
+      setPannelItems(res.data.message.productPannel.length);
+
       const state = await getUserInfo();
       setisLogged(state.isLogged);
       update();

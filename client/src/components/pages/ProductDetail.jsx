@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import DeleteModal from "../layout/DeleteModal";
 import { Link, useHistory } from "react-router-dom";
 import { addToPannel } from "../api/ProductApi";
+import { getPannelItems, setPannelItems } from "../utils/Cache";
 
 const ProductDetail = () => {
   const { isAdmin, isLogged } = useContext(AuthContext);
@@ -15,6 +16,7 @@ const ProductDetail = () => {
     if (isLogged) {
       const res = await addToPannel(pId);
       if (res.status === 200) history.push("/");
+      setPannelItems(parseInt(getPannelItems()) + 1);
     } else history.push("/login");
   };
 

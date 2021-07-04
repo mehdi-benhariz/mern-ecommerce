@@ -1,13 +1,20 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { logOut } from "../api/UserApi";
+import { getPannelItems } from "../utils/Cache";
 
 const NavBar = () => {
   const { isLogged, update, isAdmin } = useContext(AuthContext);
   const [expanded, setexpanded] = useState(false);
   const [selectedElt, setSelectedElt] = useState(false);
+  const [pannelItems, setPannelItems] = useState(0);
   const categories = ["clothes", "electronic", "food"];
+  console.log(window.localStorage.getItem("pannelItems"));
+  useEffect(() => {
+    setPannelItems(getPannelItems());
+  }, []);
+
   return (
     <nav className="bg-white shadow mb-28 " role="navigation">
       <div
@@ -49,27 +56,33 @@ const NavBar = () => {
         <div class="w-full md:w-auto md:flex-grow md:flex md:items-center">
           <ul class="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:mt-0 md:pt-0 md:mr-4 lg:mr-8 md:border-0">
             <li>
-              {isAdmin ? (
-                <Link
-                  class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 
+              {isLogged && (
+                <span>
+                  {isAdmin ? (
+                    <Link
+                      class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500 
           transform ease-linear  nav-item"
-                  to="/adminPage"
-                  title="Link"
-                >
-                  Admin Page
-                </Link>
-              ) : (
-                <Link
-                  class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500  
+                      to="/adminPage"
+                      title="Link"
+                    >
+                      Admin Page
+                    </Link>
+                  ) : (
+                    <Link
+                      class="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500  
           transform ease-linear nav-item "
-                  to="/pannel"
-                  title="Link"
-                >
-                  <span>Pannel</span>
-                  <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                    9
-                  </span>
-                </Link>
+                      to="/pannel"
+                      title="Link"
+                    >
+                      <span>Pannel</span>
+                      {pannelItems > 0 && (
+                        <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                          {pannelItems}
+                        </span>
+                      )}
+                    </Link>
+                  )}
+                </span>
               )}
             </li>
 
@@ -110,12 +123,12 @@ const NavBar = () => {
                     </button>
                   </div>
                   {expanded && (
-                    <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="origin-top-right absolute left-32 right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                       <div
                         className="py-1"
                         role="menu"
-                        aria-orientation="vertical"
-                        aria-labelledby="options-menu"
+                        ariaOrientation="vertical"
+                        ariaLabelledby="options-menu"
                       >
                         {categories.map((e) => {
                           return (
@@ -142,12 +155,12 @@ const NavBar = () => {
               </a>
             </li>
           </ul>{" "}
-          <ul className="flex flex-col mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:ml-auto md:mt-0 md:pt-0 md:border-0">
+          <ul className="flex flex-col  mt-4 -mx-4 pt-4 border-t md:flex-row md:items-center md:mx-0 md:ml-auto md:mt-0 md:pt-0 md:border-0">
             {isLogged ? (
-              <li>
+              <li className="ml-4 ">
                 <button
-                  className="block px-4 py-1 md:p-2 lg:px-4 bg-gray-500 rounded text-white font-meduim text-xl 
-hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200 "
+                  className="block px-4 py-1 md:p-2 lg:px-4  bg-gray-500 rounded text-white font-meduim text-xl 
+hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200  "
                   title="Link"
                   onClick={() => {
                     logOut();

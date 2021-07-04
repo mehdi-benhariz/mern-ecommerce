@@ -6,15 +6,31 @@ exports.getAdminBoard = async (req, res, next) => {
     var users = await User.find({ isAdmin: false }).limit(10);
     var products = await Product.find();
     var revenuePerMonth = new Array(12).fill(0);
-    var revenuePerCat = new Array(3).fill({});
+    var revenuePerCat = new Map();
+    revenuePerCat.set("clothes", { val: 0, nbr: 0 });
+    revenuePerCat.set("electronic", { val: 0, nbr: 0 });
+    revenuePerCat.set("food", { val: 0, nbr: 0 });
+
     var i = 0;
     users.forEach((user) => {
-      user.historic.forEach(({ date, total }) => {
+      user.historic.forEach(({ date, total, goods }) => {
+        console.log(goods);
+        //todo fix therevenu per category
+        // goods.forEach((good) => {
+        //   console.log(tag);
+        //   var tag = good.product.tags[0];
+        //   var obj = revenuePerCat.get(tag);
+        //   revenuePerCat.set(tag, {
+        //     val: obj.val + good.product.price * good.quantity,
+        //     nbr: obj.nbr + good.quantity,
+        //   });
+        // });
+
         i = date.getMonth();
         revenuePerMonth[i] += total;
       });
     });
-    return res.status(200).json({ users, revenuePerMonth });
+    return res.status(200).json({ users, revenuePerMonth, revenuePerCat });
   } catch (error) {
     next(error);
   }
