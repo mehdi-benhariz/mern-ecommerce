@@ -68,19 +68,37 @@ const NavBar = () => {
                       Admin Page
                     </Link>
                   ) : (
-                    <Link
-                      className="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500  
+                    <span>
+                      <Link
+                        className="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500  
           transform ease-linear nav-item "
-                      to="/pannel"
-                      title="Link"
-                    >
-                      <span>Pannel</span>
-                      {pannelItems > 0 && (
-                        <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                          {pannelItems}
+                        to="/pannel"
+                        title="Link"
+                      >
+                        <span>Pannel</span>
+                        {pannelItems > 0 && (
+                          <span className="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                            {pannelItems}
+                          </span>
+                        )}
+                      </Link>
+                      <Link
+                        className="block px-4 py-1 md:p-2 lg:px-4 font-meduim text-xl text-gray-500  
+          transform ease-linear nav-item "
+                        to="/profile"
+                        title="Link"
+                      >
+                        <span class="relative inline-flex rounded-md shadow-sm">
+                          Profile{" "}
+                          <div class="flex absolute top-0 right-0 -mt-0.5 -mr-1">
+                            <span class="absolute inline-flex animate-ping">
+                              <span class="inline-flex rounded-full h-2 w-2 bg-purple-400 opacity-75"></span>
+                            </span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                          </div>
                         </span>
-                      )}
-                    </Link>
+                      </Link>
+                    </span>
                   )}
                 </span>
               )}
@@ -127,8 +145,8 @@ const NavBar = () => {
                       <div
                         className="py-1"
                         role="menu"
-                        ariaOrientation="vertical"
-                        ariaLabelledby="options-menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="options-menu"
                       >
                         {categories.map((e) => {
                           return (

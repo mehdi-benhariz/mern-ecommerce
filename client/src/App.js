@@ -8,6 +8,7 @@ import Pannel from "./components/pages/Pannel";
 import Footer from "./components/layout/Footer";
 import ProductRoute from "./components/routes/ProductRoute";
 import AdminRoute from "./components/routes/AdminRoute";
+import Profile from "./components/pages/Profile";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/register" component={SignUp} />
         <Route exact path="/" component={Main} />
         <Route exact path="/pannel" component={Pannel} />
+        <Route exact path="/profile" component={Profile} />
         <Route path="/product" component={ProductRoute} />
         <Route path="/adminPage" component={AdminRoute} />
         <Route component={ErrorPage} />

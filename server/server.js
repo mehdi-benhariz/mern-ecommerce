@@ -60,7 +60,9 @@ const productRoutes = require("./routes/product");
 app.use("/api/v1/product", productRoutes);
 
 const adminRoutes = require("./routes/admin");
-
 app.use("/api/v1/admin", adminRoutes);
+
+const userRoutes = require("./routes/user");
+app.use("/api/v1/user", userRoutes);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
