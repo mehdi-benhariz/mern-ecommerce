@@ -96,11 +96,11 @@ exports.signin = (req, res) => {
 
   User.findOne({ email: email })
     .then((user) => {
-      if (!user) {
+      if (!user)
         return res.status(400).json({
           errors: [{ user: "not found" }],
         });
-      } else {
+      else {
         console.log(user);
         bcrypt
           .compare(password, user.password)
