@@ -10,17 +10,27 @@ const AuthContextProvider = (props) => {
   const [isLogged, setisLogged] = useState(null);
   const [change, setchange] = useState(false);
   const [isAdmin, setisAdmin] = useState(false);
+  const [profileCompleted, setProfileCompleted] = useState(false);
+
   const update = () => setchange(!change);
   async function setInfo() {
     const res = await getUserInfo();
     setisLogged(res?.data.isLogged);
     setisAdmin(res?.data.isAdmin);
+    setProfileCompleted(res?.data.profileCompleted);
   }
   useEffect(() => setInfo(), [change]);
 
   return (
     <AuthContext.Provider
-      value={{ isLogged, setisLogged, update, isAdmin, setisAdmin }}
+      value={{
+        isLogged,
+        setisLogged,
+        update,
+        isAdmin,
+        setisAdmin,
+        profileCompleted,
+      }}
     >
       {props.children}
     </AuthContext.Provider>

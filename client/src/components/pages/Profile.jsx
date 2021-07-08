@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { getProfile } from "../api/UserApi";
+import { getProfile, editProfile } from "../api/UserApi";
+import { Link } from "react-router-dom";
+import Alert from "../utils/Toasts";
 
 const Profile = () => {
   const [newUser, setNewUser] = useState({});
+  const [alert, setAlert] = useState({
+    isShown: false,
+    text: "",
+    type: "green",
+  });
   const fetchProfile = async () => {
     const res = await getProfile();
     if (res?.status === 200) setNewUser(res.data.user);
@@ -12,8 +19,31 @@ const Profile = () => {
     fetchProfile();
   }, []);
   const setField = (e, field) => {
-    setNewUser({ ...newUser, field: e.target.value });
+    var aux = newUser;
+    aux[field] = e.target.value;
+    setNewUser(aux);
   };
+  const handleSave = async (e) => {
+    e.preventDefault();
+    const res = await editProfile(newUser);
+    if (res.status === 200)
+      displayAlert(3, "green", "porfile updated succesfully");
+    else displayAlert(3, "red", "couldn't update the porfile please try again");
+  };
+  //display the toast message
+  const displayAlert = (duration, type, text) => {
+    setAlert({
+      isShown: true,
+      text,
+      type,
+    });
+
+    setTimeout(
+      () => setAlert({ alert: { ...alert, isShown: false } }),
+      duration * 1000
+    );
+  };
+
   //TODO move the repeated style into another file
   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
     focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-full mb-2 mr-4`;
@@ -26,7 +56,10 @@ const Profile = () => {
             <img src={"user-profile.png"} alt="profile" />
           </div>
           <div className="row-span-1">
-            <button className="bg-green-450 text-xl text-white font-medium rounded px-4 py-2 hover:bg-green-600">
+            <button
+              onClick={handleSave}
+              className="bg-green-450 text-xl text-white font-medium rounded px-4 py-2 hover:bg-green-600"
+            >
               Save changes
             </button>
           </div>
@@ -83,13 +116,20 @@ const Profile = () => {
             </div>
           </div>
           <div className="row-span-4 col-span-2">
-            <button className="col-span-1 mx-2 bg-purple-400 text-xl text-white font-medium rounded px-4 py-2 hover:bg-purple-600">
+            <Link
+              to="/pannel"
+              className="col-span-1 mx-2 bg-purple-400 text-xl text-white font-medium rounded px-4 py-2 hover:bg-purple-600"
+            >
               See your pannel
-            </button>
-            <button className="col-span-1 mx-2 bg-yellow-400 text-xl text-white font-medium rounded px-4 py-2 hover:bg-yellow-600">
+            </Link>
+            <Link
+              to="/about"
+              className="col-span-1 mx-2 bg-yellow-400 text-xl text-white font-medium rounded px-4 py-2 hover:bg-yellow-600"
+            >
               give us feedback{" "}
-            </button>
+            </Link>
           </div>
+          <Alert alert={alert} />
         </div>
       </div>
     </div>

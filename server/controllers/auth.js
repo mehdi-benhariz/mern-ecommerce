@@ -152,7 +152,12 @@ exports.userInfo = async (req, res) => {
   const { token } = req.cookies;
   if (token) {
     var user = await getUserByToken(token);
-    res.status(200).json({ isLogged: true, isAdmin: user.isAdmin });
+    const { adress, phone, gender } = user;
+
+    const profileCompleted = !!adress && !!phone && !!gender;
+    res
+      .status(200)
+      .json({ isLogged: true, isAdmin: user.isAdmin, profileCompleted });
   } else res.json({ isLogged: false });
 };
 //upload profile image

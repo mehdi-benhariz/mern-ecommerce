@@ -2,5 +2,5 @@ x impliment a delete user function and modal
 x fix the routing
 fix the category chart
 x fix the badge pannel
-add a profile page for user 
+x add a profile page for user 
 add forgot password 

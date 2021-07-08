@@ -56,7 +56,7 @@ export const getProfile = async () => {
 export const editProfile = async (newUser) => {
   const url = `${process.env.REACT_APP_BASIC_URL}/api/v1/user/edit-profile`;
   try {
-    const res = await axios.post(url, newUser);
+    const res = await axios.post(url, { newUser });
     return res;
   } catch (err) {
     return err.response;

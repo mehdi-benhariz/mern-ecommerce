@@ -5,7 +5,8 @@ import { logOut } from "../api/UserApi";
 import { getPannelItems } from "../utils/Cache";
 
 const NavBar = () => {
-  const { isLogged, update, isAdmin } = useContext(AuthContext);
+  const { isLogged, update, isAdmin, profileCompleted } =
+    useContext(AuthContext);
   const [expanded, setexpanded] = useState(false);
   const [selectedElt, setSelectedElt] = useState(false);
   const [pannelItems, setPannelItems] = useState(0);
@@ -90,12 +91,14 @@ const NavBar = () => {
                       >
                         <span class="relative inline-flex rounded-md shadow-sm">
                           Profile{" "}
-                          <div class="flex absolute top-0 right-0 -mt-0.5 -mr-1">
-                            <span class="absolute inline-flex animate-ping">
-                              <span class="inline-flex rounded-full h-2 w-2 bg-purple-400 opacity-75"></span>
-                            </span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-                          </div>
+                          {profileCompleted && (
+                            <div class="flex absolute top-0 right-0 -mt-0.5 -mr-1">
+                              <span class="absolute inline-flex animate-ping">
+                                <span class="inline-flex rounded-full h-2 w-2 bg-purple-400 opacity-75"></span>
+                              </span>
+                              <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                            </div>
+                          )}
                         </span>
                       </Link>
                     </span>
