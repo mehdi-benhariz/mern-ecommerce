@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { getPannel, buyProduct } from "../api/ProductApi";
+import HistoryTable from "../layout/HistoryTable";
 import Alert from "../utils/Toasts";
 
 const Pannel = () => {
@@ -8,6 +9,7 @@ const Pannel = () => {
   const [index, setIndex] = useState(0);
   const [total, setTotal] = useState(0);
   const [quantity, setQuantity] = useState(0);
+  const [historyTable, setHistoryTable] = useState([]);
   const [alert, setAlert] = useState({
     isShown: false,
     text: "",
@@ -30,8 +32,12 @@ const Pannel = () => {
   //set the pannel
   async function fetchPannel() {
     const res = await getPannel();
-    if (res?.status === 200) setPannel(res.data);
-    console.log(res?.data);
+    console.log(res);
+    if (res?.status === 200) {
+      setPannel(res?.data?.data);
+      setHistoryTable(res?.data?.historic);
+    }
+    console.log(res?.data?.historic);
   }
   useEffect(() => {
     fetchPannel();
@@ -215,10 +221,10 @@ const Pannel = () => {
         </button>
         <Alert alert={alert} />
       </div>
-      <div class="row-span-1 bg-white rounded shadow-lg mb-4  h-60 p-4 ">
-        <h4 class="text-lg font-medium text-gray-500">Payment History</h4>
-        <table></table>
-      </div>
+      <HistoryTable
+        class="row-span-1 bg-white rounded shadow-lg mb-4  h-60 p-4 "
+        data={historyTable}
+      />
     </div>
   );
 };

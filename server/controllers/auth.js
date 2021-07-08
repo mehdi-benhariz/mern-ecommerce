@@ -230,11 +230,12 @@ exports.buyProduct = async (req, res) => {
   }
 };
 //get the product inside the client's pannel
-exports.pannelDetail = async (req, res) => {
+exports.pannelDetail = async (req, res, next) => {
   const { token } = req.cookies;
   try {
     const user = await getUserByToken(token);
-    console.log(user);
+    const { historic } = user;
+    console.log({ historic });
     let data = user.pannelProducts;
     if (!data) return res.status(400).json({ error: "ID is required" });
 
@@ -245,10 +246,9 @@ exports.pannelDetail = async (req, res) => {
       data[i] = { product: prod, quantity: data[i].quantity };
     }
 
-    return res.status(200).json(data);
+    return res.status(200).json({ data, historic });
   } catch (error) {
-    console.log("err:", error);
-    return res.status(500).json({ error: "internal errors" });
+    next(error);
   }
 };
 

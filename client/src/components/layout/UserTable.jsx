@@ -9,12 +9,6 @@ const UsersDataTable = ({ data }) => {
       {exist ? (
         <div>
           <h3 class="text-2xl text-gray-700 font-semibold">clients:</h3>
-          {/* <table class="grid grid-cols-4">
-            <th>Name</th>
-            <th>Registration date</th>
-            <th>gender</th>
-            <th>delete?</th>
-          </table> */}
           <table>
             <thead>
               <tr>
