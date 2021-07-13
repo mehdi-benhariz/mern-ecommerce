@@ -9,7 +9,7 @@ import Footer from "./components/layout/Footer";
 import ProductRoute from "./components/routes/ProductRoute";
 import AdminRoute from "./components/routes/AdminRoute";
 import Profile from "./components/pages/Profile";
-
+import ReceiptRoute from "./components/routes/ReceiptRoute";
 function App() {
   return (
     <div className="App bg-gray-200 h-full flex flex-col justify-between">
@@ -22,6 +22,7 @@ function App() {
         <Route exact path="/profile" component={Profile} />
         <Route path="/product" component={ProductRoute} />
         <Route path="/adminPage" component={AdminRoute} />
+        <Route path="/receipt" component={ReceiptRoute} />
         <Route component={ErrorPage} />
       </Switch>
       <Footer />

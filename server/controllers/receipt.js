@@ -23,8 +23,8 @@ exports.getReceipt = async (req, res, next) => {
 /**
  * @param  {} body
  */
-const handleError = (body) => {
-  const { total, products } = body;
+const handleError = (body, res) => {
+  const { total, products } = body.receipt;
   let errors = [];
   if (!total) errors.push({ total: "required" });
 
@@ -38,9 +38,9 @@ const handleError = (body) => {
  * @param  {} next
  */
 exports.addReceipt = async (req, res, next) => {
-  handleError(req.body);
+  handleError(req.body, res);
   try {
-    const receipt = new Receipt(req.body);
+    const receipt = new Receipt(req.body.receipt);
     await receipt.save();
     return res.status(200).json(receipt);
   } catch (error) {
@@ -63,13 +63,13 @@ exports.removeReceipt = async (req, res, next) => {
 exports.updateReceipt = async (req, res, next) => {
   const { id, editReceipt } = req.body;
 
-  if (!pid) return res.status(400).json({ error: "ID is required" });
+  if (!id) return res.status(400).json({ error: "ID is required" });
 
   if (!editReceipt)
     return res.status(400).json({ error: "new receipt is required" });
 
   try {
-    const updated = await Receipt.findByIdAndUpdate(pId, editReceipt, {
+    const updated = await Receipt.findByIdAndUpdate(id, editReceipt, {
       new: true,
     });
     if (!updated) return res.status(500).json({ error: "couldn't update !" });

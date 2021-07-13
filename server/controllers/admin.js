@@ -15,7 +15,7 @@ exports.getAdminBoard = async (req, res, next) => {
     users.forEach((user) => {
       user.historic.forEach(({ date, total, goods }) => {
         console.log(goods);
-        //todo fix therevenu per category
+        //todo fix the revenu per category
         // goods.forEach((good) => {
         //   console.log(tag);
         //   var tag = good.product.tags[0];

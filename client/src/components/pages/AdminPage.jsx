@@ -28,9 +28,9 @@ const AdminPage = () => {
       <div>
         <div class="flex mb-3 ">
           <h2 class="flex-1 text-gray-700 font-bold">Admin Page</h2>
-          <Link>
+          <Link to="/receipt/add">
             <button class="py-4 px-8 mr-2 bg-green-500 hover:bg-green-700 text-3xl text-white font-bold rounded">
-              Add Facture
+              Add Receipt
             </button>
           </Link>
           <Link to="/product/add">

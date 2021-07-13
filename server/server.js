@@ -65,4 +65,7 @@ app.use("/api/v1/admin", adminRoutes);
 const userRoutes = require("./routes/user");
 app.use("/api/v1/user", userRoutes);
 
+const recieptRoutes = require("./routes/receipt");
+app.use("/api/v1/receipt", recieptRoutes);
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

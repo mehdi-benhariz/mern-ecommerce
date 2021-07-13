@@ -4,4 +4,4 @@ fix the category chart
 x fix the badge pannel
 x add a profile page for user 
 add forgot password 
-add facture CRUD
+add receipt CRUD
