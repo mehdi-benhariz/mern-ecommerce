@@ -184,8 +184,8 @@ const NavBar = () => {
 hover:bg-transparent  hover:text-gray-500 transform ease-in-out duration-200  "
                   title="Link"
                   onClick={() => {
-                    logOut();
                     update();
+                    logOut();
                   }}
                 >
                   Log Out

@@ -5,7 +5,7 @@ import { getAdminPage } from "../api/AdminApi";
 import CategoryChart from "../charts/CategoryChart";
 import RevenuMonth from "../charts/RevenuMonth";
 import UsersDataTable from "../layout/UserTable";
-
+import ReceiptCard from "../layout/ReceiptCard";
 const AdminPage = () => {
   const [userTable, setUserTable] = useState([]);
   const [revenuePerMonth, setRevenuePerMonth] = useState([]);
@@ -57,6 +57,11 @@ const AdminPage = () => {
             <h4 class="text-gray-500 font-normal">Revenue</h4>
           </div>
         </div>
+      </div>
+      <div className="grid xws sm:grid-cols-3 md:grid-cols-4">
+        <ReceiptCard />
+        <ReceiptCard />
+        <ReceiptCard />
       </div>
       <div class="bg-white rounded shadow-lg mt-5 p-3 grid grid-cols-3 ">
         <CategoryChart />

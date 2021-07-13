@@ -23,11 +23,10 @@ const SignUp = () => {
       login(newUser);
       console.log(res.data);
       setPannelItems(0);
-
+      history.push("/");
       const state = await getUserInfo();
       setisLogged(state.isLogged);
       update();
-      history.push("/");
     } else seterror(res.data.errors);
   };
   return (

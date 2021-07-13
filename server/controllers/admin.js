@@ -5,13 +5,20 @@ exports.getAdminBoard = async (req, res, next) => {
   try {
     var users = await User.find({ isAdmin: false }).limit(10);
     var products = await Product.find();
+    var receipts = await Receipt.find();
     var revenuePerMonth = new Array(12).fill(0);
+    var receiptPerMoonth = new Array(12).fill(0);
     var revenuePerCat = new Map();
     revenuePerCat.set("clothes", { val: 0, nbr: 0 });
     revenuePerCat.set("electronic", { val: 0, nbr: 0 });
     revenuePerCat.set("food", { val: 0, nbr: 0 });
 
     var i = 0;
+
+    receipts.forEach((receipt) => {
+      i = receipt.date.getMonth();
+      receiptPerMoonth[i] += receipt.total;
+    });
     users.forEach((user) => {
       user.historic.forEach(({ date, total, goods }) => {
         console.log(goods);
@@ -27,7 +34,7 @@ exports.getAdminBoard = async (req, res, next) => {
         // });
 
         i = date.getMonth();
-        revenuePerMonth[i] += total;
+        revenuePerMonth[i] += total - receiptPerMoonth[i];
       });
     });
     return res.status(200).json({ users, revenuePerMonth, revenuePerCat });

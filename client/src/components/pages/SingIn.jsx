@@ -17,11 +17,11 @@ const SignIn = () => {
       seterror(res.data.errors);
       console.log(res.data.errors);
     } else {
+      history.push("/");
       const state = await getUserInfo();
       setisLogged(state.isLogged);
       setPannelItems(res.data.message.pannelProducts.length);
       update();
-      history.push("/");
     }
   };
 
