@@ -34,11 +34,11 @@ export const removeReceipts = async (id) => {
   }
 };
 
-export const addReceipts = async (receipt) => {
+export const addReceipts = async (products, total) => {
   try {
     const res = await axios.post(
       `${process.env.REACT_APP_BASIC_URL}/api/v1/receipt/add`,
-      { receipt }
+      { products, total }
     );
     return res;
   } catch (err) {

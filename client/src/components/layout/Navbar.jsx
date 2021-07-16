@@ -89,14 +89,14 @@ const NavBar = () => {
                         to="/profile"
                         title="Link"
                       >
-                        <span class="relative inline-flex rounded-md shadow-sm">
+                        <span className="relative inline-flex rounded-md shadow-sm">
                           Profile{" "}
                           {profileCompleted && (
-                            <div class="flex absolute top-0 right-0 -mt-0.5 -mr-1">
-                              <span class="absolute inline-flex animate-ping">
-                                <span class="inline-flex rounded-full h-2 w-2 bg-purple-400 opacity-75"></span>
+                            <div className="flex absolute top-0 right-0 -mt-0.5 -mr-1">
+                              <span className="absolute inline-flex animate-ping">
+                                <span className="inline-flex rounded-full h-2 w-2 bg-purple-400 opacity-75"></span>
                               </span>
-                              <span class="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
                             </div>
                           )}
                         </span>

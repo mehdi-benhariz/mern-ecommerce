@@ -22,7 +22,7 @@ const Main = () => {
 
   return (
     <React.Fragment>
-      <div class="flex items-center justify-center">
+      <div className="flex items-center justify-center">
         <input
           placeholder="What are you shopping for?"
           maxLength="300"
@@ -33,7 +33,7 @@ const Main = () => {
         />
       </div>
 
-      <div class=" bg-gray-300 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 px-3">
+      <div className=" bg-gray-300 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 px-3">
         {productList?.length > 0 && productList}{" "}
       </div>
     </React.Fragment>

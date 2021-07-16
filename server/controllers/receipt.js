@@ -24,7 +24,7 @@ exports.getReceipt = async (req, res, next) => {
  * @param  {} body
  */
 const handleError = (body, res) => {
-  const { total, products } = body.receipt;
+  const { total, products } = body;
   let errors = [];
   if (!total) errors.push({ total: "required" });
 
@@ -40,9 +40,10 @@ const handleError = (body, res) => {
 exports.addReceipt = async (req, res, next) => {
   handleError(req.body, res);
   try {
-    const receipt = new Receipt(req.body.receipt);
-    await receipt.save();
-    return res.status(200).json(receipt);
+    const receipt = new Receipt(req.body);
+    const added = await receipt.save();
+    if (!added) return res.status(500).json({ error: "couldn't add !" });
+    return res.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }

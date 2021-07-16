@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { addProducts } from "../../api/ProductApi";
+import { input } from "../../shared/classes";
 //totally fine
 const AddProduct = () => {
   const [newProduct, setnewProduct] = useState({});
@@ -29,9 +30,9 @@ const AddProduct = () => {
     } else seterror(res?.data?.error);
   };
 
-  const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
+  /*   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
   focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-full mb-2 mr-4`;
-  const labelText = `text-lg font-medium text-gray-700`;
+ */ const labelText = `text-lg font-medium text-gray-700`;
 
   return (
     <div className="grid grid-rows-3 gap-8 px-4 ">
