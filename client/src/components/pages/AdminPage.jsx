@@ -6,6 +6,7 @@ import CategoryChart from "../charts/CategoryChart";
 import RevenuMonth from "../charts/RevenuMonth";
 import UsersDataTable from "../layout/UserTable";
 import ReceiptCard from "../layout/ReceiptCard";
+import { FaArrowRight } from "react-icons/fa";
 const AdminPage = () => {
   const [userTable, setUserTable] = useState([]);
   const [revenuePerMonth, setRevenuePerMonth] = useState([]);
@@ -58,11 +59,21 @@ const AdminPage = () => {
           </div>
         </div>
       </div>
-      <div className="grid xws sm:grid-cols-3 md:grid-cols-4">
+      <div className="grid sm:grid-cols-3 xsm:grid-cols-2 ">
+        <ReceiptCard />
         <ReceiptCard />
         <ReceiptCard />
         <ReceiptCard />
       </div>
+      <div className="mt-2 place-items-center grid hover:text-green-400">
+        <Link
+          to="/receipt/"
+          className=" border-2 p-1 outline-none items-center justify-center flex border-gray-400 w-28 ease-in duration-200   hover:border-green-400 "
+        >
+          <FaArrowRight color="gray" size={30} />
+        </Link>
+      </div>
+
       <div class="bg-white rounded shadow-lg mt-5 p-3 grid grid-cols-3 ">
         <CategoryChart />
       </div>

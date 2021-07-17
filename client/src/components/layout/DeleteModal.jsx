@@ -4,6 +4,7 @@ import { removeProduct } from "../api/ProductApi";
 import { useHistory } from "react-router-dom";
 import { ProductContext } from "../context/ProductContext";
 import { removeUser } from "../api/AdminApi";
+import { removeReceipt } from "../api/ReceiptApi";
 //TODO: create a template modal for delete
 const DeleteModal = ({ setShowModal, id, type }) => {
   let history = useHistory();
@@ -21,10 +22,17 @@ const DeleteModal = ({ setShowModal, id, type }) => {
         break;
       case "user":
         res = await removeUser(id);
+        if (res?.data?.success) setShowModal(false);
+
+        break;
+      case "receipt":
+        res = await removeReceipt(id);
         if (res?.data?.success) {
+          update();
+          history.push("/");
           setShowModal(false);
         }
-        break;
+
       default:
         break;
     }
