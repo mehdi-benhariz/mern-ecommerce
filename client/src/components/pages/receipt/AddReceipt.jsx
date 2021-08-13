@@ -12,77 +12,7 @@ const AddReceipt = () => {
     unitPrice: 0,
   }); */
   const [total, setTotal] = useState(0);
-  //set the product table
-  const getTabPoducts = () => {
-    return (
-      <>
-        {products.map((product, i) => {
-          console.log(product);
-          return (
-            <tr key={product._id}>
-              <td>
-                <span>product</span>
-                <input
-                  type="text"
-                  value={product.product}
-                  onChange={(e) => setForm(e, "product", i)}
-                  className="bg-gray-200 rounded px-2 py-1 hover:shadow-xl transform ease-linear duration-150 
-  focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-4/5 mb-2 mr-4"
-                />
-                {/*        <select
-                  id="products"
-                  value={product.product}
-                  onChange={(e) => setForm(e, "product", i)}
-                  className="bg-gray-200 rounded px-2 py-1 hover:shadow-xl transform ease-linear duration-150 
-  focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-4/5 mb-2 mr-4"
-                >
-                  {options}
-                </select>{" "} */}
-              </td>
-              <td>
-                <span>quantity</span>
-                <input
-                  value={product.quantity}
-                  type="number"
-                  onChange={(e) => setForm(e, "quantity", i)}
-                  className="bg-gray-200 rounded px-2 py-1 hover:shadow-xl transform ease-linear duration-150 
-  focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-4/5 mb-2 mr-4"
-                />
-              </td>
-              <td className="flex flex-row">
-                <span>unit price</span>
-
-                <input
-                  value={product.unitPrice}
-                  type="number"
-                  onChange={(e) => setForm(e, "unitPrice", i)}
-                  className="bg-gray-200 rounded px-2 py-1 hover:shadow-xl transform ease-linear duration-150 
-  focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-4/5 mb-2 mr-4"
-                />
-                {i === 0 ? (
-                  <button
-                    onClick={(e) => addCol(e)}
-                    className="text-2xl rounded-full px-4  bg-gray-400 "
-                  >
-                    +
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => removeCol(i)}
-                    className="text-2xl rounded-full px-4  bg-gray-400 "
-                  >
-                    -
-                  </button>
-                )}
-              </td>
-            </tr>
-          );
-        })}
-      </>
-    );
-  };
   //
-  let productTable = getTabPoducts();
   var map = new Map();
   const setMap = async () => {
     const res = await getReceipts();
@@ -105,11 +35,12 @@ const AddReceipt = () => {
     setProducts([{}]);
   };
   //
+
   const setForm = (e, field, i) => {
     console.log({ field, i });
     var aux = products;
     aux[i][field] = e.target.value;
-    console.log({ aux });
+    console.log(aux[i]);
     setProducts(aux);
   };
   //add column to the table
@@ -119,15 +50,12 @@ const AddReceipt = () => {
     console.log({ aux });
     setProducts(aux);
     console.log({ products });
-    getTabPoducts();
-    productTable = getTabPoducts();
   };
   //remove column from the table
   const removeCol = (i) => {
     var aux = products;
     aux.splice(i, 1);
     setProducts(aux);
-    productTable = getTabPoducts();
   };
   useEffect(() => {
     var aux = 0;
@@ -166,7 +94,59 @@ const AddReceipt = () => {
         </thead>
         <tbody>
           <tr></tr>
-          {productTable}
+          {products.map((product, i) => {
+            console.log(product);
+            return (
+              <tr key={product._id}>
+                <td>
+                  <span>product</span>
+                  <input
+                    type="text"
+                    value={product.product}
+                    onChange={(e) => setForm(e, "product", i)}
+                    className="bg-gray-200 rounded px-2 py-1 hover:shadow-xl transform ease-linear duration-150 
+  focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-4/5 mb-2 mr-4"
+                  />
+                </td>
+                <td>
+                  <span>quantity</span>
+                  <input
+                    value={product.quantity}
+                    type="number"
+                    onChange={(e) => setForm(e, "quantity", i)}
+                    className="bg-gray-200 rounded px-2 py-1 hover:shadow-xl transform ease-linear duration-150 
+  focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-4/5 mb-2 mr-4"
+                  />
+                </td>
+                <td className="flex flex-row">
+                  <span>unit price</span>
+
+                  <input
+                    value={product.unitPrice}
+                    type="number"
+                    onChange={(e) => setForm(e, "unitPrice", i)}
+                    className="bg-gray-200 rounded px-2 py-1 hover:shadow-xl transform ease-linear duration-150 
+  focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-4/5 mb-2 mr-4"
+                  />
+                  {i === 0 ? (
+                    <button
+                      onClick={(e) => addCol(e)}
+                      className="text-2xl rounded-full px-4  bg-gray-400 "
+                    >
+                      +
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => removeCol(i)}
+                      className="text-2xl rounded-full px-4  bg-gray-400 "
+                    >
+                      -
+                    </button>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <div className="flex flex-row items-center justify-between ">

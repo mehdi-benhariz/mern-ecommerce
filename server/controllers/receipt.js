@@ -40,7 +40,8 @@ const handleError = (body, res) => {
 exports.addReceipt = async (req, res, next) => {
   handleError(req.body, res);
   try {
-    const receipt = new Receipt(req.body);
+    const { products, total } = req.body;
+    const receipt = new Receipt({ total, products });
     const added = await receipt.save();
     if (!added) return res.status(500).json({ error: "couldn't add !" });
     return res.status(200).json({ success: true });
