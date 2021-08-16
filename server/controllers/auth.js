@@ -37,6 +37,7 @@ const handleErrorSignUp = (req) => {
 exports.signup = (req, res, next) => {
   var errors = handleErrorSignUp(req);
   if (errors.length > 0) return res.status(400).json({ errors });
+  const { email, name, password } = req.body;
   User.findOne({ email: email })
     .then((user) => {
       if (user)
@@ -45,36 +46,34 @@ exports.signup = (req, res, next) => {
           .json({ errors: [{ user: "email already exists" }] });
       else {
         const user = new User({
-          name: name,
-          email: email,
-          password: password,
+          name,
+          email,
+          password,
         });
 
         bcrypt.genSalt(10, function (err, salt) {
-          bcrypt.hash(password, salt, function (err, hash) {
+          bcrypt.hash(password, salt, (err, hash) => {
             if (err) throw err;
             user.password = hash;
             //saving user to db
             user
               .save()
-              .then((response) => {
+              .then((response) =>
                 res.status(200).json({
                   success: true,
                   message: response,
-                });
-              })
-              .catch((err) => {
+                })
+              )
+              .catch((err) =>
                 res.status(400).json({
                   errors: [{ error: err }],
-                });
-              });
+                })
+              );
           });
         });
       }
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch((err) => next(err));
 };
 
 //login to the account
@@ -160,14 +159,14 @@ exports.userInfo = async (req, res) => {
       .json({ isLogged: true, isAdmin: user.isAdmin, profileCompleted });
   } else res.json({ isLogged: false });
 };
-//upload profile image
 
 //create password reset
 exports.resetPWD = async (req, res) => {
   try {
-    const { email } = req.body.email;
+    const { email } = req.body;
     if (!email) return res.status(400).json("invalid email");
     const user = await User.findOne({ email: email });
+
     if (!user)
       return res.status(400).send("user with given email doesn't exist");
 
@@ -181,7 +180,7 @@ exports.resetPWD = async (req, res) => {
 
     const link = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}`;
     await sendEmail(user.email, "Password reset", link);
-
+    console.log(`reset link sent to ${user.email} with link ${link}`);
     res.send("password reset link sent to your email account");
   } catch (error) {
     res.send("An error occured");
