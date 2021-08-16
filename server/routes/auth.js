@@ -5,9 +5,8 @@ const {
   signin,
   logOut,
   userInfo,
-  buyProduct,
-  pannelDetail,
-  uploadPic,
+  resetPWD,
+  resetPWDverif,
 } = require("../controllers/auth");
 const { auth } = require("../middleware/auth");
 
@@ -15,9 +14,6 @@ router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/logOut", auth, logOut);
 router.get("/userInfo", auth, userInfo);
-router.post("/buy", auth, buyProduct);
-//router.get("/pannel", auth, pannelDetail);
-router.post("/upload-pic", auth, uploadPic);
-router.post("/buy", auth, buyProduct);
-router.post("password-reset");
+router.post("/pwd-reset", resetPWD);
+router.post("/verify-reset", resetPWDverif);
 module.exports = router;

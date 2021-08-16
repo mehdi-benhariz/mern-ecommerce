@@ -11,9 +11,9 @@ exports.auth = async (req, res, next) => {
         user_id: decode.userId,
       };
       next();
-    } else {
+    } else 
       return res.status(403).json({ message: "access denied" });
-    }
+    
   } catch (error) {
     console.log("error");
     console.log("err:", error);
