@@ -14,8 +14,10 @@ require("dotenv").config({
   path: path.join(process.cwd(), "/config/.env"),
 });
 // Connect to a data base
-require("./db/db");
+// require("./db/db");
 
+require("./startup/db")();
+require("./startup/logging");
 // parse application/x-www-form-urlencoded
 app.use(
   express.urlencoded({

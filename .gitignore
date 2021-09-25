@@ -6,4 +6,7 @@
 /.vscode
 /dummy-data.txt
 /client/.env
+/server/logs
+/.dist
+
 
