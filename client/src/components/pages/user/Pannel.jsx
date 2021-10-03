@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import { getPannel, buyProduct } from "../api/ProductApi";
-import HistoryTable from "../layout/HistoryTable";
-import Alert from "../utils/Toasts";
+import { getPannel, buyProduct } from "../../api/ProductApi";
+import HistoryTable from "../../layout/HistoryTable";
+import Alert from "../../utils/Toasts";
 
 const Pannel = () => {
   const [pannel, setPannel] = useState([]);

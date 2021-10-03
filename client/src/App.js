@@ -4,11 +4,11 @@ import SignUp from "./components/pages/SignUp";
 import Main from "./components/pages/Main";
 import ErrorPage from "./components/pages/ErrorPage";
 import NavBar from "./components/layout/Navbar";
-import Pannel from "./components/pages/Pannel";
+import Pannel from "./components/pages/user/Pannel";
 import Footer from "./components/layout/Footer";
 import ProductRoute from "./components/routes/ProductRoute";
 import AdminRoute from "./components/routes/AdminRoute";
-import Profile from "./components/pages/Profile";
+import Profile from "./components/pages/user/Profile";
 import ReceiptRoute from "./components/routes/ReceiptRoute";
 function App() {
   return (

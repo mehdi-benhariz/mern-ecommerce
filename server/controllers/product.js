@@ -106,32 +106,28 @@ exports.getByCategory = async (req, res) => {
 exports.uploadImage = async (req, res, next) => {
   console.log("");
   const { pId } = req.params;
-  const product = await Product.findById(pId);
-  console.log(product);
+  // const product = await Product.findById(pId);
+  // console.log(product);
 
-  try {
-    // file upload handler
-    if (req.files === null)
-      return res.status(400).json({ message: "No file uploaded" });
+  // file upload handler
 
-    const file = req.files.file;
-    const regex = /^image\/(png|jpg|jpeg)$/;
-    console.log(file);
-    if (!regex.test(file.mimetype))
-      return res
-        .status(400)
-        .json({ message: "File type should be png, jpg, or jpeg" });
-    const err = await file.mv(
-      path.join(__dirname, "..", "public", "product_images", file.name)
-    );
+  console.log(req.files);
+  if (!req.files) return res.status(400).json({ message: "No file uploaded" });
+  const file = req.files.myFile;
+  const regex = /^image\/(png|jpg|jpeg)$/;
+  console.log(file);
+  if (!regex.test(file.mimetype))
+    return res
+      .status(400)
+      .json({ message: "File type should be png, jpg, or jpeg" });
+  const err = await file.mv(
+    path.join(__dirname, "..", "public", "product_images", file.name)
+  );
+  return res.status(200).json("success");
+  // const newProduct = await product.save();
+  // res.json({ product: newProduct });
 
-    const newProduct = await product.save();
-    res.json({ product: newProduct });
-
-    // end file upload handler
-  } catch (error) {
-    next(error);
-  }
+  // end file upload handler
 };
 
 //

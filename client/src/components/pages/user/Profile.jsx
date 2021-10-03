@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getProfile, editProfile } from "../api/UserApi";
+import { getProfile, editProfile } from "../../api/UserApi";
 import { Link } from "react-router-dom";
-import Alert from "../utils/Toasts";
+import Alert from "../../utils/Toasts";
 
 const Profile = () => {
   const [newUser, setNewUser] = useState({});

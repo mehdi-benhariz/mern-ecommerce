@@ -111,8 +111,8 @@ export const uploadProductPic = async (formData, pId) => {
   try {
     const res = await axios.post(
       `${process.env.REACT_APP_BASIC_URL}/api/v1/product/upload-pic/${pId}`,
+      formData,
       {
-        body: formData,
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -15,9 +15,9 @@ const ProductCard = ({ product }) => {
             </p>
             <p className="uppercase text-sm text-gray-400">{description}</p>
           </div>
-          <div className="prod-img">
+          <div className="prod-img p-1">
             <img
-              src="https://unsplash.com/photos/IJjfPInzmdk/download?force=true&w=1920"
+              src={`${process.env.REACT_APP_BASIC_URL}/product_images/shoes.jpeg`}
               className="w-full object-cover object-center"
               alt="a product"
             />
