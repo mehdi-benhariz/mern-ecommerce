@@ -13,9 +13,13 @@ const path = require("path");
 require("dotenv").config({
   path: path.join(process.cwd(), "/config/.env"),
 });
+// Function to serve all static files
+// inside public directory.
+app.use(express.static("public"));
+//app.use("/public", express.static("product_images"));
+
 // Connect to a data base
 // require("./db/db");
-
 require("./startup/db")();
 require("./startup/logging");
 // parse application/x-www-form-urlencoded
