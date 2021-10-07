@@ -1,6 +1,7 @@
 const Product = require("../models/Product");
 const path = require("path");
 const { getUserByToken } = require("../utils/auth");
+const { decodeImg, dataValidation } = require("../utils/product");
 exports.getAll = async (req, res) => {
   try {
     const products = await Product.find();
@@ -11,14 +12,14 @@ exports.getAll = async (req, res) => {
 };
 //add a new product
 exports.addProduct = async (req, res) => {
-  const { name, price, description, quantityStock } = req.body.newProduct;
-  if (!name || !price || !description || !quantityStock)
-    return res.status(400).json({ error: "all fields are required required" });
+  // let errors = dataValidation(req);
+  // if (errors.length !== 0) return res.status(400).json(errors);
 
   try {
     const newProduct = new Product(req.body.newProduct);
     await newProduct.save();
-
+    console.log(req.body);
+    decodeImg(req.body.newProduct.image, newProduct._id);
     return res.status(200).json({ success: true, newProduct });
   } catch (error) {
     console.log("err:", error);

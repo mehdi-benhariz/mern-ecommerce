@@ -18,15 +18,18 @@ const EditProduct = () => {
     console.log(res);
     if (res.status === 200) history.push("/");
   };
-  //!there is an edge case that need to be fixed
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    setSelectedFile(file);
     console.log(selectedFile);
     const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
+    if (file) reader.readAsDataURL(file);
     reader.onload = () => {
       //todo:add a case for empty data
-      if (reader.readyState === 2) setPreviewImg(reader.result);
+      if (reader.readyState === 2) {
+        setPreviewImg(reader.result);
+        setnewProduct({ newProduct, image: reader.result });
+      }
     };
   };
   const handleUpload = () => {
@@ -34,6 +37,7 @@ const EditProduct = () => {
     formData.append("myFile", selectedFile);
     console.log({ selectedFile });
     uploadProductPic(formData, pId);
+    console.log({ newProduct });
   };
   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
     focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-full mb-2 mr-4`;
@@ -98,8 +102,8 @@ const EditProduct = () => {
           <span className={labelText}>Photo</span>
           <form>
             <div className="relative h-40 rounded-lg border-dashed border-2 border-gray-200 bg-white flex justify-center items-center hover:cursor-pointer">
-              {!selectedFile && (
-                <div className="absolute">
+              <div className="absolute">
+                {!selectedFile && (
                   <div className="flex flex-col items-center ">
                     <i className="fa fa-cloud-upload fa-3x text-gray-200"></i>
                     <span className="block text-gray-400 font-normal">
@@ -110,9 +114,9 @@ const EditProduct = () => {
                       Browse files
                     </span>{" "}
                   </div>
-                </div>
-              )}{" "}
-              {selectedFile && <img src={previewImg} alt="product" />}
+                )}
+                {selectedFile && <img src={previewImg} alt="product" />}
+              </div>{" "}
               <input
                 type="file"
                 onChange={handleFileChange}

@@ -1,27 +1,36 @@
 import React, { useState } from "react";
-import { addProducts } from "../../api/ProductApi";
+import { addProducts, uploadProductPic } from "../../api/ProductApi";
 import { input } from "../../shared/classes";
+import { useParams, useHistory } from "react-router";
+
 //totally fine
 const AddProduct = () => {
   const [newProduct, setnewProduct] = useState({});
   const [error, seterror] = useState(null);
-  const [file, setFile] = useState(null);
-  const [preview, setPreveiew] = useState(null);
-  //TODO need to fix the image upload!
-  const choseImg = (e) => {
-    setFile(e.target.files[0]);
-    setPreveiew(URL.createObjectURL(e.target.files[0]));
-  };
-  let formData = new FormData();
-  const changePic = () => {
-    formData = new FormData();
-    formData.append("file", file);
+  const [selectedFile, setSelectedFile] = useState(null);
+  //*for better user experience
+  const [previewImg, setPreviewImg] = useState(null);
+  let { pId } = useParams();
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    console.log(selectedFile);
+    const reader = new FileReader();
+    if (file) reader.readAsDataURL(file);
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setPreviewImg(reader.result);
+        setnewProduct({ ...newProduct, image: reader.result });
+        console.log({ newProduct });
+      }
+    };
   };
   const handleSubmit = async (e) => {
     const res = await addProducts(newProduct);
     if (res?.data?.success) {
       setnewProduct({});
-      changePic();
+      // changePic();
       // const response = await uploadProductPic(
       //   formData,
       //   res.data.newProduct._id
@@ -29,7 +38,12 @@ const AddProduct = () => {
       //      console.log(response);
     } else seterror(res?.data?.error);
   };
-
+  const handleUpload = () => {
+    const formData = new FormData();
+    formData.append("myFile", selectedFile);
+    console.log({ selectedFile });
+    uploadProductPic(formData, pId);
+  };
   /*   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
   focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-full mb-2 mr-4`;
  */ const labelText = `text-lg font-medium text-gray-700`;
@@ -100,30 +114,31 @@ const AddProduct = () => {
         <div className="mb-2">
           {" "}
           <span className={labelText}>Photo</span>
-          <div className="relative h-40 rounded-lg border-dashed border-2 border-gray-200 bg-white flex justify-center items-center hover:cursor-pointer">
-            <div className="absolute">
-              <div className="flex flex-col items-center ">
-                <i className="fa fa-cloud-upload fa-3x text-gray-200"></i>
-                <span className="block text-gray-400 font-normal">
-                  Attach you files here
-                </span>{" "}
-                <span className="block text-gray-400 font-normal">or</span>{" "}
-                <form action="" method="post" encType="multipart/form-data">
-                  <span className="block text-blue-400 font-normal">
-                    {preview && (
-                      <img
-                        src={preview}
-                        alt=""
-                        className="object-cover h-32 w-32"
-                      />
-                    )}
-
-                    <input type="file" onChange={choseImg} />
-                  </span>{" "}
-                </form>
-              </div>
-            </div>{" "}
-          </div>
+          <form>
+            <div className="relative h-40 rounded-lg border-dashed border-2 border-gray-200 bg-white flex justify-center items-center hover:cursor-pointer">
+              <div className="absolute">
+                {!selectedFile && (
+                  <div className="flex flex-col items-center ">
+                    <i className="fa fa-cloud-upload fa-3x text-gray-200"></i>
+                    <span className="block text-gray-400 font-normal">
+                      Attach you files here
+                    </span>{" "}
+                    <span className="block text-gray-400 font-normal">or</span>{" "}
+                    <span className="block text-blue-400 font-normal">
+                      Browse files
+                    </span>{" "}
+                  </div>
+                )}
+                {selectedFile && <img src={previewImg} alt="product" />}
+              </div>{" "}
+              <input
+                type="file"
+                onChange={handleFileChange}
+                className="h-full w-full opacity-0"
+                name=""
+              />
+            </div>
+          </form>
         </div>
         <div>
           <button
