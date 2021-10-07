@@ -21,8 +21,8 @@ const ProductSchema = new Schema({
     required: true,
   },
   img: {
-    data: Buffer,
-    contentType: String,
+    type: String,
+    required: false,
   },
   tags: [
     {
