@@ -8,5 +8,5 @@
 /client/.env
 /server/logs
 /.dist
-
+/server/public/
 
