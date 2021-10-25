@@ -32,7 +32,7 @@ const DeleteModal = ({ setShowModal, id, type }) => {
           history.push("/");
           setShowModal(false);
         }
-
+        break;
       default:
         break;
     }

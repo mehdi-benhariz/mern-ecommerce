@@ -15,17 +15,12 @@ exports.addProduct = async (req, res) => {
   // let errors = dataValidation(req);
   // if (errors.length !== 0) return res.status(400).json(errors);
 
-  try {
-    console.log(req.body.newProduct);
-    const newProduct = new Product(req.body.newProduct);
-    await newProduct.save();
-    console.log(req.body);
-    decodeImg(req.body.newProduct.image, newProduct._id);
-    return res.status(200).json({ success: true, newProduct });
-  } catch (error) {
-    console.log("err:", error);
-    return res.status(500).json({ error: "internal errors" });
-  }
+  console.log(req.body.newProduct);
+  const newProduct = new Product(req.body.newProduct);
+  await newProduct.save();
+  console.log(req.body);
+  decodeImg(req.body.newProduct.image, newProduct._id);
+  return res.status(200).json({ success: true, newProduct });
 };
 //delete a product
 exports.removeProduct = async (req, res) => {
@@ -57,22 +52,23 @@ exports.getProduct = async (req, res) => {
 };
 //update a product
 exports.updateProduct = async (req, res) => {
-  const { pId, editProduct } = req.body;
-
+  const {
+    pId,
+    data: { newProduct, image },
+  } = req.body;
+  console.log(req.body.data.image);
   if (!pId) return res.status(400).json({ error: "ID is required" });
 
-  if (!editProduct)
+  if (!newProduct)
     return res.status(400).json({ error: "new product is required" });
+  decodeImg(image, pId);
 
-  try {
-    const updated = await Product.findByIdAndUpdate(pId, editProduct, {
-      new: true,
-    });
-    if (!updated) return res.status(500).json({ error: "couldn't update !" });
-    return res.status(200).json({ success: true });
-  } catch (err) {
-    res.status(500).json({ error: "the was internal error" });
-  }
+  const updated = await Product.findByIdAndUpdate(pId, newProduct, {
+    new: true,
+  });
+
+  if (!updated) return res.status(500).json({ error: "couldn't update !" });
+  return res.status(200).json({ success: true });
 };
 //detailed search
 exports.search = async (req, res) => {

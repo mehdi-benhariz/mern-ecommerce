@@ -36,11 +36,11 @@ export const removeProduct = async (pId) => {
   }
 };
 //edit a product
-export const editProduct = async (pId, editProduct) => {
+export const editProduct = async (pId, data) => {
   try {
     const res = await axios.put(
       `${process.env.REACT_APP_BASIC_URL}/api/v1/product/edit`,
-      { pId, editProduct }
+      { pId, data }
     );
     return res;
   } catch (err) {

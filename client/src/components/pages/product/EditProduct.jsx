@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useParams, useHistory } from "react-router";
-import { editProduct, uploadProductPic } from "../../api/ProductApi";
+import { useParams } from "react-router";
+import { editProduct } from "../../api/ProductApi";
 const EditProduct = () => {
   const product = JSON.parse(window.localStorage.getItem("product"));
   console.log(product);
@@ -10,13 +10,13 @@ const EditProduct = () => {
   const [previewImg, setPreviewImg] = useState(null);
 
   let { pId } = useParams();
-  let history = useHistory();
   //not finished yet
   const handleSubmit = async () => {
     const res = await editProduct(pId, newProduct);
     console.log(newProduct);
     console.log(res);
-    if (res.status === 200) history.push("/");
+    if (res.status === 200) window.location.href = "/";
+    // history.push("/");
   };
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -32,13 +32,13 @@ const EditProduct = () => {
       }
     };
   };
-  const handleUpload = () => {
-    const formData = new FormData();
-    formData.append("myFile", selectedFile);
-    console.log({ selectedFile });
-    uploadProductPic(formData, pId);
-    console.log({ newProduct });
-  };
+  // const handleUpload = () => {
+  //   const formData = new FormData();
+  //   formData.append("myFile", selectedFile);
+  //   console.log({ selectedFile });
+  //   uploadProductPic(formData, pId);
+  //   console.log({ newProduct });
+  // };
   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
     focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-full mb-2 mr-4`;
   const labelText = `text-lg font-medium text-gray-700`;
@@ -115,7 +115,13 @@ const EditProduct = () => {
                     </span>{" "}
                   </div>
                 )}
-                {selectedFile && <img src={previewImg} alt="product" />}
+                {selectedFile && (
+                  <img
+                    className="w-full h-48 object-contain"
+                    src={previewImg}
+                    alt="product"
+                  />
+                )}
               </div>{" "}
               <input
                 type="file"
@@ -131,8 +137,8 @@ const EditProduct = () => {
             className="text-xl text-white font-semibold bg-purple-500 hover:bg-purple-700 ease-linear p-4
          rounded-md m-3"
             onClick={(e) => {
-              handleUpload();
-              // handleSubmit(e);
+              // handleUpload();
+              handleSubmit(e);
             }}
           >
             Save

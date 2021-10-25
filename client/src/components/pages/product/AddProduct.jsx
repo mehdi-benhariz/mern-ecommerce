@@ -38,12 +38,6 @@ const AddProduct = () => {
       //      console.log(response);
     } else seterror(res?.data?.error);
   };
-  const handleUpload = () => {
-    const formData = new FormData();
-    formData.append("myFile", selectedFile);
-    console.log({ selectedFile });
-    uploadProductPic(formData, pId);
-  };
   /*   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 
   focus:bg-white border-transparent focus:border-purple-400 border-2 outline-none w-full mb-2 mr-4`;
  */ const labelText = `text-lg font-medium text-gray-700`;
@@ -63,7 +57,7 @@ const AddProduct = () => {
             />
           </div>
           <div>
-            <label class={labelText}>Price</label>
+            <label className={labelText}>Price</label>
             <input
               className={input}
               type="number"
@@ -129,7 +123,13 @@ const AddProduct = () => {
                     </span>{" "}
                   </div>
                 )}
-                {selectedFile && <img src={previewImg} alt="product" />}
+                {selectedFile && (
+                  <img
+                    className="object-contain h-36 w-full"
+                    src={previewImg}
+                    alt="product"
+                  />
+                )}
               </div>{" "}
               <input
                 type="file"
@@ -142,14 +142,14 @@ const AddProduct = () => {
         </div>
         <div>
           <button
-            class="text-xl text-white font-semibold bg-purple-500 hover:bg-purple-700 ease-linear p-4
+            className="text-xl text-white font-semibold bg-purple-500 hover:bg-purple-700 ease-linear p-4
          rounded-md m-3"
             onClick={handleSubmit}
           >
             Save
           </button>
           <button
-            class="text-xl text-white font-semibold bg-gray-500 hover:bg-gray-700 ease-linear p-4 
+            className="text-xl text-white font-semibold bg-gray-500 hover:bg-gray-700 ease-linear p-4 
          rounded-md  m-3"
             onClick={() => {
               setnewProduct({});
