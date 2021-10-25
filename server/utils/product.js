@@ -23,3 +23,12 @@ exports.dataValidation = (req) => {
   return errors;
   //!impliment a data validation
 };
+exports.deleteImg = (name) => {
+  const path = `public/product_images/${name}.png`;
+  try {
+    fs.unlinkSync(path);
+    //file removed
+  } catch (err) {
+    console.error(err);
+  }
+};

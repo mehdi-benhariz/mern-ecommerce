@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { addProducts, uploadProductPic } from "../../api/ProductApi";
+import { addProducts } from "../../api/ProductApi";
 import { input } from "../../shared/classes";
-import { useParams, useHistory } from "react-router";
 
 //totally fine
 const AddProduct = () => {
@@ -10,7 +9,6 @@ const AddProduct = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   //*for better user experience
   const [previewImg, setPreviewImg] = useState(null);
-  let { pId } = useParams();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -30,12 +28,7 @@ const AddProduct = () => {
     const res = await addProducts(newProduct);
     if (res?.data?.success) {
       setnewProduct({});
-      // changePic();
-      // const response = await uploadProductPic(
-      //   formData,
-      //   res.data.newProduct._id
-      // );
-      //      console.log(response);
+      window.location.href = "/";
     } else seterror(res?.data?.error);
   };
   /*   const input = `bg-gray-200 rounded-full px-3 py-1 hover:shadow-xl transform ease-linear duration-150 

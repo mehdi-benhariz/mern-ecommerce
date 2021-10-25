@@ -1,7 +1,7 @@
 const Product = require("../models/Product");
 const path = require("path");
 const { getUserByToken } = require("../utils/auth");
-const { decodeImg, dataValidation } = require("../utils/product");
+const { decodeImg, dataValidation, deleteImg } = require("../utils/product");
 exports.getAll = async (req, res) => {
   try {
     const products = await Product.find();
@@ -28,13 +28,10 @@ exports.removeProduct = async (req, res) => {
   console.log(pId);
   if (!pId) return res.status(400).json({ error: "ID is required" });
 
-  try {
-    const removed = await Product.findByIdAndRemove(pId);
-    if (!removed) return res.status(200).json({ success: true });
-    else return res.status(404).json({ error: "product doesn't exist" });
-  } catch (err) {
-    res.status(500).json({ error: "the was internal error" });
-  }
+  const removed = await Product.findByIdAndRemove(pId);
+  deleteImg(pId);
+  if (!removed) return res.status(200).json({ success: true });
+  else return res.status(404).json({ error: "product doesn't exist" });
 };
 //get one product by Id
 exports.getProduct = async (req, res) => {
@@ -99,34 +96,34 @@ exports.getByCategory = async (req, res) => {
     console.log(err);
   }
 };
+// *not in need for now
+// //upload image
+// exports.uploadImage = async (req, res, next) => {
+//   console.log("");
+//   const { pId } = req.params;
+//   // const product = await Product.findById(pId);
+//   // console.log(product);
 
-//upload image
-exports.uploadImage = async (req, res, next) => {
-  console.log("");
-  const { pId } = req.params;
-  // const product = await Product.findById(pId);
-  // console.log(product);
+//   // file upload handler
 
-  // file upload handler
+//   console.log(req.files);
+//   if (!req.files) return res.status(400).json({ message: "No file uploaded" });
+//   const file = req.files.myFile;
+//   const regex = /^image\/(png|jpg|jpeg)$/;
+//   console.log(file);
+//   if (!regex.test(file.mimetype))
+//     return res
+//       .status(400)
+//       .json({ message: "File type should be png, jpg, or jpeg" });
+//   const err = await file.mv(
+//     path.join(__dirname, "..", "public", "product_images", file.name)
+//   );
+//   return res.status(200).json("success");
+//   // const newProduct = await product.save();
+//   // res.json({ product: newProduct });
 
-  console.log(req.files);
-  if (!req.files) return res.status(400).json({ message: "No file uploaded" });
-  const file = req.files.myFile;
-  const regex = /^image\/(png|jpg|jpeg)$/;
-  console.log(file);
-  if (!regex.test(file.mimetype))
-    return res
-      .status(400)
-      .json({ message: "File type should be png, jpg, or jpeg" });
-  const err = await file.mv(
-    path.join(__dirname, "..", "public", "product_images", file.name)
-  );
-  return res.status(200).json("success");
-  // const newProduct = await product.save();
-  // res.json({ product: newProduct });
-
-  // end file upload handler
-};
+//   // end file upload handler
+// };
 
 //
 exports.addToPannel = async (req, res) => {

@@ -10,7 +10,6 @@ const {
   updateProduct,
   search,
   getByCategory,
-  uploadImage,
   addToPannel,
 } = require("../controllers/product");
 const { auth, admin } = require("../middleware/auth");
@@ -18,7 +17,6 @@ const { auth, admin } = require("../middleware/auth");
 //TODO: refactor routes
 router.get("/all", getAll);
 router.post("/add", auth, admin, addProduct);
-router.post("/upload-pic/:pId", auth, admin, uploadImage);
 router.post("/delete", auth, admin, removeProduct);
 router.post("/detail", getProduct);
 router.put("/edit", auth, admin, updateProduct);
