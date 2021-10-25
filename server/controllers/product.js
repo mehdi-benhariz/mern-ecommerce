@@ -16,6 +16,7 @@ exports.addProduct = async (req, res) => {
   // if (errors.length !== 0) return res.status(400).json(errors);
 
   try {
+    console.log(req.body.newProduct);
     const newProduct = new Product(req.body.newProduct);
     await newProduct.save();
     console.log(req.body);
