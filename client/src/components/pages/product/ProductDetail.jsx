@@ -4,6 +4,7 @@ import DeleteModal from "../../layout/DeleteModal";
 import { Link, useHistory } from "react-router-dom";
 import { addToPannel } from "../../api/ProductApi";
 import { getPannelItems, setPannelItems } from "../../utils/Cache";
+import { formatURL } from "../../utils/Handlers";
 
 const ProductDetail = () => {
   const { isAdmin, isLogged } = useContext(AuthContext);
@@ -34,11 +35,7 @@ const ProductDetail = () => {
       </div>
       <div class="bg-white hover:shadow-md mx-4 rounded-md grid grid-rows-3 sm:grid-rows-1 sm:grid grid-flow-col ">
         <div class="row-span-3 p-3  border-gray-700 border-r-0">
-          <img
-            src="https://www.cdiscount.com/pdt2/6/2/0/2/300x300/tok5194620/rw/pack-3t-shirt-col-rond-noir-logo-poitrine.jpg"
-            class="pr-0"
-            alt="a product"
-          />
+          <img src={formatURL(pId)} class="pr-0" alt="a product" />
         </div>
         <div class="col-span-2 pl-2 text-left">
           <h4 class="text-gray-500 text-lg font-semibold ">clothes</h4>

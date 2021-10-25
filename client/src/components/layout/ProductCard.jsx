@@ -1,18 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { formatURL } from "../utils/Handlers";
 const ProductCard = ({ product }) => {
   const { name, description, price, _id } = product;
   const addProductToCache = (e) => {
     window.localStorage.setItem("product", JSON.stringify(product));
   };
   //check  if the image of product exist
-  const formatURL = (id) => {
-    // const res = await axios.get(
-    //   `${process.env.REACT_APP_BASIC_URL}/product_images/${url}`
-    // );
-    console.log(`${process.env.REACT_APP_BASIC_URL}/product_images/${id}.png`);
-    return `${process.env.REACT_APP_BASIC_URL}/product_images/${id}.png`;
-  };
+
   return (
     <div className="w-full flex justify-center items-center">
       <div className="container mx-auto max-w-sm w-full p-4 ">
